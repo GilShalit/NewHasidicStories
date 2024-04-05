@@ -1,6 +1,7 @@
 ﻿@page "/"
+@inject IStringLocalizer<Home> localizer
 
-<PageTitle>Home</PageTitle>
+<PageTitle>@localizer["HelloMsg"]</PageTitle>
 <pb-page endpoint="http://localhost:8081/exist/apps/HasidicStoriesServer"
              data-template="pages:pb-page" unresolved="unresolved">
     <pb-document id="document1" path="ShivheiHabesht2022-08-6.xml" odd="Stories" view="page"></pb-document>
@@ -21,6 +22,7 @@
 
     <pb-progress></pb-progress>
     <!-- Output the document title -->
+    @localizer["HelloMsg"]
     <pb-view src="document1" xpath="//teiHeader/fileDesc/titleStmt/title[@@type='main']" view="single" disable-history="">
         <pb-param name="header" value="short" />
     </pb-view>

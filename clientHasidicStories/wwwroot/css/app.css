@@ -1,6 +1,6 @@
 #view1 {
     flex: 1 1;
-    height: 60vi;
+    height: 80svh;
     overflow: auto;
 }
 
@@ -13,7 +13,7 @@
 
     .content-body pb-facsimile {
         flex: 1 1;
-        height: 50vi;
+        height: 80svh;
     }
 
 .valid.modified:not([type=checkbox]) {
