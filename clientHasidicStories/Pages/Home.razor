@@ -1,6 +1,9 @@
 ﻿@page "/"
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<Home> Localizer
 
 <PageTitle>Home</PageTitle>
+@Localizer["msgHello"]
 <pb-page endpoint="http://localhost:8081/exist/apps/HasidicStoriesServer"
              data-template="pages:pb-page" unresolved="unresolved">
     <pb-document id="document1" path="ShivheiHabesht2022-08-6.xml" odd="Stories" view="page"></pb-document>
@@ -18,7 +21,6 @@
             </paper-button>
         </pb-navigation>
     </header>
-
     <pb-progress></pb-progress>
     <!-- Output the document title -->
     <pb-view src="document1" xpath="//teiHeader/fileDesc/titleStmt/title[@@type='main']" view="single" disable-history="">
@@ -31,5 +33,6 @@
     </div>
 </pb-page>
 @code {
+
 }
 
