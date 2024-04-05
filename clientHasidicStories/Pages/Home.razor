@@ -3,6 +3,7 @@
 @inject IStringLocalizer<Home> Localizer
 
 <PageTitle>Home</PageTitle>
+<clientHasidicStories.Components.CultureSelector />
 @Localizer["msgHello"]
 <pb-page endpoint="http://localhost:8081/exist/apps/HasidicStoriesServer"
              data-template="pages:pb-page" unresolved="unresolved">

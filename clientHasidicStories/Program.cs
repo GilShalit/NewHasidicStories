@@ -14,7 +14,7 @@ builder.Services.AddLocalization();
 
 var host = builder.Build();
 
-const string defaultCulture = "en-US";
+const string defaultCulture = "he-IL";
 
 var js = host.Services.GetRequiredService<IJSRuntime>();
 var result = await js.InvokeAsync<string>("blazorCulture.get");
