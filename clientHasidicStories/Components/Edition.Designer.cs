@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace clientHasidicStories.Pages {
+namespace clientHasidicStories.Components {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace clientHasidicStories.Pages {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class Home {
+    public partial class Edition {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        public Home() {
+        public Edition() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace clientHasidicStories.Pages {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("clientHasidicStories.Pages.Home", typeof(Home).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("clientHasidicStories.Components.Edition", typeof(Edition).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

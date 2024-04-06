@@ -19,21 +19,17 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Resources\" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Compile Update="Pages\Home.Designer.cs">
+	  <Compile Update="Components\Edition.Designer.cs">
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
-	    <DependentUpon>Home.resx</DependentUpon>
+	    <DependentUpon>Edition.resx</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Update="Pages\Home.resx">
+	  <EmbeddedResource Update="Components\Edition.resx">
 	    <Generator>PublicResXFileCodeGenerator</Generator>
-	    <LastGenOutput>Home.Designer.cs</LastGenOutput>
+	    <LastGenOutput>Edition.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
 	</ItemGroup>
 

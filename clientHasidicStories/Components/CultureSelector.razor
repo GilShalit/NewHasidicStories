@@ -8,7 +8,7 @@
         <select @bind="Culture">
             @foreach (var culture in supportedCultures)
             {
-                <option value="@culture">@culture.DisplayName</option>
+                <option value="@culture">@DisplayLanguage(culture)</option>
             }
         </select>
     </label>
@@ -34,6 +34,22 @@
 
                 Navigation.NavigateTo(Navigation.Uri, forceLoad: true);
             }
+        }
+    }
+
+    private string DisplayLanguage(CultureInfo culture)
+    {
+        if (culture.Name == "he-IL")
+        {
+            return "עברית";
+        }
+        else if (culture.Name == "en-US")
+        {
+            return "English";
+        }
+        else
+        {
+            return string.Empty;
         }
     }
 }

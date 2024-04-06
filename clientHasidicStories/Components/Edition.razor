@@ -1,9 +1,6 @@
-﻿@page "/"
-@using Microsoft.Extensions.Localization
-@inject IStringLocalizer<Home> Localizer
+﻿@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<Edition> Localizer
 
-<PageTitle>Home</PageTitle>
-<clientHasidicStories.Components.CultureSelector />
 @Localizer["msgHello"]
 <pb-page endpoint="http://localhost:8081/exist/apps/HasidicStoriesServer"
              data-template="pages:pb-page" unresolved="unresolved">
@@ -34,6 +31,5 @@
     </div>
 </pb-page>
 @code {
-
 }
 
