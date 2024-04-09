@@ -3,15 +3,12 @@
 @inject NavigationManager Navigation
 
 <p>
-    <label>
-        Select your locale:
-        <select @bind="Culture">
-            @foreach (var culture in supportedCultures)
-            {
-                <option value="@culture">@DisplayLanguage(culture)</option>
-            }
-        </select>
-    </label>
+    <select @bind="Culture">
+        @foreach (var culture in supportedCultures)
+        {
+            <option value="@culture">@DisplayLanguage(culture)</option>
+        }
+    </select>
 </p>
 
 @code

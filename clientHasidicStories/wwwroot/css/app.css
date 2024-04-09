@@ -1,3 +1,4 @@
+/*used in Edition.razor*/
 #view1 {
     flex: 1 1;
     height: 60vi;
@@ -15,6 +16,19 @@
         flex: 1 1;
         height: 50vi;
     }
+
+.toolbar {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+pb-navigation[disabled] {
+    display: block;
+    color: gray;
+    pointer-events: none;
+}
+/*End used in Edition.razor*/
 
 .valid.modified:not([type=checkbox]) {
     outline: 1px solid #26b050;

@@ -61,6 +61,24 @@ namespace clientHasidicStories.Components {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Previous Page.
+        /// </summary>
+        public static string back {
+            get {
+                return ResourceManager.GetString("back", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Next Page.
+        /// </summary>
+        public static string forward {
+            get {
+                return ResourceManager.GetString("forward", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hello.
         /// </summary>
         public static string msgHello {
