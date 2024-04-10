@@ -1,19 +1,23 @@
-#view1 {
-    flex: 1 1;
-    height: 60vi;
-    overflow: auto;
+.navbar-nav{
+    padding-left:0!important;
 }
-
-.content-body {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    padding: 0 20px;
+.languageSelector {
+    overflow: hidden;
+    margin-right: 8px;
+    margin-left: 8px;
+    font-size: 110%;
+    text-align: center;
+    border-width: 0;
 }
+    .languageSelector > option:checked {
+        background-color: antiquewhite;
+        border: 2px solid black;
+        /*    color:white;*/
+    }
 
-    .content-body pb-facsimile {
-        flex: 1 1;
-        height: 50vi;
+    .languageSelector > option {
+         border: 1px solid black;
+         border-radius:3px;
     }
 
 .valid.modified:not([type=checkbox]) {

@@ -1,0 +1,39 @@
+﻿<tei:TEI xmlns:tei="http://www.tei-c.org/ns/1.0">
+	<teiHeader xmlns="http://www.tei-c.org/ns/1.0">
+	</teiHeader>
+
+	<text xmlns="http://www.tei-c.org/ns/1.0">
+		<body>
+			<div type="story" xml:id="Mifalot-HaZadikim_0001">
+				<head>Mifalot-HaZadikim_0001</head>
+				<pb facs="MifalotZadikim-0004.jpg"/>
+				<head> מפעלות הצדיקים</head>
+				<head>
+					מהרב הצדיק הגאון אמיתי הקדוש ר׳ <persName>
+						יעקב שמשון
+						מ<placeName>שפיטעווקע</placeName>
+					</persName> .
+				</head>
+				<lb/>
+				<span
+                    ana="supernatural:prognostication; supernatural:perception; times:historical_event; practice:the_travels_of_the_tsaddik; women:major_character; characters-and-roles:agunah; practice:releasing_agunot; ethics-and-emotions:repentance; social-relations:divorce; social-relations:converts_and_conversion"
+                    >תיוגים</span>
+				<lb/>
+				<p>
+					בעת מלחמת התוגר עם הקיסר מ<placeName>רוסיא</placeName> אירע מעשה בעיר אחת במדינת
+				</p>
+			</div>
+			<lb/>
+			<div type="story" xml:id="Mifalot-HaZadikim_0002">
+				<head>Mifalot-HaZadikim_0002</head>
+				<!--<pb facs="MifalotZadikim-0006.jpg"/>-->
+				<span ana="not-a-hasidic-story:hagiography">תיוגים</span>
+				<lb/>
+				<p>
+					בעיר <placeName>פוזנא</placeName> התקין הרבי ר׳ <persName>נפתלי</persName><note/> בית
+					וועד. וציוה שלא יפסיקו שום ד״ת רק בבית וועד הנ״ל. וכן קימו. עד שבימי הגאון ר׳ע
+				</p>
+			</div>
+		</body>
+	</text>
+</tei:TEI>
