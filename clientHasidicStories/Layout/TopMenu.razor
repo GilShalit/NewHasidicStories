@@ -1,0 +1,29 @@
+﻿@using Blazorise.Localization
+@using System.Globalization
+
+<Bar Breakpoint="Breakpoint.Desktop" Style="padding-bottom: 0 !important;width:100%" Shadow="Shadow.Default" ThemeContrast="ThemeContrast.Light" CollapseMode="BarCollapseMode.Hide">
+    <BarToggler />
+    <BarMenu>
+        @if (CultureInfo.CurrentCulture.Name == "en-US")
+        {
+            <BarStart>
+                <TopMenuStart />
+            </BarStart>
+            <BarEnd>
+                <TopMenuEnd />
+            </BarEnd>
+        }
+        else
+        {
+            <BarEnd>
+                <TopMenuStart />
+            </BarEnd>
+            <BarStart>
+                <TopMenuEnd />
+            </BarStart>
+        }
+    </BarMenu>
+</Bar>
+
+@code {
+}
