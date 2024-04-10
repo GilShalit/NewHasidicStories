@@ -121,9 +121,6 @@
     <value>העמוד הקודם</value>
   </data>
   <data name="forward" xml:space="preserve">
-    <value>העבוד הבא</value>
-  </data>
-  <data name="msgHello" xml:space="preserve">
-    <value>שלום</value>
+    <value>העמוד הבא</value>
   </data>
 </root>

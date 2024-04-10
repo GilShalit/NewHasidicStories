@@ -1,0 +1,29 @@
+﻿#view1 {
+    flex: 1 1;
+    height: 60vi;
+    overflow: auto;
+}
+
+.content-body {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    padding: 0 20px;
+}
+
+    .content-body pb-facsimile {
+        flex: 1 1;
+        height: 50vi;
+    }
+
+.toolbar {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+pb-navigation[disabled] {
+    display: block;
+    color: gray;
+    pointer-events: none;
+}

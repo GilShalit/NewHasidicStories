@@ -123,7 +123,4 @@
   <data name="forward" xml:space="preserve">
     <value>Next Page</value>
   </data>
-  <data name="msgHello" xml:space="preserve">
-    <value>Hello</value>
-  </data>
 </root>

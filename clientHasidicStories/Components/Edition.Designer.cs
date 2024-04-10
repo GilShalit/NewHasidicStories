@@ -77,14 +77,5 @@ namespace clientHasidicStories.Components {
                 return ResourceManager.GetString("forward", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Hello.
-        /// </summary>
-        public static string msgHello {
-            get {
-                return ResourceManager.GetString("msgHello", resourceCulture);
-            }
-        }
     }
 }
