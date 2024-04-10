@@ -1,4 +1,68 @@
-﻿#view1 {
+﻿/*from HasidicRTL*/
+body {
+    --pb-menubar-color: #FCE1DD;
+}
+
+.clsMenu {
+    font-family: Yiddishkeit;
+    letter-spacing: .2rem;
+    font-size: 1.4rem;
+}
+
+.content-body {
+    direction: rtl;
+    text-align: right;
+}
+
+main {
+    direction: rtl;
+    text-align: right;
+}
+
+.speaker {
+    font-weight: 800 !important;
+}
+
+.stage {
+    font-style: italic !important;
+}
+
+.persname {
+    color: steelblue !important;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+.strikethrough {
+    text-decoration: line-through;
+}
+
+.logo {
+    background-image: url("../images/logo.jpg");
+    height: 60px;
+    width: 198px;
+    padding: 0;
+}
+
+.menubar {
+    background-color: black;
+    color: var(--pb-menubar-color);
+}
+
+.input-element {
+    color: var(--pb-menubar-color);
+}
+
+.toc li {
+    margin-right: 3rem !important
+}
+
+
+
+/*From template*/
+#view1 {
     flex: 1 1;
     height: 60vi;
     overflow: auto;
