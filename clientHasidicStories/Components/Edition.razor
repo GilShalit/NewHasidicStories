@@ -1,4 +1,5 @@
-﻿@using Microsoft.Extensions.Localization
+﻿@page "/Edition/{fileName}"
+@using Microsoft.Extensions.Localization
 @inject IStringLocalizer<Edition> Localizer
 
 <pb-page endpoint="http://localhost:8081/exist/apps/HasidicStoriesServer"
@@ -32,5 +33,16 @@
 
 @code {
     [Parameter] public string fileName { get; set; }
+    protected override void OnParametersSet()
+    {
+        // Validate the Id parameter
+        if (string.IsNullOrEmpty(fileName))
+        {
+            throw new ArgumentException("fileName parameter cannot be null or empty");
+        }
+
+        // Sanitize the Id parameter
+        fileName = System.Net.WebUtility.HtmlEncode(fileName) + ".xml";
+    }
 }
 
