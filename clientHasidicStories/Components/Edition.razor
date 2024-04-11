@@ -1,8 +1,9 @@
 ﻿@page "/Edition/{fileName}"
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<Edition> Localizer
+@inject IConfiguration Configuration
 
-<pb-page endpoint="http://localhost:8081/exist/apps/HasidicStoriesServer"
+<pb-page endpoint=@Configuration["endpointURL"]
          data-template="pages:pb-page" unresolved="unresolved">
     <pb-document id="document1" path=@fileName odd="Stories" view="page"></pb-document>
     <app-toolbar class="toolbar" sticky="sticky" dir="rtl">

@@ -1,14 +1,24 @@
-.navbar-nav{
-    padding-left:0!important;
+.listControl {
+    /*background-color: beige !important;*/
+    border-radius: 5px;
+    box-shadow: 0 .25rem .25rem rgba(0,0,0,0.8) !important;
 }
+.controlsContainer{
+    margin-top:10px;
+}
+.navbar-nav {
+    padding-left: 0 !important;
+}
+
 .languageSelector {
     overflow: hidden;
     margin-right: 8px;
     margin-left: 8px;
-    font-size: 110%;
+    font-size: 107%;
     text-align: center;
     border-width: 0;
 }
+
     .languageSelector > option:checked {
         background-color: antiquewhite;
         border: 2px solid black;
@@ -16,8 +26,8 @@
     }
 
     .languageSelector > option {
-         border: 1px solid black;
-         border-radius:3px;
+        border: 1px solid black;
+        border-radius: 3px;
     }
 
 .valid.modified:not([type=checkbox]) {
