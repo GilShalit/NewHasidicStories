@@ -22,7 +22,7 @@
     <link href="_content/Blazorise.Bootstrap5/blazorise.bootstrap5.css" rel="stylesheet" />
 
     <! TEIPub stuff-- @import css can not be done in scoped css>
-    <link rel="stylesheet" href="https://teipub9.dh-dev.com/exist/apps/HasidicStoriesServer/resources/css/theme.css" />
+    <!--<link rel="stylesheet" href="https://teipub9.dh-dev.com/exist/apps/HasidicStoriesServer/resources/css/theme.css" />-->
     <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.3/webcomponents-loader.js"></script>
     <script type="module" src="https://unpkg.com/@teipublisher/pb-components@latest/dist/pb-components-bundle.js"></script>
 
@@ -53,6 +53,13 @@
             },
             set: (value) => window.localStorage['BlazorCulture'] = value
         };
+        window.loadCssFile = function (href) {
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = href;
+            document.head.appendChild(link);
+        }
+
     </script>
     <script>navigator.serviceWorker.register('service-worker.js');</script>
 </body>
