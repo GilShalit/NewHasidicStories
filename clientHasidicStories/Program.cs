@@ -25,9 +25,11 @@ builder.Services
              options.Immediate = true;
          })
     .AddBootstrap5Providers()
-    .AddFontAwesomeIcons()
-    .AddScoped(sp => //need to modify base address for the HttpClient with Configuration["endpointURL"]
-        new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+    .AddFontAwesomeIcons();
+
+string baseAddress = builder.Configuration.GetValue<string>("endpointURL");
+builder.Services.AddScoped(sp => 
+        new HttpClient { BaseAddress = new Uri(baseAddress) });
 
 var host = builder.Build();
 

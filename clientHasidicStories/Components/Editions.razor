@@ -1,7 +1,15 @@
 ﻿<Div Class="listControl">
-    <h3 >Editions</h3>
+    <h3>Editions</h3>
 </Div>
 
 @code {
-
+    [Inject] HttpClient http { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        // HttpResponseMessage response = await http.GetAsync($"api/filelist");
+        // if (response.IsSuccessStatusCode)
+        // {
+            
+        // }
+    }
 }
