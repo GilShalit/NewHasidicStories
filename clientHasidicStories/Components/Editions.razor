@@ -1,15 +1,36 @@
 ﻿<Div Class="listControl">
     <h3>Editions</h3>
+    @if(editions.Count > 0)
+    {
+        <ul>
+            @foreach(string edition in editions)
+            {
+                <li>@edition</li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>Loading...</p>
+    }
 </Div>
 
 @code {
     [Inject] HttpClient http { get; set; }
+    List<string> editions = new List<string>();
+
     protected override async Task OnInitializedAsync()
     {
-        // HttpResponseMessage response = await http.GetAsync($"api/filelist");
-        // if (response.IsSuccessStatusCode)
-        // {
-            
-        // }
+        clsFileList files;
+        HttpResponseMessage response = await http.GetAsync($"api/filelist");
+
+        if (response.IsSuccessStatusCode)
+        {
+            files= await response.Content.ReadFromJsonAsync<clsFileList>();
+            foreach(Li lItem in files.li)
+            {
+                editions.Add(lItem.pbrestricted.pbajax.url);
+            }
+        }
     }
 }

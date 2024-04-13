@@ -15,10 +15,12 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 // Build the configuration
 var configuration = builder.Configuration;
 
+string baseAddress = builder.Configuration.GetValue<string>("endpointURL") + "/HasidicStoriesServer/";
+//baseAddress = "http://localhost:8081/exist/apps/HasidicStoriesServer/";
 // Add services to the service collection
 builder.Services
     .AddScoped(sp =>
-        new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) })
+        new HttpClient { BaseAddress = new Uri(baseAddress) })
     .AddLocalization()
     .AddBlazorise(options =>
          {
@@ -26,10 +28,6 @@ builder.Services
          })
     .AddBootstrap5Providers()
     .AddFontAwesomeIcons();
-
-string baseAddress = builder.Configuration.GetValue<string>("endpointURL");
-builder.Services.AddScoped(sp => 
-        new HttpClient { BaseAddress = new Uri(baseAddress) });
 
 var host = builder.Build();
 
