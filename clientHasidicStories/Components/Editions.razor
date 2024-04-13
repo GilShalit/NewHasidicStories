@@ -1,11 +1,12 @@
-﻿<Div Class="listControl">
+﻿@inject NavigationManager navigationManager
+<Div Class="listControl">
     <h3>Editions</h3>
-    @if(editions.Count > 0)
+    @if (editionTitless.Count > 0)
     {
         <ul>
-            @foreach(string edition in editions)
+            @foreach (string edition in editionFiles)
             {
-                <li>@edition</li>
+                <button @onclick="() => NavigateToFile(edition)">@edition</button>
             }
         </ul>
     }
@@ -17,8 +18,8 @@
 
 @code {
     [Inject] HttpClient http { get; set; }
-    List<string> editions = new List<string>();
-
+    List<string> editionTitless = new List<string>();
+    List<string> editionFiles = new List<string>();
     protected override async Task OnInitializedAsync()
     {
         clsFileList files;
@@ -26,11 +27,28 @@
 
         if (response.IsSuccessStatusCode)
         {
-            files= await response.Content.ReadFromJsonAsync<clsFileList>();
-            foreach(Li lItem in files.li)
+            files = await response.Content.ReadFromJsonAsync<clsFileList>();
+            foreach (Li lItem in files.li)
             {
-                editions.Add(lItem.pbrestricted.pbajax.url);
+                editionFiles.Add(lItem.pbrestricted.pbajax.url);
+                editionTitless.Add(lItem.header.div.div[0].a.h5.text);
             }
         }
     }
+    private void NavigateToFile(string fileName)
+    {
+        navigationManager.NavigateTo($"/Edition/{fileName}");
+    }
+
+    class clsFile
+    {
+        string _file;
+        string _title;
+        clsFile(string file, string title)
+        {
+            _file = file;
+            _title = title;
+        }
+    }
+
 }
