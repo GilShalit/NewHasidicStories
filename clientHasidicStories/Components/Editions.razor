@@ -1,12 +1,13 @@
-﻿@inject NavigationManager navigationManager
+﻿@using System.IO;
+@inject NavigationManager navigationManager
 <Div Class="listControl">
     <h3>Editions</h3>
-    @if (editionTitless.Count > 0)
+    @if (lstFiles.Count > 0)
     {
         <ul>
-            @foreach (string edition in editionFiles)
+            @foreach (clsFile file in lstFiles)
             {
-                <button @onclick="() => NavigateToFile(edition)">@edition</button>
+                <button @onclick="() => NavigateToFile(file.name)">@file.title</button>
             }
         </ul>
     }
@@ -18,8 +19,7 @@
 
 @code {
     [Inject] HttpClient http { get; set; }
-    List<string> editionTitless = new List<string>();
-    List<string> editionFiles = new List<string>();
+    List<clsFile> lstFiles = new List<clsFile>();
     protected override async Task OnInitializedAsync()
     {
         clsFileList files;
@@ -30,8 +30,7 @@
             files = await response.Content.ReadFromJsonAsync<clsFileList>();
             foreach (Li lItem in files.li)
             {
-                editionFiles.Add(lItem.pbrestricted.pbajax.url);
-                editionTitless.Add(lItem.header.div.div[0].a.h5.text);
+                lstFiles.Add(new clsFile(lItem.pbrestricted.pbajax.url, lItem.header.div.div[0].a.h5.text));
             }
         }
     }
@@ -40,15 +39,17 @@
         navigationManager.NavigateTo($"/Edition/{fileName}");
     }
 
-    class clsFile
+    internal class clsFile
     {
         string _file;
         string _title;
-        clsFile(string file, string title)
+        internal clsFile(string file, string title)
         {
             _file = file;
             _title = title;
         }
+        internal string name { get { return Path.GetFileNameWithoutExtension(_file); } }
+        internal string title { get { return _title; } }
     }
 
 }

@@ -54,12 +54,14 @@
             set: (value) => window.localStorage['BlazorCulture'] = value
         };
         window.loadCssFile = function (href) {
-            var link = document.createElement('link');
-            link.rel = 'stylesheet';
-            link.href = href;
-            document.head.appendChild(link);
+            var existingLinks = Array.from(document.head.getElementsByTagName('link'));
+            if (!existingLinks.some(link => link.href === href)) {
+                var newLink = document.createElement('link');
+                newLink.rel = 'stylesheet';
+                newLink.href = href;
+                document.head.appendChild(newLink);
+            }
         }
-
     </script>
     <script>navigator.serviceWorker.register('service-worker.js');</script>
 </body>

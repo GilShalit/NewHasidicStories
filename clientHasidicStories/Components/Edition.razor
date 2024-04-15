@@ -8,7 +8,7 @@
 
 <pb-page endpoint=@(Configuration["endpointURL"] + "/HasidicStoriesServer")
          data-template="pages:pb-page" unresolved="unresolved">
-    <pb-document id="document1" path=@fileName odd="Stories" view="page"></pb-document>
+    <pb-document id="document1" path=@(fileName + ".xml") odd="Stories" view="page"></pb-document>
     <app-toolbar class="toolbar" sticky="sticky" dir="rtl">
         <pb-navigation emit="transcription" keyboard="left" subscribe="transcription" direction="backward" unit="div">
             <paper-button>
@@ -46,16 +46,16 @@
             await JSRuntime.InvokeVoidAsync("loadCssFile", cssUrl);
         }
     }
-    protected override void OnParametersSet()
-    {
-        // Validate the Id parameter
-        if (string.IsNullOrEmpty(fileName))
-        {
-            throw new ArgumentException("fileName parameter cannot be null or empty");
-        }
+    // protected override void OnParametersSet()
+    // {
+    //     // Validate the Id parameter
+    //     if (string.IsNullOrEmpty(fileName))
+    //     {
+    //         throw new ArgumentException("fileName parameter cannot be null or empty");
+    //     }
 
-        // Sanitize the Id parameter
-        fileName = System.Net.WebUtility.HtmlEncode(fileName) + ".xml";
-    }
+    //     // Sanitize the Id parameter
+    //     fileName = System.Net.WebUtility.HtmlEncode(fileName) + ".xml";
+    // }
 }
 
