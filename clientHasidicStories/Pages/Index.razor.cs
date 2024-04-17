@@ -1,12 +1,16 @@
 ﻿using Microsoft.AspNetCore.Components;
+using static clientHasidicStories.Components.Editions;
+using System.Net.Http.Json;
 
 namespace clientHasidicStories.Pages
 {
     public partial class Index : ComponentBase
     {
+        [Inject] HttpClient http { get; set; }
+        bool isLoading = true;
         protected override async Task OnInitializedAsync()
         {
-            var task1 = CallApi1();
+            var task1 = GetDocThemes();
             await task1.ContinueWith(t =>
             {
                 if (t.IsFaulted)
@@ -25,14 +29,24 @@ namespace clientHasidicStories.Pages
             });
 
             await Task.WhenAll(task1, task2);
+            isLoading = false;
         }
 
-        private async Task<clsThemesJson> CallApi1()
+        private async Task<clsThemesJson> GetDocThemes()
         {
             try
             {
-                // Call your first API and return the result
-                return new clsThemesJson();
+                HttpResponseMessage response = await http.GetAsync($"api/get-ana");
+                if (response.IsSuccessStatusCode)
+                {
+                    clsThemesJson themesJson = await response.Content.ReadFromJsonAsync<clsThemesJson>();
+                    return themesJson;
+                }
+                else
+                {
+                    HandleError(new Exception($"Failed to get themes. Status code: {response.StatusCode}"));
+                    return null;
+                }
             }
             catch (Exception ex)
             {
