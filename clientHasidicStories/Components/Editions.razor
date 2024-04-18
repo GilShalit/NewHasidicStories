@@ -23,7 +23,7 @@
     protected override async Task OnInitializedAsync()
     {
         clsFileList files;
-        HttpResponseMessage response = await http.GetAsync($"api/filelist");
+        HttpResponseMessage response = await http.GetAsync("api/filelist");
 
         if (response.IsSuccessStatusCode)
         {

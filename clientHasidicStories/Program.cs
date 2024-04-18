@@ -27,7 +27,8 @@ builder.Services
              options.Immediate = true;
          })
     .AddBootstrap5Providers()
-    .AddFontAwesomeIcons();
+    .AddFontAwesomeIcons()
+    .AddSingleton<GlobalService>();
 
 var host = builder.Build();
 

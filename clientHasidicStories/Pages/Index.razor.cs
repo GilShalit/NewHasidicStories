@@ -7,16 +7,17 @@ namespace clientHasidicStories.Pages
     public partial class Index : ComponentBase
     {
         [Inject] HttpClient http { get; set; }
+        [Inject] GlobalService globalService { get; set; }
         bool isLoading = true;
         protected override async Task OnInitializedAsync()
         {
             var task1 = GetDocThemes();
             await task1.ContinueWith(t =>
             {
-                if (t.IsFaulted)
+                if (t.IsFaulted || t.Result == null)
                     HandleError(t.Exception);
                 else
-                    InvokeAsync(async () => await ProcessResult1(t.Result));
+                    InvokeAsync(async () => await ProcessThemes(t.Result));
             });
 
             var task2 = CallApi2();
@@ -36,7 +37,7 @@ namespace clientHasidicStories.Pages
         {
             try
             {
-                HttpResponseMessage response = await http.GetAsync($"api/get-ana");
+                HttpResponseMessage response = await http.GetAsync("api/get-ana");
                 if (response.IsSuccessStatusCode)
                 {
                     clsThemesJson themesJson = await response.Content.ReadFromJsonAsync<clsThemesJson>();
@@ -55,11 +56,25 @@ namespace clientHasidicStories.Pages
             }
         }
 
-        private async Task ProcessResult1(clsThemesJson result)
+        private async Task ProcessThemes(clsThemesJson result)
         {
             try
             {
-                // Process the result of your first API call
+                string story = "";
+                string[] themeNames = [];
+                clsThemes localThemes = new clsThemes();
+                clsTheme theme;
+                for (int i = 0; i < result.all.Length; i += 2)
+                {
+                    story = result.all[i];
+                    themeNames = result.all[i + 1].Split(";");
+                    for (int j = 0; j < themeNames.Length; j++)
+                    {
+                        localThemes.newTheme(themeNames[j],story);
+                        theme = localThemes.Find(t => t.name == themeNames[j].Split(":")[0].Trim());
+                    }
+                }
+                globalService.Themes = localThemes;
             }
             catch (Exception ex)
             {

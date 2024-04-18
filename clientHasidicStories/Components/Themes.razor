@@ -4,5 +4,17 @@
 
 
 @code {
-
+    [Inject] GlobalService globalService { get; set; }
+    protected override void OnInitialized()
+    {
+        globalService.OnGlobalThemesChanged += HandleGlobalThemesChange;
+    }
+    public void Dispose()
+    {
+        globalService.OnGlobalThemesChanged -= HandleGlobalThemesChange;
+    }
+    private void HandleGlobalThemesChange()
+    {
+        StateHasChanged();
+    }
 }
