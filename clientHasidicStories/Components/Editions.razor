@@ -11,7 +11,7 @@
                   @bind-SelectedNodes="selectedNodes">
             <NodeContent>
                 <Icon Name="IconName.Book" />
-                <button @onclick="() => NavigateToFile(context.name)">@context.title</button>
+                <Button Class="linkStyle" @onclick="() => NavigateToFile(context.name)">@context.title</Button>
             </NodeContent>
         </TreeView>
     }
@@ -25,23 +25,6 @@
     [Inject] GlobalService globalService { get; set; }
     IList<clsEdition> selectedNodes = new List<clsEdition>();
 
-    //[Inject] HttpClient http { get; set; }
-    //List<clsFile> lstFiles = new List<clsFile>();
-    // protected override async Task OnInitializedAsync()
-    // {
-
-    //     // clsFileList files;
-    //     // HttpResponseMessage response = await http.GetAsync("api/filelist");
-
-    //     // if (response.IsSuccessStatusCode)
-    //     // {
-    //     //     files = await response.Content.ReadFromJsonAsync<clsFileList>();
-    //     //     foreach (Li lItem in files.li)
-    //     //     {
-    //     //         lstFiles.Add(new clsFile(lItem.pbrestricted.pbajax.url, lItem.header.div.div[0].a.h5.text));
-    //     //     }
-    //     // }
-    // }
     protected override void OnInitialized()
     {
         globalService.OnGlobalEditionsChanged += HandleGlobalEditionsChange;
@@ -59,18 +42,5 @@
     {
         navigationManager.NavigateTo($"/Edition/{fileName}", true);
     }
-
-    // internal class clsFile
-    // {
-    //     string _file;
-    //     string _title;
-    //     internal clsFile(string file, string title)
-    //     {
-    //         _file = file;
-    //         _title = title;
-    //     }
-    //     internal string name { get { return Path.GetFileNameWithoutExtension(_file); } }
-    //     internal string title { get { return _title; } }
-    // }
 
 }
