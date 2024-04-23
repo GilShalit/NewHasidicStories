@@ -40,7 +40,8 @@
     }
     private void NavigateToFile(string fileName)
     {
-        navigationManager.NavigateTo($"/Edition/{fileName}", true);
+        if (!globalService.TEILoadedOnce) navigationManager.NavigateTo($"/Edition/{fileName}",false);
+        else navigationManager.NavigateTo($"/Edition/{fileName}", true);
     }
 
 }

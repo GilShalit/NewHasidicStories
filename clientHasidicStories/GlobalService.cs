@@ -5,6 +5,8 @@ namespace clientHasidicStories
     public class GlobalService
     {
         private clsThemes _themes;
+        private clsEditions _editions;
+        private bool _TEILoadedOnce;
         public clsThemes Themes
         {
             get => _themes;
@@ -17,10 +19,6 @@ namespace clientHasidicStories
                 }
             }
         }
-
-        public event Action OnGlobalThemesChanged;
-
-        private clsEditions _editions;
         public clsEditions Editions
         {
             get => _editions;
@@ -33,6 +31,9 @@ namespace clientHasidicStories
                 }
             }
         }
+        public bool TEILoadedOnce { get { bool loaded = _TEILoadedOnce;_TEILoadedOnce = true; return loaded; } init { _TEILoadedOnce = false; } }
+
         public event Action OnGlobalEditionsChanged;
+        public event Action OnGlobalThemesChanged;
     }
 }
