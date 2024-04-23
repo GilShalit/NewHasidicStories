@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using static clientHasidicStories.Components.Editions;
 using System.Net.Http.Json;
+using clientHasidicStories.Classes;
 
 namespace clientHasidicStories.Pages
 {
@@ -20,13 +21,13 @@ namespace clientHasidicStories.Pages
                     InvokeAsync(async () => await ProcessThemes(t.Result));
             });
 
-            var task2 = CallApi2();
+            var task2 = GetEditions();
             await task2.ContinueWith(t =>
             {
                 if (t.IsFaulted)
                     HandleError(t.Exception);
                 else
-                    InvokeAsync(async () => await ProcessResult2(t.Result));
+                    InvokeAsync(async () => await ProcessEditions(t.Result));
             });
 
             await Task.WhenAll(task1, task2);
@@ -82,12 +83,23 @@ namespace clientHasidicStories.Pages
             }
         }
 
-        private async Task<ApiResult2> CallApi2()
+        private async Task<clsFileList> GetEditions()
         {
             try
             {
-                // Call your second API and return the result
-                return new ApiResult2();
+                clsFileList files;
+                HttpResponseMessage response = await http.GetAsync("api/filelist");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    files = await response.Content.ReadFromJsonAsync<clsFileList>();
+                    return files;
+                }
+                else
+                {
+                    HandleError(new Exception($"Failed to get editions. Status code: {response.StatusCode}"));
+                    return null;
+                }
             }
             catch (Exception ex)
             {
@@ -96,11 +108,16 @@ namespace clientHasidicStories.Pages
             }
         }
 
-        private async Task ProcessResult2(ApiResult2 result)
+        private async Task ProcessEditions(clsFileList result)
         {
             try
             {
-                // Process the result of your second API call
+                clsEditions editions = new clsEditions();
+                foreach (Li lItem in result.li)
+                {
+                    editions.Add(new clsEdition(lItem.pbrestricted.pbajax.url, lItem.header.div.div[0].a.h5.text));
+                }
+                globalService.Editions = editions;
             }
             catch (Exception ex)
             {
@@ -113,7 +130,6 @@ namespace clientHasidicStories.Pages
             // Handle the error here
         }
 
-        class ApiResult2 { }
 
     }
 }

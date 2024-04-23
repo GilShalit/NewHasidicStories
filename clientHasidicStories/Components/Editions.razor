@@ -2,14 +2,18 @@
 @inject NavigationManager navigationManager
 <Div Class="listControl">
     <h3>Editions</h3>
-    @if (lstFiles.Count > 0)
+    @if (globalService.Editions.Count > 0)
     {
-        <ul>
-            @foreach (clsFile file in lstFiles)
-            {
-                <button @onclick="() => NavigateToFile(file.name)">@file.title</button>
-            }
-        </ul>
+        <TreeView Nodes="globalService.Editions"
+                  GetChildNodes="@(item => item.children)"
+                  HasChildNodes="@(item => item.children?.Any() == true)"
+                  SelectionMode="TreeViewSelectionMode.Multiple"
+                  @bind-SelectedNodes="selectedNodes">
+            <NodeContent>
+                <Icon Name="IconName.Lightbulb" />
+                @(context.name)
+            </NodeContent>
+        </TreeView>
     }
     else
     {
@@ -18,38 +22,55 @@
 </Div>
 
 @code {
-    [Inject] HttpClient http { get; set; }
-    List<clsFile> lstFiles = new List<clsFile>();
-    protected override async Task OnInitializedAsync()
-    {
-        clsFileList files;
-        HttpResponseMessage response = await http.GetAsync("api/filelist");
+    [Inject] GlobalService globalService { get; set; }
+    IList<clsEdition> selectedNodes = new List<clsEdition>();
 
-        if (response.IsSuccessStatusCode)
-        {
-            files = await response.Content.ReadFromJsonAsync<clsFileList>();
-            foreach (Li lItem in files.li)
-            {
-                lstFiles.Add(new clsFile(lItem.pbrestricted.pbajax.url, lItem.header.div.div[0].a.h5.text));
-            }
-        }
+    //[Inject] HttpClient http { get; set; }
+    //List<clsFile> lstFiles = new List<clsFile>();
+    // protected override async Task OnInitializedAsync()
+    // {
+
+    //     // clsFileList files;
+    //     // HttpResponseMessage response = await http.GetAsync("api/filelist");
+
+    //     // if (response.IsSuccessStatusCode)
+    //     // {
+    //     //     files = await response.Content.ReadFromJsonAsync<clsFileList>();
+    //     //     foreach (Li lItem in files.li)
+    //     //     {
+    //     //         lstFiles.Add(new clsFile(lItem.pbrestricted.pbajax.url, lItem.header.div.div[0].a.h5.text));
+    //     //     }
+    //     // }
+    // }
+    protected override void OnInitialized()
+    {
+        globalService.OnGlobalEditionsChanged += HandleGlobalEditionsChange;
+    }
+    public void Dispose()
+    {
+        globalService.OnGlobalEditionsChanged -= HandleGlobalEditionsChange;
+    }
+    private void HandleGlobalEditionsChange()
+    {
+
+        StateHasChanged();
     }
     private void NavigateToFile(string fileName)
     {
         navigationManager.NavigateTo($"/Edition/{fileName}", true);
     }
 
-    internal class clsFile
-    {
-        string _file;
-        string _title;
-        internal clsFile(string file, string title)
-        {
-            _file = file;
-            _title = title;
-        }
-        internal string name { get { return Path.GetFileNameWithoutExtension(_file); } }
-        internal string title { get { return _title; } }
-    }
+    // internal class clsFile
+    // {
+    //     string _file;
+    //     string _title;
+    //     internal clsFile(string file, string title)
+    //     {
+    //         _file = file;
+    //         _title = title;
+    //     }
+    //     internal string name { get { return Path.GetFileNameWithoutExtension(_file); } }
+    //     internal string title { get { return _title; } }
+    // }
 
 }

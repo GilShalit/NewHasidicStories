@@ -1,4 +1,6 @@
-﻿namespace clientHasidicStories
+﻿using clientHasidicStories.Classes;
+
+namespace clientHasidicStories
 {
     public class GlobalService
     {
@@ -17,5 +19,20 @@
         }
 
         public event Action OnGlobalThemesChanged;
+
+        private clsEditions _editions;
+        public clsEditions Editions
+        {
+            get => _editions;
+            set
+            {
+                if (_editions != value)
+                {
+                    _editions = value;
+                    OnGlobalEditionsChanged?.Invoke();
+                }
+            }
+        }
+        public event Action OnGlobalEditionsChanged;
     }
 }

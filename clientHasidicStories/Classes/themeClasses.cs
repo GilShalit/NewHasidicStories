@@ -1,4 +1,4 @@
-﻿namespace clientHasidicStories
+﻿namespace clientHasidicStories.Classes
 {
     public class clsThemesJson
     {
@@ -25,15 +25,15 @@
 
         // Expose all elements as a read-only list
         public IReadOnlyList<clsTheme> Elements => this;
-        
+
         public void newTheme(string themeNames, string story)
         {
             string[] themeParts = themeNames.Split(":");
-            for(int i = 0; i < themeParts.Length; i++)
+            for (int i = 0; i < themeParts.Length; i++)
             {
                 themeParts[i] = themeParts[i].Trim();
             }
-            clsTheme currentTopTheme = base.Find(t => t.name == themeParts[0]);
+            clsTheme currentTopTheme = Find(t => t.name == themeParts[0]);
             clsTheme bottomTheme;
             if (currentTopTheme == null)
             {
