@@ -2,7 +2,7 @@
 @inject NavigationManager navigationManager
 <Div Class="listControl">
     <h3>Editions</h3>
-    @if (globalService.Editions.Count > 0)
+    @if (globalService.Editions!=null && globalService.Editions.Count > 0)
     {
         <TreeView Nodes="globalService.Editions"
                   GetChildNodes="@(item => item.children)"
@@ -10,8 +10,8 @@
                   SelectionMode="TreeViewSelectionMode.Multiple"
                   @bind-SelectedNodes="selectedNodes">
             <NodeContent>
-                <Icon Name="IconName.Lightbulb" />
-                @(context.name)
+                <Icon Name="IconName.Book" />
+                <button @onclick="() => NavigateToFile(context.name)">@context.title</button>
             </NodeContent>
         </TreeView>
     }
