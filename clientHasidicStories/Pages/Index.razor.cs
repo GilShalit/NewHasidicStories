@@ -12,25 +12,34 @@ namespace clientHasidicStories.Pages
         bool isLoading = true;
         protected override async Task OnInitializedAsync()
         {
-            var task1 = GetDocThemes();
-            await task1.ContinueWith(t =>
+            isLoading = true;
+
+            var task1 = GetDocThemes().ContinueWith(t =>
             {
-                if (t.IsFaulted || t.Result == null)
-                    HandleError(t.Exception);
-                else
+                if (t.IsCompletedSuccessfully)
+                {
                     InvokeAsync(async () => await ProcessThemes(t.Result));
+                }
+                else
+                {
+                    HandleError(t.Exception);
+                }
             });
 
-            var task2 = GetEditions();
-            await task2.ContinueWith(t =>
+            var task2 = GetEditions().ContinueWith(t =>
             {
-                if (t.IsFaulted)
-                    HandleError(t.Exception);
-                else
+                if (t.IsCompletedSuccessfully)
+                {
                     InvokeAsync(async () => await ProcessEditions(t.Result));
+                }
+                else
+                {
+                    HandleError(t.Exception);
+                }
             });
 
             await Task.WhenAll(task1, task2);
+
             isLoading = false;
         }
 
@@ -38,10 +47,14 @@ namespace clientHasidicStories.Pages
         {
             try
             {
+                Console.WriteLine("Start GetDocThemes");
+                //await Task.Delay(2000); // Delay for 2 seconds
+                //Console.WriteLine("End delay in GetDocThemes");
                 HttpResponseMessage response = await http.GetAsync("api/get-ana");
                 if (response.IsSuccessStatusCode)
                 {
                     clsThemesJson themesJson = await response.Content.ReadFromJsonAsync<clsThemesJson>();
+                    Console.WriteLine("End GetDocThemes");
                     return themesJson;
                 }
                 else
@@ -49,6 +62,7 @@ namespace clientHasidicStories.Pages
                     HandleError(new Exception($"Failed to get themes. Status code: {response.StatusCode}"));
                     return null;
                 }
+
             }
             catch (Exception ex)
             {
@@ -61,6 +75,7 @@ namespace clientHasidicStories.Pages
         {
             try
             {
+                Console.WriteLine("Start ProcessThemes");
                 string story = "";
                 string[] themeNames = [];
                 clsThemes localThemes = new clsThemes();
@@ -76,6 +91,7 @@ namespace clientHasidicStories.Pages
                     }
                 }
                 globalService.Themes = localThemes;
+                Console.WriteLine("End ProcessThemes");
             }
             catch (Exception ex)
             {
@@ -87,12 +103,14 @@ namespace clientHasidicStories.Pages
         {
             try
             {
+                Console.WriteLine("Start GetEditions");
                 clsFileList files;
                 HttpResponseMessage response = await http.GetAsync("api/filelist");
 
                 if (response.IsSuccessStatusCode)
                 {
                     files = await response.Content.ReadFromJsonAsync<clsFileList>();
+                    Console.WriteLine("End GetEditions");
                     return files;
                 }
                 else
@@ -112,12 +130,16 @@ namespace clientHasidicStories.Pages
         {
             try
             {
+                Console.WriteLine("Start ProcessEditions");
+                //await Task.Delay(2000); // Delay for 2 seconds
+                //Console.WriteLine("End delay in ProcessEditions");
                 clsEditions editions = new clsEditions();
                 foreach (Li lItem in result.li)
                 {
                     editions.Add(new clsEdition(lItem.pbrestricted.pbajax.url, lItem.header.div.div[0].a.h5.text));
                 }
                 globalService.Editions = editions;
+                Console.WriteLine("End ProcessEditions");
             }
             catch (Exception ex)
             {
