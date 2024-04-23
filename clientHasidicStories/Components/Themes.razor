@@ -1,10 +1,24 @@
 ﻿<Div Class="listControl">
     <h3>Themes</h3>
+    @if (globalService.Themes != null && globalService.Themes.Count > 0)
+    {
+        <TreeView Nodes="globalService.Themes"
+                  GetChildNodes="@(item => item.children)"
+                  HasChildNodes="@(item => item.children?.Any() == true)"
+                  SelectionMode="TreeViewSelectionMode.Multiple"
+                  @bind-SelectedNodes="selectedNodes">
+            <NodeContent>
+                <Icon Name="IconName.Lightbulb" />
+                @(fixName(context.name))
+            </NodeContent>
+        </TreeView>
+    }
 </Div>
 
 
 @code {
     [Inject] GlobalService globalService { get; set; }
+    IList<clsTheme> selectedNodes = new List<clsTheme>();
     protected override void OnInitialized()
     {
         globalService.OnGlobalThemesChanged += HandleGlobalThemesChange;
@@ -15,6 +29,13 @@
     }
     private void HandleGlobalThemesChange()
     {
+
         StateHasChanged();
+    }
+    private string fixName(string name)
+    {
+        string n = name.Replace("_", " ").Replace("-", " ");
+        n = char.ToUpper(n[0]) + n.Substring(1);
+        return n;
     }
 }
