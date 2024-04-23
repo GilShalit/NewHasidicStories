@@ -12,35 +12,39 @@ namespace clientHasidicStories.Pages
         bool isLoading = true;
         protected override async Task OnInitializedAsync()
         {
-            isLoading = true;
-
-            var task1 = GetDocThemes().ContinueWith(t =>
+            if (!globalService.DataLoaded)
             {
-                if (t.IsCompletedSuccessfully)
-                {
-                    InvokeAsync(async () => await ProcessThemes(t.Result));
-                }
-                else
-                {
-                    HandleError(t.Exception);
-                }
-            });
+                isLoading = true;
 
-            var task2 = GetEditions().ContinueWith(t =>
-            {
-                if (t.IsCompletedSuccessfully)
+                var task1 = GetDocThemes().ContinueWith(t =>
                 {
-                    InvokeAsync(async () => await ProcessEditions(t.Result));
-                }
-                else
+                    if (t.IsCompletedSuccessfully)
+                    {
+                        InvokeAsync(async () => await ProcessThemes(t.Result));
+                    }
+                    else
+                    {
+                        HandleError(t.Exception);
+                    }
+                });
+
+                var task2 = GetEditions().ContinueWith(t =>
                 {
-                    HandleError(t.Exception);
-                }
-            });
+                    if (t.IsCompletedSuccessfully)
+                    {
+                        InvokeAsync(async () => await ProcessEditions(t.Result));
+                    }
+                    else
+                    {
+                        HandleError(t.Exception);
+                    }
+                });
 
-            await Task.WhenAll(task1, task2);
+                await Task.WhenAll(task1, task2);
+                globalService.DataLoaded = true;
 
-            isLoading = false;
+                isLoading = false;
+            }
         }
 
         private async Task<clsThemesJson> GetDocThemes()
@@ -86,7 +90,7 @@ namespace clientHasidicStories.Pages
                     themeNames = result.all[i + 1].Split(";");
                     for (int j = 0; j < themeNames.Length; j++)
                     {
-                        localThemes.newTheme(themeNames[j],story);
+                        localThemes.newTheme(themeNames[j], story);
                         theme = localThemes.Find(t => t.name == themeNames[j].Split(":")[0].Trim());
                     }
                 }

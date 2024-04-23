@@ -32,6 +32,7 @@ namespace clientHasidicStories
             }
         }
         public bool TEILoadedOnce { get { bool loaded = _TEILoadedOnce;_TEILoadedOnce = true; return loaded; } init { _TEILoadedOnce = false; } }
+        public bool DataLoaded { get; set; }
 
         public event Action OnGlobalEditionsChanged;
         public event Action OnGlobalThemesChanged;
