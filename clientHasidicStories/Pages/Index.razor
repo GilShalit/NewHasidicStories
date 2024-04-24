@@ -1,13 +1,15 @@
 ﻿@page "/"
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<Index> Localizer
 @using clientHasidicStories.Components
 <Container Class="controlsContainer">
     <Row>
         <Column ColumnSize="ColumnSize.Is4">
-            <Row><Editions /></Row>
-            <Row><People /></Row>
+            <Row><Editions caption="@Localizer["editions"]" /></Row>
+            <Row><People caption="@Localizer["people"]" /></Row>
         </Column>
         <Column ColumnSize="ColumnSize.Is4">
-            <Themes />
+            <Themes caption="@Localizer["themes"]" />
         </Column>
         <Column ColumnSize="ColumnSize.Is4">
             <Map />

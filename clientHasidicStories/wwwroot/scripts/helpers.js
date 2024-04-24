@@ -16,6 +16,20 @@ window.loadCssFile = (href) => {
         document.head.appendChild(newLink);
     }
 }
+window.changeClassStyle = (className, styleName, styleValue) => {
+    var elements = document.getElementsByClassName(className);
+    for (var i = 0; i < elements.length; i++) {
+        elements[i].style[styleName] = styleValue;
+    }
+}
+window.changeClass = (oldClassName, newClassName) => {
+    var elements = document.querySelectorAll('.' + oldClassName);
+    elements.forEach(element => {
+        element.classList.remove(oldClassName);
+        element.classList.add(newClassName);
+    });
+}
+
 //function loadEditionLibraries() {
 //    // Remove existing script elements
 //    var oldScripts = document.querySelectorAll('script[src="https://unpkg.com/@webcomponents/webcomponentsjs@2.4.3/webcomponents-loader.js"], script[src="https://unpkg.com/@teipublisher/pb-components@latest/dist/pb-components-bundle.js"]');

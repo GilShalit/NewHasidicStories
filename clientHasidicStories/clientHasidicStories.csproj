@@ -28,12 +28,24 @@
 	    <AutoGen>True</AutoGen>
 	    <DependentUpon>Edition.resx</DependentUpon>
 	  </Compile>
+	  <Compile Update="Pages\Index.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Index.resx</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
 	  <EmbeddedResource Update="Components\Edition.resx">
 	    <Generator>PublicResXFileCodeGenerator</Generator>
 	    <LastGenOutput>Edition.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Pages\Index.he.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Pages\Index.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <LastGenOutput>Index.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
 	</ItemGroup>
 

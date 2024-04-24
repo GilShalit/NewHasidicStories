@@ -1,11 +1,14 @@
-﻿<Div Class="listControl">
-    <h3>Themes</h3>
+﻿@using System.Globalization
+<Div Class="listControl">
+    <h3>@caption</h3>
     @if (globalService.Themes != null && globalService.Themes.Count > 0)
     {
         <TreeView Nodes="globalService.Themes"
+                  TNode="clsTheme"
                   GetChildNodes="@(item => item.children)"
                   HasChildNodes="@(item => item.children?.Any() == true)"
                   SelectionMode="TreeViewSelectionMode.Multiple"
+                  ExpandedNodesChanged="@OnExpandedNodeChanged"
                   @bind-SelectedNodes="selectedNodes">
             <NodeContent>
                 <Icon Name="IconName.Lightbulb" />
@@ -23,7 +26,11 @@
 
 @code {
     [Inject] GlobalService globalService { get; set; }
+    [Inject] IJSRuntime JS { get; set; }
+    [Parameter] public string caption { get; set; }
+
     IList<clsTheme> selectedNodes = new List<clsTheme>();
+    IList<clsTheme> expandedNodes = new List<clsTheme>();
     protected override void OnInitialized()
     {
         globalService.OnGlobalThemesChanged += HandleGlobalThemesChange;
@@ -34,8 +41,8 @@
     }
     private void HandleGlobalThemesChange()
     {
-
         StateHasChanged();
+        FixAlignment();
     }
     private string fixName(string name)
     {
@@ -43,4 +50,23 @@
         n = char.ToUpper(n[0]) + n.Substring(1);
         return n;
     }
+    async Task OnExpandedNodeChanged()
+    {
+       await FixAlignment();
+    }
+
+    async Task FixAlignment()
+    {
+
+        @if (CultureInfo.CurrentCulture.Name == "he-IL")
+        {
+            await JS.InvokeVoidAsync("changeClassStyle", "b-tree-view-node", "margin-left", "0");
+            await JS.InvokeVoidAsync("changeClassStyle", "b-tree-view-node", "margin-right", "1.25rem");
+            await JS.InvokeVoidAsync("changeClassStyle", "b-tree-view-node-title", "margin-left", "0");
+            await JS.InvokeVoidAsync("changeClassStyle", "b-tree-view-node-title", "margin-right", "1.25rem");
+            await JS.InvokeVoidAsync("changeClassStyle", "b-tree-view-node-icon", "float", "right");
+            await JS.InvokeVoidAsync("changeClass", "fa-chevron-right", "fa-chevron-left");
+        }
+    }
+
 }

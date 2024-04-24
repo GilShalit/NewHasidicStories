@@ -2,12 +2,14 @@
 using static clientHasidicStories.Components.Editions;
 using System.Net.Http.Json;
 using clientHasidicStories.Classes;
+using Microsoft.JSInterop;
 
 namespace clientHasidicStories.Pages
 {
     public partial class Index : ComponentBase
     {
         [Inject] HttpClient http { get; set; }
+        [Inject] IJSRuntime JS { get; set; }
         [Inject] GlobalService globalService { get; set; }
         bool isLoading = true;
         protected override async Task OnInitializedAsync()

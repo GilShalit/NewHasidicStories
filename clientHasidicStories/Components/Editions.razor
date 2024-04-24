@@ -1,7 +1,7 @@
 ﻿@using System.IO;
 @inject NavigationManager navigationManager
 <Div Class="listControl">
-    <h3>Editions</h3>
+    <h3>@caption</h3>
     @if (globalService.Editions!=null && globalService.Editions.Count > 0)
     {
         <TreeView Nodes="globalService.Editions"
@@ -23,6 +23,7 @@
 
 @code {
     [Inject] GlobalService globalService { get; set; }
+    [Parameter] public string caption { get; set; }
     IList<clsEdition> selectedNodes = new List<clsEdition>();
 
     protected override void OnInitialized()
