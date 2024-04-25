@@ -3,6 +3,11 @@ using static clientHasidicStories.Components.Editions;
 using System.Net.Http.Json;
 using clientHasidicStories.Classes;
 using Microsoft.JSInterop;
+using System.IO;
+using System.Xml.Serialization;
+
+using clientHasidicStories.Components;
+using System.Data.SqlTypes;
 
 namespace clientHasidicStories.Pages
 {
@@ -18,11 +23,11 @@ namespace clientHasidicStories.Pages
             {
                 isLoading = true;
 
-                var task1 = GetDocThemes().ContinueWith(t =>
+                var task1 = GetFullData().ContinueWith(t =>
                 {
                     if (t.IsCompletedSuccessfully)
                     {
-                        InvokeAsync(async () => await ProcessThemes(t.Result));
+                        InvokeAsync(async () => await ProcessData(t.Result));
                     }
                     else
                     {
@@ -49,19 +54,25 @@ namespace clientHasidicStories.Pages
             }
         }
 
-        private async Task<clsThemesJson> GetDocThemes()
+        private async Task<clsEditionsData> GetFullData()
         {
             try
             {
                 Console.WriteLine("Start GetDocThemes");
                 //await Task.Delay(2000); // Delay for 2 seconds
                 //Console.WriteLine("End delay in GetDocThemes");
-                HttpResponseMessage response = await http.GetAsync("api/get-ana");
+                clsEditionsData editions;
+                HttpResponseMessage response = await http.GetAsync("api/get-fulldata");
                 if (response.IsSuccessStatusCode)
                 {
-                    clsThemesJson themesJson = await response.Content.ReadFromJsonAsync<clsThemesJson>();
+                    clsDataJson dataJson = await response.Content.ReadFromJsonAsync<clsDataJson>();
+                    XmlSerializer serializer =new  XmlSerializer(typeof(clsEditionsData));
+                    using (StringReader reader = new StringReader(dataJson.all))
+                    {
+                        editions= (clsEditionsData)serializer.Deserialize(reader);
+                    }
                     Console.WriteLine("End GetDocThemes");
-                    return themesJson;
+                    return editions;
                 }
                 else
                 {
@@ -77,26 +88,26 @@ namespace clientHasidicStories.Pages
             }
         }
 
-        private async Task ProcessThemes(clsThemesJson result)
+        private async Task ProcessData(clsEditionsData data)
         {
             try
             {
                 Console.WriteLine("Start ProcessThemes");
-                string story = "";
-                string[] themeNames = [];
-                clsThemes localThemes = new clsThemes();
-                clsTheme theme;
-                for (int i = 0; i < result.all.Length; i += 2)
-                {
-                    story = result.all[i];
-                    themeNames = result.all[i + 1].Split(";");
-                    for (int j = 0; j < themeNames.Length; j++)
-                    {
-                        localThemes.newTheme(themeNames[j], story);
-                        theme = localThemes.Find(t => t.name == themeNames[j].Split(":")[0].Trim());
-                    }
-                }
-                globalService.Themes = localThemes;
+                //string story = "";
+                //string[] themeNames = [];
+                //clsThemes localThemes = new clsThemes();
+                //clsTheme theme;
+                //for (int i = 0; i < result.all.Length; i += 2)
+                //{
+                //    story = result.all[i];
+                //    themeNames = result.all[i + 1].Split(";");
+                //    for (int j = 0; j < themeNames.Length; j++)
+                //    {
+                //        localThemes.newTheme(themeNames[j], story);
+                //        theme = localThemes.Find(t => t.name == themeNames[j].Split(":")[0].Trim());
+                //    }
+                //}
+                //globalService.Themes = localThemes;
                 Console.WriteLine("End ProcessThemes");
             }
             catch (Exception ex)

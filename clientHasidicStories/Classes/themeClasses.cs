@@ -1,8 +1,8 @@
 ﻿namespace clientHasidicStories.Classes
 {
-    public class clsThemesJson
+    public class clsDataJson
     {
-        public string[] all { get; set; }
+        public string all { get; set; }
     }
 
     public class clsTheme
