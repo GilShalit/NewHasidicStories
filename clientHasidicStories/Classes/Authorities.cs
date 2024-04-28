@@ -89,7 +89,7 @@
         /// <remarks/>
         public string name { get; set; }
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.Xml.Serialization.XmlAttributeAttribute("xml:id")]
         public string xmlid { get; set; }
     }
 
@@ -107,7 +107,7 @@
         /// <remarks/>
         public TEITeiHeaderFileDescSourceDescPlaceIdno idno { get; set; }
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.Xml.Serialization.XmlAttributeAttribute("xml:id")]
         public string xmlid { get; set; }
     }
 
