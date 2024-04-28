@@ -10,7 +10,7 @@ public partial class clsEditionsData
 
     /// <remarks/>
     [System.Xml.Serialization.XmlElementAttribute("edition")]
-    public clsEditionData[] edition { get; set; }
+    public clsEditionData[] editions { get; set; }
 }
 
 /// <remarks/>

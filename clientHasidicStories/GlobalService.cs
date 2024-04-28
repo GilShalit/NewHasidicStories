@@ -5,8 +5,10 @@ namespace clientHasidicStories
     public class GlobalService
     {
         private clsThemes _themes;
-        private clsEditions _editions;
+        private clsEditionFiles _editions;
+        private clsPersons _persons;
         private bool _TEILoadedOnce;
+        public clsEditionsData EditionsData { get; set;}
         public clsThemes Themes
         {
             get => _themes;
@@ -19,7 +21,7 @@ namespace clientHasidicStories
                 }
             }
         }
-        public clsEditions Editions
+        public clsEditionFiles Editions
         {
             get => _editions;
             set
@@ -31,10 +33,20 @@ namespace clientHasidicStories
                 }
             }
         }
+        public clsPersons Persons
+        {
+            get => _persons;
+            set
+            {
+                _persons = value;
+                OnGlobalPersonsChanged?.Invoke();
+            }
+        }
         public bool TEILoadedOnce { get { bool loaded = _TEILoadedOnce;_TEILoadedOnce = true; return loaded; } init { _TEILoadedOnce = false; } }
         public bool DataLoaded { get; set; }
 
         public event Action OnGlobalEditionsChanged;
         public event Action OnGlobalThemesChanged;
+        public event Action OnGlobalPersonsChanged;
     }
 }

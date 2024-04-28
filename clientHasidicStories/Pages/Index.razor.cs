@@ -60,16 +60,16 @@ namespace clientHasidicStories.Pages
             {
                 Console.WriteLine("Start GetDocThemes");
                 //await Task.Delay(2000); // Delay for 2 seconds
-                //Console.WriteLine("End delay in GetDocThemes");
+                //Console.WriteLine("End delay in GetFullData");
                 clsEditionsData editions;
                 HttpResponseMessage response = await http.GetAsync("api/get-fulldata");
                 if (response.IsSuccessStatusCode)
                 {
                     clsDataJson dataJson = await response.Content.ReadFromJsonAsync<clsDataJson>();
-                    XmlSerializer serializer =new  XmlSerializer(typeof(clsEditionsData));
+                    XmlSerializer serializer = new XmlSerializer(typeof(clsEditionsData));
                     using (StringReader reader = new StringReader(dataJson.all))
                     {
-                        editions= (clsEditionsData)serializer.Deserialize(reader);
+                        editions = (clsEditionsData)serializer.Deserialize(reader);
                     }
                     Console.WriteLine("End GetDocThemes");
                     return editions;
@@ -92,23 +92,42 @@ namespace clientHasidicStories.Pages
         {
             try
             {
-                Console.WriteLine("Start ProcessThemes");
-                //string story = "";
-                //string[] themeNames = [];
-                //clsThemes localThemes = new clsThemes();
-                //clsTheme theme;
-                //for (int i = 0; i < result.all.Length; i += 2)
-                //{
-                //    story = result.all[i];
-                //    themeNames = result.all[i + 1].Split(";");
-                //    for (int j = 0; j < themeNames.Length; j++)
-                //    {
-                //        localThemes.newTheme(themeNames[j], story);
-                //        theme = localThemes.Find(t => t.name == themeNames[j].Split(":")[0].Trim());
-                //    }
-                //}
-                //globalService.Themes = localThemes;
-                Console.WriteLine("End ProcessThemes");
+                Console.WriteLine("Start ProcessData");
+                string story = "";
+                globalService.EditionsData = data;
+
+                //building persons in separate loops so UI updates as we go
+                clsPersons localPersons = new clsPersons();
+                for (int e = 0; e < data.editions.Length; e++)
+                {
+                    for (int s = 0; s < data.editions[e].stories.Length; s++)
+                    {
+                        story = data.editions[e].stories[s].Id;
+                        for (int j = 0; j < data.editions[e].stories[s].persons.Length; j++)
+                        {
+                            localPersons.newPerson(data.editions[e].stories[s].persons[j], story);
+                        }
+                    }
+                }
+                globalService.Persons = localPersons;
+
+                //building themes in separate loops so UI updates as we go
+                string[] themeNames = [];
+                clsThemes localThemes = new clsThemes();
+                for (int e = 0; e < data.editions.Length; e++)
+                {
+                    for (int s = 0; s < data.editions[e].stories.Length; s++)
+                    {
+                        story = data.editions[e].stories[s].Id;
+                        themeNames = data.editions[e].stories[s].ana.Split(";");
+                        for (int j = 0; j < themeNames.Length; j++)
+                        {
+                            localThemes.newTheme(themeNames[j], story);
+                        }
+                    }
+                }
+                globalService.Themes = localThemes;
+                Console.WriteLine("End ProcessData");
             }
             catch (Exception ex)
             {
@@ -150,10 +169,10 @@ namespace clientHasidicStories.Pages
                 Console.WriteLine("Start ProcessEditions");
                 //await Task.Delay(2000); // Delay for 2 seconds
                 //Console.WriteLine("End delay in ProcessEditions");
-                clsEditions editions = new clsEditions();
+                clsEditionFiles editions = new clsEditionFiles();
                 foreach (Li lItem in result.li)
                 {
-                    editions.Add(new clsEdition(lItem.pbrestricted.pbajax.url, lItem.header.div.div[0].a.h5.text));
+                    editions.Add(new clsEditionFile(lItem.pbrestricted.pbajax.url, lItem.header.div.div[0].a.h5.text));
                 }
                 globalService.Editions = editions;
                 Console.WriteLine("End ProcessEditions");
