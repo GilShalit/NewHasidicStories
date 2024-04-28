@@ -10,6 +10,14 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Content Remove="sample.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="sample.json" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Blazorise.Bootstrap5" Version="1.5.1" />
 		<PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.5.1" />
 		<PackageReference Include="Blazorise.TreeView" Version="1.5.2" />

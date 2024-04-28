@@ -8,6 +8,7 @@ using System.Xml.Serialization;
 
 using clientHasidicStories.Components;
 using System.Data.SqlTypes;
+using System.Text.Json;
 
 namespace clientHasidicStories.Pages
 {
@@ -16,6 +17,7 @@ namespace clientHasidicStories.Pages
         [Inject] HttpClient http { get; set; }
         [Inject] IJSRuntime JS { get; set; }
         [Inject] GlobalService globalService { get; set; }
+        [Inject] NavigationManager Navigation { get; set; }
         bool isLoading = true;
         protected override async Task OnInitializedAsync()
         {
@@ -47,10 +49,77 @@ namespace clientHasidicStories.Pages
                     }
                 });
 
-                await Task.WhenAll(task1, task2);
+                var task3 = GetAuthorities().ContinueWith(t =>
+                {
+                    if (t.IsCompletedSuccessfully)
+                    {
+                        InvokeAsync(async () => await ProcessAuthorities(t.Result));
+                    }
+                    else
+                    {
+                        HandleError(t.Exception);
+                    }
+                });
+
+                await Task.WhenAll(task1, task2, task3);
                 globalService.DataLoaded = true;
 
                 isLoading = false;
+            }
+        }
+        private async Task<TEI> GetAuthorities()
+        {
+            try
+            {
+                Console.WriteLine("Start GetAuthorities");
+                //await Task.Delay(2000); // Delay for 2 seconds
+                //Console.WriteLine("End delay in GetAuthorities");
+                TEI authorities;
+
+                HttpClient httpLocal = new HttpClient();
+                httpLocal.BaseAddress = new Uri(Navigation.BaseUri);
+
+                HttpResponseMessage response = await httpLocal.GetAsync("Authorities.xml");
+                if (response.IsSuccessStatusCode)
+                {
+                    XmlSerializer serializer = new XmlSerializer(typeof(TEI));
+                    using (Stream stream = await response.Content.ReadAsStreamAsync())
+                    {
+                        authorities = (TEI)serializer.Deserialize(stream);
+                    }
+                    Console.WriteLine("End GetAuthorities");
+                    return authorities;
+                }
+                else
+                {
+                    HandleError(new Exception($"Failed to get authorities. Status code: {response.StatusCode}"));
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleError(ex);
+                return null;
+            }
+        }
+        private async Task ProcessAuthorities(TEI authorities)
+        {
+            try
+            {
+                Console.WriteLine("Start ProcessAuthorities");
+                //await Task.Delay(2000); // Delay for 2 seconds
+                //Console.WriteLine("End delay in ProcessAuthorities");
+                //clsAuthorities localAuthorities = new clsAuthorities();
+                //foreach (TEITeiHeaderFileDescTitleStmt titleStmt in authorities.teiHeader.fileDesc.titleStmt)
+                //{
+                //    localAuthorities.newAuthority(titleStmt.title);
+                //}
+                //globalService.Authorities = localAuthorities;
+                Console.WriteLine("End ProcessAuthorities");
+            }
+            catch (Exception ex)
+            {
+                HandleError(ex);
             }
         }
 
