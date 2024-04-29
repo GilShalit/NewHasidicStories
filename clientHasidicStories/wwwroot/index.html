@@ -7,6 +7,9 @@
     <base href="/" />
     <link rel="stylesheet" href="css/app.css" />
 
+    <!--Suppress the fav.ico error-->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
     <!-- If you add any scoped CSS files, uncomment the following to load them: -->
     <link href="clientHasidicStories.styles.css" rel="stylesheet" />
 
@@ -27,6 +30,7 @@
     <script type="module" src="https://unpkg.com/@teipublisher/pb-components@latest/dist/pb-components-bundle.js"></script>
 
     <link href="https://cdn.maptiler.com/maptiler-sdk-js/v1.2.0/maptiler-sdk.css" rel="stylesheet" />
+    <script src="https://cdn.maptiler.com/maptiler-sdk-js/v1.2.0/maptiler-sdk.umd.min.js"></script>
 </head>
 
 <body>
@@ -45,7 +49,6 @@
     </div>
     <script src="_framework/blazor.webassembly.js"></script>
     <script src="scripts/helpers.js"></script>
-    <script src="https://cdn.maptiler.com/maptiler-sdk-js/v1.2.0/maptiler-sdk.umd.min.js"></script>
     <script src="scripts/map.js"></script>
     <script>navigator.serviceWorker.register('service-worker.js');</script>
 </body>
