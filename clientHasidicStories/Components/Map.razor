@@ -1,13 +1,30 @@
 ﻿@using System.Text.Json
-    <Div id="mapDiv" style="width: 100%!important;height:100%!important;" />
+<Div id="mapDiv" style="width: 100%!important;height:100%!important;" />
 
 @code {
     //https://docs.maptiler.com/sdk-js/examples/geojson-markers/
-        [Inject] IJSRuntime JSRuntime { get; set; }
+    [Inject] GlobalService globalService { get; set; }
+    [Inject] IJSRuntime JS { get; set; }
+    private Action ChangeDelegate;//so the Handle method can be unsubscribed
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override async Task OnInitializedAsync()
+    {
+        ChangeDelegate = async () => await HandleGlobalPointsChange();
+        globalService.OnGlobalPointsChanged += ChangeDelegate;
+    }
+    public async Task Dispose()
+    {
+        globalService.OnGlobalPointsChanged -= ChangeDelegate;
+    }
+    private async Task HandleGlobalPointsChange()
+    {
+        await DrawMap();
+    }
+    private async Task DrawMap()
     {
         var json = JsonSerializer.Deserialize<double[]>("[50,50]");
-        await JSRuntime.InvokeVoidAsync("showMap", json, "mapDiv");
+        await JS.InvokeVoidAsync("showMap", json, "mapDiv");
+        StateHasChanged();
     }
+
 }

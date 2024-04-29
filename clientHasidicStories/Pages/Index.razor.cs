@@ -9,6 +9,8 @@ using System.Xml.Serialization;
 using clientHasidicStories.Components;
 using System.Data.SqlTypes;
 using System.Text.Json;
+using System.Net.WebSockets;
+using System.Drawing;
 
 namespace clientHasidicStories.Pages
 {
@@ -111,6 +113,7 @@ namespace clientHasidicStories.Pages
                 //await Task.Delay(2000); // Delay for 2 seconds
                 //Console.WriteLine("End delay in ProcessAuthorities");
 
+                //get Person names
                 globalService.Authorities = authorities;
                 clsPersons localPersons = globalService.Persons;
                 foreach (clsPerson person in localPersons)
@@ -120,6 +123,21 @@ namespace clientHasidicStories.Pages
                 localPersons.hasNames = true;
                 globalService.Persons = localPersons;
 
+                clsGeoJson localPoints = new clsGeoJson();
+                foreach (TEITeiHeaderFileDescSourceDescPlace place in authorities.teiHeader.fileDesc.sourceDesc.listPlace)
+                {
+                    Feature newPoint = new Feature();
+                    string[] aGeo = place.location.geo.Trim().Split(",");
+                    float[] geo = new float[aGeo.Length];
+                    geo[0] = float.Parse(aGeo[0]);
+                    geo[1] = float.Parse(aGeo[1]);
+                    newPoint.geometry.coordinates = geo;
+                    newPoint.properties.name = place.placeName.Value;
+                    newPoint.properties.link = place.idno.Value;
+                    newPoint.properties.xmlid = place.xmlid;
+                    localPoints.data.Add(newPoint);
+                }
+                globalService.Points=localPoints;
                 Console.WriteLine("End ProcessAuthorities");
             }
             catch (Exception ex)
@@ -243,6 +261,7 @@ namespace clientHasidicStories.Pages
                 Console.WriteLine("Start ProcessEditions");
                 //await Task.Delay(2000); // Delay for 2 seconds
                 //Console.WriteLine("End delay in ProcessEditions");
+
                 clsEditionFiles editions = new clsEditionFiles();
                 foreach (Li lItem in result.li)
                 {

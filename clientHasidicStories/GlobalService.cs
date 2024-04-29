@@ -4,18 +4,31 @@ namespace clientHasidicStories
 {
     public class GlobalService
     {
+        private clsGeoJson _points;
         private clsThemes _themes;
         private clsEditionFiles _editions;
         private clsPersons _persons;
         private bool _TEILoadedOnce;
         public clsEditionsData EditionsData { get; set;}
         public TEI Authorities{ get; set; }
+        public clsGeoJson Points
+        {
+            get => _points;
+            set
+            {
+                if (_points != value)
+                {
+                    _points = value;
+                    OnGlobalPointsChanged?.Invoke();
+                }
+            }
+        }
         public clsThemes Themes
         {
             get => _themes;
             set
             {
-                if (_themes!= value)
+                if (_themes != value)
                 {
                     _themes = value;
                     OnGlobalThemesChanged?.Invoke();
@@ -49,5 +62,6 @@ namespace clientHasidicStories
         public event Action OnGlobalEditionsChanged;
         public event Action OnGlobalThemesChanged;
         public event Action OnGlobalPersonsChanged;
+        public event Action OnGlobalPointsChanged;
     }
 }
