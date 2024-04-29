@@ -37,17 +37,18 @@ namespace clientHasidicStories.Pages
                     }
                 });
 
-                var task2 = GetEditions().ContinueWith(t =>
+                var task2 = GetEditionFiles().ContinueWith(t =>
                 {
                     if (t.IsCompletedSuccessfully)
                     {
-                        InvokeAsync(async () => await ProcessEditions(t.Result));
+                        InvokeAsync(async () => await ProcessEditionFiles(t.Result));
                     }
                     else
                     {
                         HandleError(t.Exception);
                     }
                 });
+                await Task.WhenAll(task1, task2);
 
                 var task3 = GetAuthorities().ContinueWith(t =>
                 {
@@ -60,8 +61,8 @@ namespace clientHasidicStories.Pages
                         HandleError(t.Exception);
                     }
                 });
+                await task3;
 
-                await Task.WhenAll(task1, task2, task3);
                 globalService.DataLoaded = true;
 
                 isLoading = false;
@@ -109,12 +110,16 @@ namespace clientHasidicStories.Pages
                 Console.WriteLine("Start ProcessAuthorities");
                 //await Task.Delay(2000); // Delay for 2 seconds
                 //Console.WriteLine("End delay in ProcessAuthorities");
-                //clsAuthorities localAuthorities = new clsAuthorities();
-                //foreach (TEITeiHeaderFileDescTitleStmt titleStmt in authorities.teiHeader.fileDesc.titleStmt)
-                //{
-                //    localAuthorities.newAuthority(titleStmt.title);
-                //}
-                //globalService.Authorities = localAuthorities;
+
+                globalService.Authorities = authorities;
+                clsPersons localPersons = globalService.Persons;
+                foreach (clsPerson person in localPersons)
+                {
+                    person.name = authorities.teiHeader.fileDesc.sourceDesc.listPerson.Where(p => p.xmlid == person.xmlref).FirstOrDefault().name;
+                }
+                localPersons.hasNames = true;
+                globalService.Persons = localPersons;
+
                 Console.WriteLine("End ProcessAuthorities");
             }
             catch (Exception ex)
@@ -127,7 +132,7 @@ namespace clientHasidicStories.Pages
         {
             try
             {
-                Console.WriteLine("Start GetDocThemes");
+                Console.WriteLine("Start GetFullData");
                 //await Task.Delay(2000); // Delay for 2 seconds
                 //Console.WriteLine("End delay in GetFullData");
                 clsEditionsData editions;
@@ -140,7 +145,7 @@ namespace clientHasidicStories.Pages
                     {
                         editions = (clsEditionsData)serializer.Deserialize(reader);
                     }
-                    Console.WriteLine("End GetDocThemes");
+                    Console.WriteLine("End GetFullData");
                     return editions;
                 }
                 else
@@ -165,7 +170,7 @@ namespace clientHasidicStories.Pages
                 string story = "";
                 globalService.EditionsData = data;
 
-                //building persons in separate loops so UI updates as we go
+                //building persons
                 clsPersons localPersons = new clsPersons();
                 for (int e = 0; e < data.editions.Length; e++)
                 {
@@ -204,7 +209,7 @@ namespace clientHasidicStories.Pages
             }
         }
 
-        private async Task<clsFileList> GetEditions()
+        private async Task<clsFileList> GetEditionFiles()
         {
             try
             {
@@ -231,7 +236,7 @@ namespace clientHasidicStories.Pages
             }
         }
 
-        private async Task ProcessEditions(clsFileList result)
+        private async Task ProcessEditionFiles(clsFileList result)
         {
             try
             {

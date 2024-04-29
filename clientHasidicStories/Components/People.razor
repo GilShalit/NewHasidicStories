@@ -1,6 +1,6 @@
 ﻿<Div Class="listControl">
     <h3>@caption</h3>
-    @if (globalService.Persons!= null && globalService.Persons.Count > 0)
+    @if (globalService.Persons != null && globalService.Persons.Count > 0 && globalService.Persons.hasNames)
     {
         <TreeView Nodes="globalService.Persons"
                   TNode="clsPerson"

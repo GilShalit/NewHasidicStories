@@ -111,3 +111,10 @@ code {
 .linkStyle{
     text-decoration:underline!important;
 }
+#map {
+    position: absolute;
+    height:1000px;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+}

@@ -1,7 +1,15 @@
-﻿<Div Class="listControl">
-    <h3>Map</h3>
+﻿@using System.Text.Json
+<Div>
+    <Div id="mapDiv" style="width: 100%;height:100%;" />
 </Div>
 
 @code {
+    //https://docs.maptiler.com/sdk-js/examples/geojson-markers/
+        [Inject] IJSRuntime JSRuntime { get; set; }
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var json = JsonSerializer.Deserialize<double[]>("[50,50]");
+        await JSRuntime.InvokeVoidAsync("showMap", json, "mapDiv");
+    }
 }

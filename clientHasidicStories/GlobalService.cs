@@ -9,6 +9,7 @@ namespace clientHasidicStories
         private clsPersons _persons;
         private bool _TEILoadedOnce;
         public clsEditionsData EditionsData { get; set;}
+        public TEI Authorities{ get; set; }
         public clsThemes Themes
         {
             get => _themes;
