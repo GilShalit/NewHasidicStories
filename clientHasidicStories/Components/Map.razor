@@ -22,7 +22,8 @@
     }
     private async Task DrawMap()
     {
-        var center = JsonSerializer.Deserialize<double[]>("[53,20]");
+
+        var center = globalService.Points.data.Center;
 
         await JS.InvokeVoidAsync("showMap", center, "mapDiv", globalService.Points);
         StateHasChanged();

@@ -2,9 +2,9 @@
 @inject NavigationManager navigationManager
 <Div Class="listControl">
     <h3>@caption</h3>
-    @if (globalService.Editions!=null && globalService.Editions.Count > 0)
+    @if (globalService.EditionFiles!=null && globalService.EditionFiles.Count > 0)
     {
-        <TreeView Nodes="globalService.Editions"
+        <TreeView Nodes="globalService.EditionFiles"
                   GetChildNodes="@(item => item.children)"
                   HasChildNodes="@(item => item.children?.Any() == true)"
                   SelectionMode="TreeViewSelectionMode.Multiple"

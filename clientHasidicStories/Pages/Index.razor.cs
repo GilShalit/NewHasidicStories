@@ -11,6 +11,7 @@ using System.Data.SqlTypes;
 using System.Text.Json;
 using System.Net.WebSockets;
 using System.Drawing;
+using Blazorise.Modules;
 
 namespace clientHasidicStories.Pages
 {
@@ -124,7 +125,16 @@ namespace clientHasidicStories.Pages
                 globalService.Persons = localPersons;
 
                 clsGeoJson localPoints = new clsGeoJson();
-                foreach (TEITeiHeaderFileDescSourceDescPlace place in authorities.teiHeader.fileDesc.sourceDesc.listPlace)
+
+                //find Ids of places included in the stories
+                List<string> includedPlacesIds = new List<string>();
+                foreach (clsEditionData editedData in globalService.EditionsData.editions)
+                    foreach (clsStory story in editedData.stories)
+                        foreach (string placeId in story.places)
+                            if (!includedPlacesIds.Contains(placeId)) includedPlacesIds.Add(placeId);
+
+                foreach (TEITeiHeaderFileDescSourceDescPlace place in authorities.teiHeader.fileDesc.sourceDesc.listPlace
+                    .Where(p => includedPlacesIds.Contains(p.xmlid)))
                 {
                     Feature newPoint = new Feature();
                     string[] aGeo = place.location.geo.Trim().Split(",");
@@ -137,7 +147,7 @@ namespace clientHasidicStories.Pages
                     newPoint.properties.xmlid = place.xmlid;
                     localPoints.data.Add(newPoint);
                 }
-                globalService.Points=localPoints;
+                globalService.Points = localPoints;
                 Console.WriteLine("End ProcessAuthorities");
             }
             catch (Exception ex)
@@ -267,7 +277,7 @@ namespace clientHasidicStories.Pages
                 {
                     editions.Add(new clsEditionFile(lItem.pbrestricted.pbajax.url, lItem.header.div.div[0].a.h5.text));
                 }
-                globalService.Editions = editions;
+                globalService.EditionFiles = editions;
                 Console.WriteLine("End ProcessEditions");
             }
             catch (Exception ex)

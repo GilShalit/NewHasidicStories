@@ -6,7 +6,7 @@ namespace clientHasidicStories
     {
         private clsGeoJson _points;
         private clsThemes _themes;
-        private clsEditionFiles _editions;
+        private clsEditionFiles _editionfiles;
         private clsPersons _persons;
         private bool _TEILoadedOnce;
         public clsEditionsData EditionsData { get; set;}
@@ -35,14 +35,14 @@ namespace clientHasidicStories
                 }
             }
         }
-        public clsEditionFiles Editions
+        public clsEditionFiles EditionFiles
         {
-            get => _editions;
+            get => _editionfiles;
             set
             {
-                if (_editions != value)
+                if (_editionfiles != value)
                 {
-                    _editions = value;
+                    _editionfiles = value;
                     OnGlobalEditionsChanged?.Invoke();
                 }
             }

@@ -3,8 +3,8 @@
     const map = new maptilersdk.Map({
         container: divname, // container's id or the HTML element to render the map
         style: maptilersdk.MapStyle.TOPO.TOPOGRAPHIQUE,
-        center: [50,20], // starting position [lng, lat]
-        zoom: 8, // starting zoom
+        center: center, // starting position [lng, lat]
+        zoom: 3, // starting zoom
         pitch: 70,
         //bearing: -100.86,
         maxPitch: 85,
