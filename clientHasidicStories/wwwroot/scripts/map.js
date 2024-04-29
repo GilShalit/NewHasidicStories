@@ -1,4 +1,4 @@
-﻿window.showMap = (center, divname) => {
+﻿window.showMap = (center, divname, data) => {
     maptilersdk.config.apiKey = 'yHCSCgx2fJ24IoOXLGYO';
     const map = new maptilersdk.Map({
         container: divname, // container's id or the HTML element to render the map
@@ -10,8 +10,10 @@
         maxPitch: 85,
         maxZoom: 14
     });
-    const marker = new maptilersdk.Marker()
-        .setLngLat(center)
-        .addTo(map);
+
+
+    //const marker = new maptilersdk.Marker()
+    //    .setLngLat(center)
+    //    .addTo(map);
 
 }

@@ -11,7 +11,7 @@
     {
 
         /// <remarks/>
-        public TEITeiHeader teiHeader { get; set; }
+        public clsTEITeiHeader teiHeader { get; set; }
 
         /// <remarks/>
         public TEIText text { get; set; }
@@ -21,7 +21,7 @@
     [System.SerializableAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://www.tei-c.org/ns/1.0")]
-    public partial class TEITeiHeader
+    public partial class clsTEITeiHeader
     {
         /// <remarks/>
         public TEITeiHeaderFileDesc fileDesc { get; set; }
