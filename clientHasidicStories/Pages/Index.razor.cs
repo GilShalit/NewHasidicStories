@@ -129,8 +129,8 @@ namespace clientHasidicStories.Pages
                     Feature newPoint = new Feature();
                     string[] aGeo = place.location.geo.Trim().Split(",");
                     float[] geo = new float[aGeo.Length];
-                    geo[0] = float.Parse(aGeo[0]);
-                    geo[1] = float.Parse(aGeo[1]);
+                    geo[0] = float.Parse(aGeo[1]);
+                    geo[1] = float.Parse(aGeo[0]);
                     newPoint.geometry.coordinates = geo;
                     newPoint.properties.name = place.placeName.Value;
                     newPoint.properties.link = place.idno.Value;
