@@ -5,9 +5,9 @@
         style: maptilersdk.MapStyle.TOPO.TOPOGRAPHIQUE,
         center: center, // starting position [lng, lat]
         zoom: 3, // starting zoom
-        pitch: 70,
+        pitch: 90,
         //bearing: -100.86,
-        maxPitch: 85,
+        //maxPitch: 85,
         maxZoom: 14
     });
 

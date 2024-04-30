@@ -36,6 +36,11 @@
 	    <AutoGen>True</AutoGen>
 	    <DependentUpon>Edition.resx</DependentUpon>
 	  </Compile>
+	  <Compile Update="Layout\TopMenuStart.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>TopMenuStart.resx</DependentUpon>
+	  </Compile>
 	  <Compile Update="Pages\Index.Designer.cs">
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
@@ -47,6 +52,13 @@
 	  <EmbeddedResource Update="Components\Edition.resx">
 	    <Generator>PublicResXFileCodeGenerator</Generator>
 	    <LastGenOutput>Edition.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Layout\TopMenuStart.he.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Layout\TopMenuStart.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <LastGenOutput>TopMenuStart.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
 	  <EmbeddedResource Update="Pages\Index.he.resx">
 	    <Generator>PublicResXFileCodeGenerator</Generator>

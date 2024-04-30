@@ -1,39 +1,48 @@
 ﻿@using System.Globalization
-    
-    <BarItem>
-        <Button Clicked="()=>goToSets()" Style="font-size:1rem!important; padding-top:0!important">
-            <BarIcon IconName="IconName.Dashboard" IconSize="IconSize.Large" />
-            Sets
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<TopMenuStart> Localizer
+
+
+<BarItem>
+    <Button Style="font-size:1rem!important; padding-top:0!important">
+        <BarIcon IconName="IconName.QuestionCircle" IconSize="IconSize.Large" />
+        @Localizer["about"]
+    </Button>
+</BarItem>
+<BarItem>
+    <Button Style="font-size:1rem!important; padding-top:0!important">
+        <BarIcon IconName="IconName.HandPaper" IconSize="IconSize.Large" />
+        @Localizer["credits"]
+    </Button>
+</BarItem>
+<BarItem>
+    <Button Style="font-size:1rem!important; padding-top:0!important">
+        <BarIcon IconName="IconName.Desktop" IconSize="IconSize.Large" />
+        @Localizer["using"]
+    </Button>
+</BarItem>
+<BarItem>
+    <Button Style="font-size:1rem!important; padding-top:0!important">
+        <BarIcon IconName="IconName.UserFriends" IconSize="IconSize.Large" />
+        @Localizer["team"]
+    </Button>
+</BarItem>
+<BarItem>
+    <Tooltip Text="Click to copy a link to the current object. Paste in an email or social media message." Multiline=true Fade=true Placement="TooltipPlacement.Bottom">
+        <Button Clicked="@OnShare" Style="font-size:1rem!important; padding-top:0!important">
+            <BarIcon IconName="IconName.ShareAlt" IconSize="IconSize.Large" />
+            @Localizer["share"]
         </Button>
-    </BarItem>
-    <BarItem>
-        <Button Clicked="()=>goToTopics()" Style="font-size:1rem!important; padding-top:0!important">
-            <BarIcon IconName="IconName.Archive" IconSize="IconSize.Large" />
-            Topics
-        </Button>
-    </BarItem>
-    <BarItem>
-        <Button Clicked="()=>goToPubs()" Style="font-size:1rem!important; padding-top:0!important">
-            <BarIcon IconName="IconName.BookReader" IconSize="IconSize.Large" />
-            Publications
-        </Button>
-    </BarItem>
-    <BarItem>
-        <Tooltip Text="Click to copy a link to the current object. Paste in an email or social media message." Multiline=true Fade=true Placement="TooltipPlacement.Bottom">
-            <Button Clicked="@OnShare" Style="font-size:1rem!important; padding-top:0!important">
-                <BarIcon IconName="IconName.ShareAlt" IconSize="IconSize.Large" />
-                Share
-            </Button>
-        </Tooltip>
-    </BarItem>
-    <BarItem>
-        <Tooltip Text="Click to start an email about the current display" Multiline=true Fade=true Placement="TooltipPlacement.Bottom">
-            <Link To="@mailURI" Clicked="@buildComment" Class="btn" Target="Target.Blank" Style="font-size:1rem!important; padding-top:0!important">
-            <BarIcon IconName="IconName.CommentAlt" IconSize="IconSize.Large" />
-            Comment
-            </Link>
-        </Tooltip>
-    </BarItem>
+    </Tooltip>
+</BarItem>
+<BarItem>
+    <Tooltip Text="Click to start an email about the current display" Multiline=true Fade=true Placement="TooltipPlacement.Bottom">
+        <Link To="@mailURI" Clicked="@buildComment" Class="btn" Target="Target.Blank" Style="font-size:1rem!important; padding-top:0!important">
+        <BarIcon IconName="IconName.CommentAlt" IconSize="IconSize.Large" />
+            @Localizer["comment"]
+        </Link>
+    </Tooltip>
+</BarItem>
 @code {
     [Inject] NavigationManager Navigation { get; set; }
     [Inject] IJSRuntime JS { get; set; }
@@ -53,21 +62,6 @@
     void buildComment()
     {
         //mailURI = clientUtils.getMailURI(globals);
-    }
-    private async Task goToSets()
-    {
-        //await sideMenuState.collapseAndReset();
-        Navigation.NavigateTo($"/sets");
-    }
-    private async Task goToTopics()
-    {
-        //await sideMenuState.collapseAndReset();
-        Navigation.NavigateTo($"/topics");
-    }
-    private async Task goToPubs()
-    {
-        //await sideMenuState.collapseAndReset();
-        Navigation.NavigateTo($"/publications");
     }
 
 }
