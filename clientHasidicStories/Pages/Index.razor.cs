@@ -81,6 +81,11 @@ namespace clientHasidicStories.Pages
                 TEI authorities;
 
                 HttpClient httpLocal = new HttpClient();
+
+                //Both options below do not work so probably need to develop an api call so that authorities can be outside the application
+                //httpLocal.BaseAddress = new Uri("http://localhost:8081/exist/apps/HasidicStoriesServer/data/");
+                //httpLocal.BaseAddress = new Uri("http://localhost:8081/exist/apps/");
+
                 httpLocal.BaseAddress = new Uri(Navigation.BaseUri);
 
                 HttpResponseMessage response = await httpLocal.GetAsync("Authorities.xml");
