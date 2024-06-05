@@ -122,21 +122,26 @@ namespace clientHasidicStories.Pages
                 //get Person names
                 globalService.Authorities = authorities;
                 clsPersons localPersons = globalService.Persons;
-                foreach (clsPerson person in localPersons)
+                if (localPersons != null)
                 {
-                    person.name = authorities.teiHeader.fileDesc.sourceDesc.listPerson.Where(p => p.xmlid == person.xmlref).FirstOrDefault().name;
+                    foreach (clsPerson person in localPersons)
+                    {
+                        person.name = authorities.teiHeader.fileDesc.sourceDesc.listPerson.Where(p => p.xmlid == person.xmlref).FirstOrDefault().name;
+                    }
+                    localPersons.hasNames = true;
+                    globalService.Persons = localPersons;
                 }
-                localPersons.hasNames = true;
-                globalService.Persons = localPersons;
-
                 clsGeoJson localPoints = new clsGeoJson();
 
                 //find Ids of places included in the stories
                 List<string> includedPlacesIds = new List<string>();
-                foreach (clsEditionData editedData in globalService.EditionsData.editions)
-                    foreach (clsStory story in editedData.stories)
-                        foreach (string placeId in story.places)
-                            if (!includedPlacesIds.Contains(placeId)) includedPlacesIds.Add(placeId);
+                if (globalService.EditionsData != null)
+                {
+                    foreach (clsEditionData editedData in globalService.EditionsData.editions)
+                        foreach (clsStory story in editedData.stories)
+                            foreach (string placeId in story.places)
+                                if (!includedPlacesIds.Contains(placeId)) includedPlacesIds.Add(placeId);
+                }
 
                 foreach (TEITeiHeaderFileDescSourceDescPlace place in authorities.teiHeader.fileDesc.sourceDesc.listPlace
                     .Where(p => includedPlacesIds.Contains(p.xmlid)))
