@@ -9,8 +9,21 @@ namespace clientHasidicStories
         private clsEditionFiles _editionfiles;
         private clsPersons _persons;
         private bool _TEILoadedOnce;
-        public clsEditionsData EditionsData { get; set;}
-        public TEI Authorities{ get; set; }
+        private bool _displayStories;
+        public clsEditionsData EditionsData { get; set; }
+        public TEI Authorities { get; set; }
+        public bool diplayStories
+        {
+            get => _displayStories;
+            set
+            {
+                if (_displayStories != value)
+                {
+                    _displayStories = value;
+                    OnDisplayStoriesChanged?.Invoke();
+                }
+            }
+        }
         public clsGeoJson Points
         {
             get => _points;
@@ -56,12 +69,13 @@ namespace clientHasidicStories
                 OnGlobalPersonsChanged?.Invoke();
             }
         }
-        public bool TEILoadedOnce { get { bool loaded = _TEILoadedOnce;_TEILoadedOnce = true; return loaded; } init { _TEILoadedOnce = false; } }
+        public bool TEILoadedOnce { get { bool loaded = _TEILoadedOnce; _TEILoadedOnce = true; return loaded; } init { _TEILoadedOnce = false; } }
         public bool DataLoaded { get; set; }
 
         public event Action OnGlobalEditionsChanged;
         public event Action OnGlobalThemesChanged;
         public event Action OnGlobalPersonsChanged;
         public event Action OnGlobalPointsChanged;
+        public event Action OnDisplayStoriesChanged;
     }
 }
