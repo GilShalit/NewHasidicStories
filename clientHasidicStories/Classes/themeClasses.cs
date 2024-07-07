@@ -5,15 +5,30 @@
         public string all { get; set; }
     }
 
-    public class clsTheme
+    public class clsTheme : IEquatable<clsTheme>
     {
         public string name { get; set; }
+        public bool selected { get; set; }
+        public bool hasSelected { get
+            {
+                if (selected) return true;
+                return children.Where(c => c.selected).Any();
+            }
+        }
         public List<clsTheme> children { get; set; }
         public List<string> stories { get; set; }
         public clsTheme()
         {
             children = new List<clsTheme>();
             stories = new List<string>();
+        }
+        public bool Equals(clsTheme? other)
+        {
+            // Check if the other object is null
+            if (other == null) return false;
+
+            // Check if the Titles are equal
+            return this.name == other.name;
         }
     }
     public class clsThemes : List<clsTheme>
@@ -70,5 +85,6 @@
             }
 
         }
+        public bool hasSelected => this.Where(e => e.hasSelected).Any();
     }
 }

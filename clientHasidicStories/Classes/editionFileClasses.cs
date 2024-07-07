@@ -24,18 +24,6 @@
             // Check if the Titles are equal
             return this.title == other.title;
         }
-        //public override bool Equals(object obj)
-        //{
-        //    if (obj == null) return false;
-        //    clsEditionFile objAsMyClass = obj as clsEditionFile;
-        //    if (objAsMyClass == null) return false;
-        //    else return Equals(objAsMyClass);
-        //}
-        //public override int GetHashCode()
-        //{
-        //    // Use the hash code of the Title string as the hash code for MyClass instances
-        //    return title?.GetHashCode() ?? 0;
-        //}
     }
     public class clsEditionFiles : List<clsEditionFile>
     {

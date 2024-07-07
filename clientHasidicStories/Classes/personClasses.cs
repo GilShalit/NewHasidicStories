@@ -1,8 +1,9 @@
 ﻿namespace clientHasidicStories.Classes
 {
-    public class clsPerson
+    public class clsPerson : IEquatable<clsPerson>
     {
         public string name { get; set; }
+        public bool selected { get; set; }
         public string xmlref { get; set; }
         public List<clsPerson> children { get; set; }
         public List<string> stories { get; set; }
@@ -11,6 +12,14 @@
             this.xmlref = xmlref;
             children = new List<clsPerson>();
             stories = new List<string>();
+        }
+        public bool Equals(clsPerson? other)
+        {
+            // Check if the other object is null
+            if (other == null) return false;
+
+            // Check if the cmlRefs are equal
+            return this.xmlref == other.xmlref;
         }
     }
     public class clsPersons : List<clsPerson>
@@ -37,5 +46,6 @@
                 person.stories.Add(story);
             }
         }
+        public bool hasSelected => this.Where(e => e.selected).Any();
     }
 }

@@ -4,7 +4,7 @@
     {
         public static bool displayStories (GlobalService globalService)
         {
-            return globalService.EditionFiles.hasSelected;//add other lists
+            return globalService.EditionFiles.hasSelected || globalService.Persons.hasSelected || globalService.Themes.hasSelected;
         }
     }
 }

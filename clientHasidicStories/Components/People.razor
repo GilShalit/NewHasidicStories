@@ -7,7 +7,7 @@
                   GetChildNodes="@(item => item.children)"
                   HasChildNodes="@(item => item.children?.Any() == true)"
                   SelectionMode="TreeViewSelectionMode.Multiple"
-                  @bind-SelectedNodes="selectedNodes">
+                  SelectedNodesChanged="selectedNodesChanged">
 
             <NodeContent>
                 <Icon Name="IconName.IdCard" />
@@ -26,7 +26,6 @@
 @code {
     [Inject] GlobalService globalService { get; set; }
     [Parameter] public string caption { get; set; }
-    IList<clsPerson> selectedNodes = new List<clsPerson>();
     IList<clsPerson> expandedNodes = new List<clsPerson>();
     protected override void OnInitialized()
     {
@@ -39,5 +38,13 @@
     private void HandleGlobalPersonsChange()
     {
         StateHasChanged();
+    }
+    private void selectedNodesChanged(IList<clsPerson> nodes)
+    {
+        foreach (clsPerson node in globalService.Persons)
+        {
+            node.selected = nodes.Contains(node);
+        }
+        globalService.diplayStories = Utils.displayStories(globalService);
     }
 }

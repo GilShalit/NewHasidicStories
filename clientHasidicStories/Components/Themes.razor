@@ -7,9 +7,9 @@
                   TNode="clsTheme"
                   GetChildNodes="@(item => item.children)"
                   HasChildNodes="@(item => item.children?.Any() == true)"
-                  SelectionMode="TreeViewSelectionMode.Multiple"
                   ExpandedNodesChanged="@OnExpandedNodeChanged"
-                  @bind-SelectedNodes="selectedNodes">
+                  SelectionMode="TreeViewSelectionMode.Multiple"
+                  SelectedNodesChanged="selectedNodesChanged">
             <NodeContent>
                 <Icon Name="IconName.Lightbulb" />
                 @(fixName(context.name))
@@ -52,7 +52,7 @@
     }
     async Task OnExpandedNodeChanged()
     {
-       await FixAlignment();
+        await FixAlignment();
     }
 
     async Task FixAlignment()
@@ -67,6 +67,18 @@
             await JS.InvokeVoidAsync("changeClassStyle", "b-tree-view-node-icon", "float", "right");
             await JS.InvokeVoidAsync("changeClass", "fa-chevron-right", "fa-chevron-left");
         }
+    }
+    private void selectedNodesChanged(IList<clsTheme> nodes)
+    {
+        foreach (clsTheme node in globalService.Themes)
+        {
+            node.selected = nodes.Contains(node);
+            foreach(clsTheme child in node.children)
+            {
+                child.selected = nodes.Contains(child);
+            }
+        }
+        globalService.diplayStories = Utils.displayStories(globalService);
     }
 
 }
