@@ -1,11 +1,19 @@
 .listControl {
     /*background-color: beige !important;*/
     border-radius: 5px;
+    border-top: 1px solid #e0e0e0;
     box-shadow: 0 .25rem .25rem rgba(0,0,0,0.8) !important;
 }
 .controlsContainer{
     margin-top:10px;
+    padding-left: 20px;
+    padding-right: 15px;
 }
+.secondRow{
+        margin-top: 30px!important;
+
+}
+
 .navbar-nav {
     padding-left: 0 !important;
 }

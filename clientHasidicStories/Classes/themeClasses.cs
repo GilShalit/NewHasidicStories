@@ -83,7 +83,6 @@
                 else //only add story to topTheme if for this story it has no children
                     currentTopTheme.stories.Add(story);
             }
-
         }
         public bool hasSelected => this.Where(e => e.hasSelected).Any();
     }

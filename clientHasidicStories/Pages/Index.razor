@@ -2,11 +2,11 @@
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<Index> Localizer
 @using clientHasidicStories.Components
-<Container Class="controlsContainer">
+<div class="controlsContainer">
     <Row>
         <Column ColumnSize="@myColumnSize">
             <Row><Editions caption="@Localizer["editions"]" /></Row>
-            <Row><People caption="@Localizer["people"]" /></Row>
+            <Row Margin="Margin.Is2.FromTop"><People caption="@Localizer["people"]" /></Row>
         </Column>
         <Column ColumnSize="@myColumnSize">
             <Themes caption="@Localizer["themes"]" />
@@ -18,7 +18,7 @@
             <Stories caption="@Localizer["stories"]" />
         </Column>
     </Row>
-</Container>
+</div>
 @code {
     // Define a variable for ColumnSize
     private Blazorise.IFluentColumn myColumnSize = ColumnSize.Is4;
