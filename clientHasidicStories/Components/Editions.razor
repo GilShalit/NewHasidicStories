@@ -2,13 +2,14 @@
 @inject NavigationManager navigationManager
 <Div Class="listControl">
     <h3>@caption</h3>
-    @if (globalService.EditionFiles!=null && globalService.EditionFiles.Count > 0)
+    @if (globalService.EditionFiles != null && globalService.EditionFiles.Count > 0)
     {
         <TreeView Nodes="globalService.EditionFiles"
+                  TNode="clsEditionFile"
                   GetChildNodes="@(item => item.children)"
                   HasChildNodes="@(item => item.children?.Any() == true)"
                   SelectionMode="TreeViewSelectionMode.Multiple"
-                  @bind-SelectedNodes="selectedNodes">
+                  SelectedNodesChanged="selectedNodesChanged">
             <NodeContent>
                 <Icon Name="IconName.Book" />
                 <Button Class="linkStyle" @onclick="() => NavigateToFile(context.name)">@context.title</Button>
@@ -24,7 +25,7 @@
 @code {
     [Inject] GlobalService globalService { get; set; }
     [Parameter] public string caption { get; set; }
-    IList<clsEditionFile> selectedNodes = new List<clsEditionFile>();
+    //IList<clsEditionFile> selectedNodes = new List<clsEditionFile>();
 
     protected override void OnInitialized()
     {
@@ -41,8 +42,16 @@
     }
     private void NavigateToFile(string fileName)
     {
-        if (!globalService.TEILoadedOnce) navigationManager.NavigateTo($"/Edition/{fileName}",false);
+        if (!globalService.TEILoadedOnce) navigationManager.NavigateTo($"/Edition/{fileName}", false);
         else navigationManager.NavigateTo($"/Edition/{fileName}", true);
+    }
+    private void selectedNodesChanged(IList<clsEditionFile> nodes)
+    {
+        foreach (clsEditionFile node in globalService.EditionFiles)
+        {
+            node.selected = nodes.Contains(node);
+        }
+        globalService.diplayStories = Utils.displayStories(globalService);
     }
 
 }

@@ -4,20 +4,40 @@
 @using clientHasidicStories.Components
 <Container Class="controlsContainer">
     <Row>
-        <Column ColumnSize="ColumnSize.Is3">
+        <Column ColumnSize="@myColumnSize">
             <Row><Editions caption="@Localizer["editions"]" /></Row>
             <Row><People caption="@Localizer["people"]" /></Row>
         </Column>
-        <Column ColumnSize="ColumnSize.Is3">
+        <Column ColumnSize="@myColumnSize">
             <Themes caption="@Localizer["themes"]" />
         </Column>
-        <Column ColumnSize="ColumnSize.Is3">
+        <Column ColumnSize="@myColumnSize">
             <Map />
         </Column>
-        <Column ColumnSize="ColumnSize.Is3">
+        <Column ColumnSize="@myColumnSize" Display="@showStories">
             <Stories caption="@Localizer["stories"]" />
         </Column>
     </Row>
 </Container>
 @code {
+    // Define a variable for ColumnSize
+    private Blazorise.IFluentColumn myColumnSize = ColumnSize.Is4;
+    private Blazorise.IFluentDisplay showStories = Blazorise.Display.None;
+
+    protected override void OnInitialized()
+    {
+        globalService.OnDisplayStoriesChanged += HandleDisplayStoriesChanged;
+    }
+
+    public void Dispose()
+    {
+        globalService.OnDisplayStoriesChanged -= HandleDisplayStoriesChanged;
+    }
+
+    private void HandleDisplayStoriesChanged()
+    {
+        if (globalService.diplayStories) { showStories = Blazorise.Display.Block; myColumnSize = ColumnSize.Is3; }
+        else { showStories = Blazorise.Display.None; myColumnSize = ColumnSize.Is4; }
+        StateHasChanged();
+    }
 }

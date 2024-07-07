@@ -12,9 +12,9 @@ namespace clientHasidicStories
         private bool _displayStories;
         public clsEditionsData EditionsData { get; set; }
         public TEI Authorities { get; set; }
-        public bool diplayStories//Should the stories be displayed
+        public bool diplayStories
         {
-            get => _displayStories;
+            get=>_displayStories;
             set
             {
                 if (_displayStories != value)
