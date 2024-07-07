@@ -1,0 +1,7 @@
+﻿<Div Class="listControl">
+    <h3>@caption</h3>
+</Div>
+@code {
+    [Inject] GlobalService globalService { get; set; }
+    [Parameter] public string caption { get; set; }
+}

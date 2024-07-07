@@ -22,8 +22,9 @@ namespace clientHasidicStories.Pages {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class Index {
-        
+    public partial class Index
+    {
+
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
@@ -75,6 +76,15 @@ namespace clientHasidicStories.Pages {
         public static string people {
             get {
                 return ResourceManager.GetString("people", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stories.
+        /// </summary>
+        public static string stories {
+            get {
+                return ResourceManager.GetString("stories", resourceCulture);
             }
         }
         

@@ -4,18 +4,20 @@
 @using clientHasidicStories.Components
 <Container Class="controlsContainer">
     <Row>
-        <Column ColumnSize="ColumnSize.Is4">
+        <Column ColumnSize="ColumnSize.Is3">
             <Row><Editions caption="@Localizer["editions"]" /></Row>
             <Row><People caption="@Localizer["people"]" /></Row>
         </Column>
-        <Column ColumnSize="ColumnSize.Is4">
+        <Column ColumnSize="ColumnSize.Is3">
             <Themes caption="@Localizer["themes"]" />
         </Column>
-        <Column ColumnSize="ColumnSize.Is4">
+        <Column ColumnSize="ColumnSize.Is3">
             <Map />
+        </Column>
+        <Column ColumnSize="ColumnSize.Is3">
+            <Stories caption="@Localizer["stories"]" />
         </Column>
     </Row>
 </Container>
 @code {
-
 }
