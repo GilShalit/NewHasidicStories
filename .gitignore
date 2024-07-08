@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/clientHasidicStories/sample.json
+/clientHasidicStories/sample.xml
+/clientHasidicStories/sample2.xml
