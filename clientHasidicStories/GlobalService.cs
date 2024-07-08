@@ -10,7 +10,7 @@ namespace clientHasidicStories
         private clsPersons _persons;
         private bool _TEILoadedOnce;
         private bool _displayStories;
-        public clsEditionsData EditionsData { get; set; }
+        public clsStoryInfoData EditionsData { get; set; }
         public TEI Authorities { get; set; }
         public bool diplayStories
         {

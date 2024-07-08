@@ -5,7 +5,7 @@
 [System.ComponentModel.DesignerCategoryAttribute("code")]
 [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
 [System.Xml.Serialization.XmlRootAttribute("editions", Namespace = "", IsNullable = false)]
-public partial class clsEditionsData
+public partial class clsStoryInfoData
 {
 
     /// <remarks/>

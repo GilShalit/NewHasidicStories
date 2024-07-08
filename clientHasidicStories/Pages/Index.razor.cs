@@ -28,11 +28,11 @@ namespace clientHasidicStories.Pages
             {
                 isLoading = true;
 
-                var task1 = GetFullData().ContinueWith(t =>
+                var task1 = GetStoryInfo().ContinueWith(t =>
                 {
                     if (t.IsCompletedSuccessfully)
                     {
-                        InvokeAsync(async () => await ProcessData(t.Result));
+                        InvokeAsync(async () => await ProcessStoryInfo(t.Result));
                     }
                     else
                     {
@@ -166,22 +166,22 @@ namespace clientHasidicStories.Pages
             }
         }
 
-        private async Task<clsEditionsData> GetFullData()
+        private async Task<clsStoryInfoData> GetStoryInfo()
         {
             try
             {
-                Console.WriteLine("Start GetFullData");
+                Console.WriteLine("Start GetStoryInfo");
                 //await Task.Delay(2000); // Delay for 2 seconds
                 //Console.WriteLine("End delay in GetFullData");
-                clsEditionsData editions;
-                HttpResponseMessage response = await http.GetAsync("api/get-fulldata");
+                clsStoryInfoData editions;
+                HttpResponseMessage response = await http.GetAsync("api/get-storyinfo");
                 if (response.IsSuccessStatusCode)
                 {
                     clsDataJson dataJson = await response.Content.ReadFromJsonAsync<clsDataJson>();
-                    XmlSerializer serializer = new XmlSerializer(typeof(clsEditionsData));
+                    XmlSerializer serializer = new XmlSerializer(typeof(clsStoryInfoData));
                     using (StringReader reader = new StringReader(dataJson.all))
                     {
-                        editions = (clsEditionsData)serializer.Deserialize(reader);
+                        editions = (clsStoryInfoData)serializer.Deserialize(reader);
                     }
                     Console.WriteLine("End GetFullData");
                     return editions;
@@ -200,7 +200,7 @@ namespace clientHasidicStories.Pages
             }
         }
 
-        private async Task ProcessData(clsEditionsData data)
+        private async Task ProcessStoryInfo(clsStoryInfoData data)
         {
             try
             {
