@@ -11,6 +11,7 @@ namespace clientHasidicStories
         private bool _TEILoadedOnce;
         private bool _displayStories;
         public clsStoryInfoData EditionsData { get; set; }
+        public clsEditionsStoryTexts StoryTexts { get; set; }
         public TEI Authorities { get; set; }
         public bool diplayStories
         {

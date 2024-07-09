@@ -66,11 +66,73 @@ namespace clientHasidicStories.Pages
                 });
                 await task3;
 
+                var task4 = GetStoryTexts().ContinueWith(t =>
+                {
+                    if (t.IsCompletedSuccessfully)
+                    {
+                        InvokeAsync(async () => await ProcessStoryTexts(t.Result));
+                    }
+                    else
+                    {
+                        HandleError(t.Exception);
+                    }
+                });
+                await task4;
+
                 globalService.DataLoaded = true;
 
                 isLoading = false;
             }
         }
+
+        private async Task ProcessStoryTexts(clsEditionsStoryTexts StoryTexts)
+        {
+            try
+            {
+                Console.WriteLine("Start ProcessStories");
+                globalService.StoryTexts = StoryTexts;
+                Console.WriteLine("End ProcessData");
+            }
+            catch (Exception ex)
+            {
+                HandleError(ex);
+            }
+        }
+
+        private async Task<clsEditionsStoryTexts> GetStoryTexts()
+        {
+            try
+            {
+                Console.WriteLine("Start GetStoryTexts");
+                //await Task.Delay(2000); // Delay for 2 seconds
+                //Console.WriteLine("End delay in GetFullData");
+                clsEditionsStoryTexts editionsStoryTexts;
+                HttpResponseMessage response = await http.GetAsync("api/get-storytexts");
+                if (response.IsSuccessStatusCode)
+                {
+                    clsDataJson dataJson = await response.Content.ReadFromJsonAsync<clsDataJson>();
+                    XmlSerializer serializer = new XmlSerializer(typeof(clsEditionsStoryTexts));
+                    using (StringReader reader = new StringReader(dataJson.all))
+                    {
+                        editionsStoryTexts = (clsEditionsStoryTexts)serializer.Deserialize(reader);
+                    }
+                    Console.WriteLine("End GetStoryTexts");
+                    return editionsStoryTexts;
+                }
+                else
+                {
+                    HandleError(new Exception($"Failed to get story texts. Status code: {response.StatusCode}"));
+                    return null;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                HandleError(ex);
+                return null;
+            }
+        }
+
         private async Task<TEI> GetAuthorities()
         {
             try
@@ -173,7 +235,7 @@ namespace clientHasidicStories.Pages
                 Console.WriteLine("Start GetStoryInfo");
                 //await Task.Delay(2000); // Delay for 2 seconds
                 //Console.WriteLine("End delay in GetFullData");
-                clsStoryInfoData editions;
+                clsStoryInfoData editionsInfo;
                 HttpResponseMessage response = await http.GetAsync("api/get-storyinfo");
                 if (response.IsSuccessStatusCode)
                 {
@@ -181,14 +243,14 @@ namespace clientHasidicStories.Pages
                     XmlSerializer serializer = new XmlSerializer(typeof(clsStoryInfoData));
                     using (StringReader reader = new StringReader(dataJson.all))
                     {
-                        editions = (clsStoryInfoData)serializer.Deserialize(reader);
+                        editionsInfo = (clsStoryInfoData)serializer.Deserialize(reader);
                     }
-                    Console.WriteLine("End GetFullData");
-                    return editions;
+                    Console.WriteLine("End GetStoryInfo");
+                    return editionsInfo;
                 }
                 else
                 {
-                    HandleError(new Exception($"Failed to get themes. Status code: {response.StatusCode}"));
+                    HandleError(new Exception($"Failed to get story info. Status code: {response.StatusCode}"));
                     return null;
                 }
 
@@ -200,24 +262,24 @@ namespace clientHasidicStories.Pages
             }
         }
 
-        private async Task ProcessStoryInfo(clsStoryInfoData data)
+        private async Task ProcessStoryInfo(clsStoryInfoData storyInfo)
         {
             try
             {
                 Console.WriteLine("Start ProcessData");
                 string story = "";
-                globalService.EditionsData = data;
+                globalService.EditionsData = storyInfo;
 
                 //building persons
                 clsPersons localPersons = new clsPersons();
-                for (int e = 0; e < data.editions.Length; e++)
+                for (int e = 0; e < storyInfo.editions.Length; e++)
                 {
-                    for (int s = 0; s < data.editions[e].stories.Length; s++)
+                    for (int s = 0; s < storyInfo.editions[e].stories.Length; s++)
                     {
-                        story = data.editions[e].stories[s].Id;
-                        for (int j = 0; j < data.editions[e].stories[s].persons.Length; j++)
+                        story = storyInfo.editions[e].stories[s].Id;
+                        for (int j = 0; j < storyInfo.editions[e].stories[s].persons.Length; j++)
                         {
-                            localPersons.newPerson(data.editions[e].stories[s].persons[j], story);
+                            localPersons.newPerson(storyInfo.editions[e].stories[s].persons[j], story);
                         }
                     }
                 }
@@ -226,12 +288,12 @@ namespace clientHasidicStories.Pages
                 //building themes in separate loops so UI updates as we go
                 string[] themeNames = [];
                 clsThemes localThemes = new clsThemes();
-                for (int e = 0; e < data.editions.Length; e++)
+                for (int e = 0; e < storyInfo.editions.Length; e++)
                 {
-                    for (int s = 0; s < data.editions[e].stories.Length; s++)
+                    for (int s = 0; s < storyInfo.editions[e].stories.Length; s++)
                     {
-                        story = data.editions[e].stories[s].Id;
-                        themeNames = data.editions[e].stories[s].ana.Split(";");
+                        story = storyInfo.editions[e].stories[s].Id;
+                        themeNames = storyInfo.editions[e].stories[s].ana.Split(";");
                         for (int j = 0; j < themeNames.Length; j++)
                         {
                             localThemes.newTheme(themeNames[j], story);
@@ -298,7 +360,7 @@ namespace clientHasidicStories.Pages
 
         private void HandleError(Exception ex)
         {
-            // Handle the error here
+            Console.WriteLine(ex.Message);
         }
 
 
