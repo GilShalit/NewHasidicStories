@@ -12,6 +12,7 @@ using System.Text.Json;
 using System.Net.WebSockets;
 using System.Drawing;
 using Blazorise.Modules;
+using Blazorise;
 
 namespace clientHasidicStories.Pages
 {
@@ -22,8 +23,12 @@ namespace clientHasidicStories.Pages
         [Inject] GlobalService globalService { get; set; }
         [Inject] NavigationManager Navigation { get; set; }
         bool isLoading = true;
+        private Blazorise.IFluentColumn myColumnSize = ColumnSize.Is4;
+        private Blazorise.IFluentDisplay showStories = Blazorise.Display.None;
+
         protected override async Task OnInitializedAsync()
         {
+            globalService.OnDisplayStoriesChanged += HandleDisplayStoriesChanged;
             if (!globalService.DataLoaded)
             {
                 isLoading = true;
@@ -83,6 +88,17 @@ namespace clientHasidicStories.Pages
 
                 isLoading = false;
             }
+        }
+        public void Dispose()
+        {
+            globalService.OnDisplayStoriesChanged -= HandleDisplayStoriesChanged;
+        }
+
+        private void HandleDisplayStoriesChanged()
+        {
+            if (globalService.diplayStories) { showStories = Blazorise.Display.Block; myColumnSize = ColumnSize.Is3; }
+            else { showStories = Blazorise.Display.None; myColumnSize = ColumnSize.Is4; }
+            StateHasChanged();
         }
 
         private async Task ProcessStoryTexts(clsEditionsStoryTexts StoryTexts)

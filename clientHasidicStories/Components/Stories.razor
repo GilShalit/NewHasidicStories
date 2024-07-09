@@ -1,7 +1,42 @@
 ﻿<Div Class="listControl">
     <h3>@caption</h3>
+    @if (globalService.StoryTexts != null)
+    {
+        <Accordion>
+            @foreach (editionStoryTexts edition in globalService.StoryTexts.editions)
+            {
+                <AccordionItem>
+                    <AccordionHeader>
+                        <Heading Size="HeadingSize.Is6">@edition.name</Heading>
+                    </AccordionHeader>
+                    <AccordionBody></AccordionBody>
+                        @foreach (story story in edition.stories)
+                        {
+                            <p>@story.text</p>
+                        }
+                </AccordionItem>
+            }
+        </Accordion>
+    }
+    else
+    {
+        <p>Loading...</p>
+    }
 </Div>
 @code {
     [Inject] GlobalService globalService { get; set; }
     [Parameter] public string caption { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        globalService.OnDisplayStoriesChanged += HandleDisplayStoriesChanged;
+    }
+    public void Dispose()
+    {
+        globalService.OnDisplayStoriesChanged -= HandleDisplayStoriesChanged;
+    }
+
+    private void HandleDisplayStoriesChanged()
+    {
+        if (globalService.diplayStories) StateHasChanged();
+    }
 }

@@ -9,14 +9,14 @@ public partial class clsEditionsStoryTexts
 {
     /// <remarks/>
     [System.Xml.Serialization.XmlElementAttribute("edition")]
-    public edition[] editions { get; set;}
+    public editionStoryTexts[] editions { get; set;}
 }
 
 /// <remarks/>
 [System.SerializableAttribute()]
 [System.ComponentModel.DesignerCategoryAttribute("code")]
 [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-public partial class edition
+public partial class editionStoryTexts
 {
     /// <remarks/>
     public string name { get; set;}

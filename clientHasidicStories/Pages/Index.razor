@@ -19,25 +19,3 @@
         </Column>
     </Row>
 </div>
-@code {
-    // Define a variable for ColumnSize
-    private Blazorise.IFluentColumn myColumnSize = ColumnSize.Is4;
-    private Blazorise.IFluentDisplay showStories = Blazorise.Display.None;
-
-    protected override void OnInitialized()
-    {
-        globalService.OnDisplayStoriesChanged += HandleDisplayStoriesChanged;
-    }
-
-    public void Dispose()
-    {
-        globalService.OnDisplayStoriesChanged -= HandleDisplayStoriesChanged;
-    }
-
-    private void HandleDisplayStoriesChanged()
-    {
-        if (globalService.diplayStories) { showStories = Blazorise.Display.Block; myColumnSize = ColumnSize.Is3; }
-        else { showStories = Blazorise.Display.None; myColumnSize = ColumnSize.Is4; }
-        StateHasChanged();
-    }
-}
