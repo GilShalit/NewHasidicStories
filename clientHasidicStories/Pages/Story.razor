@@ -1,0 +1,29 @@
+﻿@page "/Story/{fileName}/{storyId}"
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<Story> Localizer
+@inject IJSRuntime JSRuntime
+@inject IConfiguration Configuration
+
+<div class="controlsContainer">
+    <Row>
+        <Column ColumnSize="@myColumnSize" Display="@showMap">
+            <Map />
+        </Column>
+        <Column ColumnSize="@myColumnSize">
+            @fileName
+        </Column>
+        <Column ColumnSize="@myColumnSize">
+            <Row>@storyId</Row>
+            <Row Margin="Margin.Is2.FromTop"></Row>
+            <Row Margin="Margin.Is2.FromTop"></Row>
+        </Column>
+    </Row>
+</div>
+
+@code {
+    [Parameter] public string fileName { get; set; }
+    [Parameter] public string storyId { get; set; }
+    private Blazorise.IFluentColumn myColumnSize = ColumnSize.Is3;
+    private Blazorise.IFluentDisplay showMap = Blazorise.Display.Block;
+
+}

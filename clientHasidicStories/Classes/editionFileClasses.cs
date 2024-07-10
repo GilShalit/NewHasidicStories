@@ -35,5 +35,9 @@
         // Expose all elements as a read-only list
         public IReadOnlyList<clsEditionFile> Elements => this;
         public bool hasSelected => this.Where(e => e.selected).Any();
+        public string getFileName(string title)
+        {
+            return this.Where(e => e.title == title).FirstOrDefault().name;
+        }
     }
 }

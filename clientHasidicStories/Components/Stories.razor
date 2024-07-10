@@ -1,4 +1,5 @@
-﻿<Div Class="listControl">
+﻿@inject NavigationManager navigationManager
+<Div Class="listControl">
     <h3>@caption</h3>
     @if (globalService.StoryTexts != null)
     {
@@ -12,7 +13,7 @@
                     <AccordionBody></AccordionBody>
                         @foreach (story story in edition.stories)
                         {
-                        <p class="pStory" id=@($"{story.id}") @onclick="(() => HandleStoryClick(story.id))">@story.text ...</p>
+                        <p class="pStory" id=@($"{story.id}") @onclick="(() => HandleStoryClick(edition.name, story.id))">@story.text ...</p>
                         }
                 </AccordionItem>
             }
@@ -40,10 +41,12 @@
         if (globalService.diplayStories) StateHasChanged();
     }
 
-    private void HandleStoryClick(string id)
+    private void HandleStoryClick(string editionName, string storyId)
     {
-        // Handle the click event here using the id
-        Console.WriteLine($"Clicked story ID: {id}");
+        string fileName = globalService.EditionFiles.getFileName(editionName);
+        Console.WriteLine($"Clicked story ID: {storyId} in edition: {editionName} ({fileName})");
+
+        navigationManager.NavigateTo($"/Story/{fileName}/{storyId}", false);
     }
 
 
