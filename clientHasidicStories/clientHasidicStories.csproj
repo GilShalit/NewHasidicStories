@@ -31,7 +31,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Components\Edition.Designer.cs">
+	  <Compile Update="Pages\Edition.Designer.cs">
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
 	    <DependentUpon>Edition.resx</DependentUpon>
@@ -49,7 +49,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Update="Components\Edition.resx">
+	  <EmbeddedResource Update="Pages\Edition.resx">
 	    <Generator>PublicResXFileCodeGenerator</Generator>
 	    <LastGenOutput>Edition.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>

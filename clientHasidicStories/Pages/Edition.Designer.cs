@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace clientHasidicStories.Components {
+namespace clientHasidicStories.Pages {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace clientHasidicStories.Components {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("clientHasidicStories.Components.Edition", typeof(Edition).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("clientHasidicStories.Pages.Edition", typeof(Edition).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
