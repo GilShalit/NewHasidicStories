@@ -10,10 +10,10 @@
             <Map />
         </Column>
         <Column ColumnSize="@myColumnSize">
-            @fileName
+            <StoryTEI fileName="@fileName" storyId="@storyId"/>
         </Column>
         <Column ColumnSize="@myColumnSize">
-            <Row>@storyId</Row>
+            <Row></Row>
             <Row Margin="Margin.Is2.FromTop"></Row>
             <Row Margin="Margin.Is2.FromTop"></Row>
         </Column>
@@ -23,7 +23,12 @@
 @code {
     [Parameter] public string fileName { get; set; }
     [Parameter] public string storyId { get; set; }
-    private Blazorise.IFluentColumn myColumnSize = ColumnSize.Is3;
+    private Blazorise.IFluentColumn myColumnSize = ColumnSize.Is4;
     private Blazorise.IFluentDisplay showMap = Blazorise.Display.Block;
+
+    // protected override Task OnParametersSetAsync()
+    // {
+    //     return base.OnParametersSetAsync();
+    // }
 
 }

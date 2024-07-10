@@ -1,0 +1,27 @@
+﻿@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<StoryTEI> Localizer
+@inject IJSRuntime JSRuntime
+@inject IConfiguration Configuration
+
+<pb-page endpoint=@(Configuration["endpointURL"] + "/HasidicStoriesServer")
+         data-template="pages:pb-page" unresolved="unresolved">
+    <pb-document id="document1" path=@(fileName + ".xml") odd="Stories" view="page"></pb-document>
+    <br />
+    <div class="content-body">
+        <pb-view id="view1" src="document1" column-separator=".tei-cb" append-footnotes="append-footnotes" subscribe="transcription" emit="transcription" wait-for="#facsimile" animation disable-history />
+    </div>
+</pb-page>
+@code {
+    [Parameter] public string fileName { get; set; }
+    [Parameter] public string storyId { get; set; }
+    
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var cssUrl = Configuration["endpointURL"] + "/HasidicStoriesServer/resources/css/theme.css";
+            await JSRuntime.InvokeVoidAsync("loadCssFile", cssUrl);
+        }
+    }
+
+}
