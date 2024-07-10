@@ -12,7 +12,7 @@
                     <AccordionBody></AccordionBody>
                         @foreach (story story in edition.stories)
                         {
-                            <p>@story.text</p>
+                        <p class="pStory" id=@($"{story.id}") @onclick="(() => HandleStoryClick(story.id))">@story.text ...</p>
                         }
                 </AccordionItem>
             }
@@ -39,4 +39,12 @@
     {
         if (globalService.diplayStories) StateHasChanged();
     }
+
+    private void HandleStoryClick(string id)
+    {
+        // Handle the click event here using the id
+        Console.WriteLine($"Clicked story ID: {id}");
+    }
+
+
 }
