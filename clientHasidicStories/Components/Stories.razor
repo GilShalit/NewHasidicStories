@@ -1,21 +1,26 @@
 ﻿@inject NavigationManager navigationManager
 <Div Class="listControl">
     <h3>@caption</h3>
-    @if (globalService.StoryTexts != null)
+    @if (globalService.DisplayStoryTexts != null)
     {
         <Accordion>
-            @foreach (editionStoryTexts edition in globalService.StoryTexts.editions)
+            @foreach (clsEditionStories edition in globalService.DisplayStoryTexts.editions)
             {
+                if (edition.display) { }
                 <AccordionItem>
                     <AccordionHeader>
                         <Heading Size="HeadingSize.Is6">@edition.name</Heading>
                     </AccordionHeader>
                     <AccordionBody></AccordionBody>
-                        @foreach (story story in edition.stories)
+                    @foreach (clsStoryText story in edition.stories)
+                    {
+                        if (story.display)
                         {
-                        <p class="pStory" id=@($"{story.id}") @onclick="(() => HandleStoryClick(edition.name, story.id))">@story.text ...</p>
+                            <p class="pStory" id=@($"{story.id}") @onclick="(() => HandleStoryClick(edition.name, story.id))">@story.text ...</p>
                         }
+                    }
                 </AccordionItem>
+            }
             }
         </Accordion>
     }

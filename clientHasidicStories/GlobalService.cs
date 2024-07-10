@@ -10,9 +10,9 @@ namespace clientHasidicStories
         private clsPersons _persons;
         private bool _TEILoadedOnce;
         private bool _displayStories;
-        public clsStoryInfoData EditionsData { get; set; }
-        public clsEditionsStoryTexts StoryTexts { get; set; }
-        public TEI Authorities { get; set; }
+        public clsStoryInfoData StoryInfoData { get; set; }
+        public clsDisplayStoryTexts DisplayStoryTexts { get; set; }
+        public TEI AuthoritiesData { get; set; }
         public bool diplayStories
         {
             get=>_displayStories;

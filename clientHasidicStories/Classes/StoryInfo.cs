@@ -22,7 +22,7 @@ public partial class clsEditionData
 {
     /// <remarks/>
     [System.Xml.Serialization.XmlArrayItemAttribute("story", IsNullable = false)]
-    public clsStory[] stories { get; set; }
+    public clsStoryInfo[] stories { get; set; }
 
     /// <remarks/>
     [System.Xml.Serialization.XmlTextAttribute()]
@@ -33,7 +33,7 @@ public partial class clsEditionData
 [System.SerializableAttribute()]
 [System.ComponentModel.DesignerCategoryAttribute("code")]
 [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-public partial class clsStory
+public partial class clsStoryInfo
 {
     /// <remarks/>
     public string ana { get; set; }

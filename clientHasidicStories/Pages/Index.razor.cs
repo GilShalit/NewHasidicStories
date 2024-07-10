@@ -106,7 +106,16 @@ namespace clientHasidicStories.Pages
             try
             {
                 Console.WriteLine("Start ProcessStories");
-                globalService.StoryTexts = StoryTexts;
+                clsDisplayStoryTexts dst = new clsDisplayStoryTexts();
+                foreach (editionStoryTexts e in StoryTexts.editions)
+                {
+                    dst.editions.Add(new clsEditionStories() { name = e.name ,display=true});
+                    foreach (story s in e.stories)
+                    {
+                        dst.editions[dst.editions.Count - 1].stories.Add(new clsStoryText() { id = s.id, text = s.text ,display=true});
+                    }
+                }
+                globalService.DisplayStoryTexts = dst;
                 Console.WriteLine("End ProcessData");
             }
             catch (Exception ex)
@@ -198,7 +207,7 @@ namespace clientHasidicStories.Pages
                 //Console.WriteLine("End delay in ProcessAuthorities");
 
                 //get Person names
-                globalService.Authorities = authorities;
+                globalService.AuthoritiesData = authorities;
                 clsPersons localPersons = globalService.Persons;
                 if (localPersons != null)
                 {
@@ -213,10 +222,10 @@ namespace clientHasidicStories.Pages
 
                 //find Ids of places included in the stories
                 List<string> includedPlacesIds = new List<string>();
-                if (globalService.EditionsData != null)
+                if (globalService.StoryInfoData != null)
                 {
-                    foreach (clsEditionData editedData in globalService.EditionsData.editions)
-                        foreach (clsStory story in editedData.stories)
+                    foreach (clsEditionData editedData in globalService.StoryInfoData.editions)
+                        foreach (clsStoryInfo story in editedData.stories)
                             foreach (string placeId in story.places)
                                 if (!includedPlacesIds.Contains(placeId)) includedPlacesIds.Add(placeId);
                 }
@@ -284,7 +293,7 @@ namespace clientHasidicStories.Pages
             {
                 Console.WriteLine("Start ProcessData");
                 string story = "";
-                globalService.EditionsData = storyInfo;
+                globalService.StoryInfoData = storyInfo;
 
                 //building persons
                 clsPersons localPersons = new clsPersons();
