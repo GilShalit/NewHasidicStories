@@ -4,6 +4,7 @@
     @if (globalService.Themes != null && globalService.Themes.Count > 0)
     {
         <TreeView Nodes="globalService.Themes"
+                  id="themesTree"
                   TNode="clsTheme"
                   GetChildNodes="@(item => item.children)"
                   HasChildNodes="@(item => item.children?.Any() == true)"
@@ -22,7 +23,6 @@
     }
 
 </Div>
-
 
 @code {
     [Inject] GlobalService globalService { get; set; }
@@ -60,10 +60,10 @@
 
         @if (CultureInfo.CurrentCulture.Name == "he-IL")
         {
-            await JS.InvokeVoidAsync("changeClassStyle", "b-tree-view-node", "margin-left", "0");
-            await JS.InvokeVoidAsync("changeClassStyle", "b-tree-view-node", "margin-right", "1.25rem");
-            await JS.InvokeVoidAsync("changeClassStyle", "b-tree-view-node-title", "margin-left", "0");
-            await JS.InvokeVoidAsync("changeClassStyle", "b-tree-view-node-title", "margin-right", "1.25rem");
+            // await JS.InvokeVoidAsync("changeClassStyle", "b-tree-view-node", "margin-left", "0");
+            // await JS.InvokeVoidAsync("changeClassStyle", "b-tree-view-node", "margin-right", "1.25rem");
+            // await JS.InvokeVoidAsync("changeClassStyle", "b-tree-view-node-title", "margin-left", "0");
+            // await JS.InvokeVoidAsync("changeClassStyle", "b-tree-view-node-title", "margin-right", "1.25rem");
             await JS.InvokeVoidAsync("changeClassStyle", "b-tree-view-node-icon", "float", "right");
             await JS.InvokeVoidAsync("changeClass", "fa-chevron-right", "fa-chevron-left");
         }
@@ -72,12 +72,20 @@
     {
         foreach (clsTheme node in globalService.Themes)
         {
-            node.selected = nodes.Contains(node);
-            foreach(clsTheme child in node.children)
+            //node.selected = nodes.Contains(node); as there are no top level themes in stories (need to chaeck)
+            foreach (clsTheme child in node.children)
             {
                 child.selected = nodes.Contains(child);
             }
         }
+
+        // foreach (clsTheme node in globalService.Themes)
+        // {
+        //     foreach (clsTheme child in node.children)
+        //     {
+
+        //     }
+        // }
         globalService.diplayStories = Utils.displayStories(globalService);
     }
 

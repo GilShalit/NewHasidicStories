@@ -1,3 +1,18 @@
+#themesTree .b-tree-view-node .form-check {
+    /* Styles for your top level checkboxes */
+    display: none;
+}
+
+#themesTree .b-tree-view-node .b-tree-view-node .form-check {
+    /* Revert styles for checkboxes that are too deeply nested */
+    display: block;
+}
+
+.b-tree-view-node, .b-tree-view-node-title{
+    margin-left:0!important;
+    margin-right:0!important;
+}
+
 .listControl {
     /*background-color: beige !important;*/
     border-radius: 5px;
