@@ -7,9 +7,12 @@
 
     public class clsTheme : IEquatable<clsTheme>
     {
+        //There are no single level themes in the data
         public string name { get; set; }
         public bool selected { get; set; }
-        public bool hasSelected { get
+        public bool hasSelected
+        {
+            get
             {
                 if (selected) return true;
                 return children.Where(c => c.selected).Any();
@@ -38,6 +41,19 @@
             throw new Exception("Add method not supported");
         }
 
+        public List<string> selectedStoryIds
+        {
+            get
+            {
+                List<string> selectedStoryIds = new List<string>();
+                foreach (clsTheme theme in this)
+                    foreach (clsTheme child in theme.children)
+                        if (child.selected)
+                            selectedStoryIds.AddRange(child.stories);
+                return selectedStoryIds.Distinct().ToList();
+            }
+        }
+
         // Expose all elements as a read-only list
         public IReadOnlyList<clsTheme> Elements => this;
 
@@ -50,7 +66,7 @@
             }
             clsTheme currentTopTheme = Find(t => t.name == themeParts[0]);
             clsTheme bottomTheme;
-            if (currentTopTheme == null)
+            if (currentTopTheme == null)//new top theme
             {
                 currentTopTheme = new clsTheme { name = themeParts[0] };
                 base.Add(currentTopTheme);
@@ -61,7 +77,7 @@
                     currentTopTheme.children.Add(bottomTheme);
                 }
                 else //only add story to topTheme if for this story it has no children
-                    currentTopTheme.stories.Add(story);
+                    currentTopTheme.stories.Add(story); //leave breakpoint to make sure no single level theme exists
 
             }
             else//topTheme exists

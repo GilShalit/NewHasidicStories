@@ -15,9 +15,11 @@ namespace clientHasidicStories
         public TEI AuthoritiesData { get; set; }
         public bool diplayStories
         {
-            get=>_displayStories;
+            get => _displayStories;
             set
             {
+                Utils.changeDisplayStories(value, this);
+                OnStoriesToDisplayChanged!.Invoke();
                 if (_displayStories != value)
                 {
                     _displayStories = value;
@@ -78,5 +80,6 @@ namespace clientHasidicStories
         public event Action OnGlobalPersonsChanged;
         public event Action OnGlobalPointsChanged;
         public event Action OnDisplayStoriesChanged;
+        public event Action OnStoriesToDisplayChanged;
     }
 }

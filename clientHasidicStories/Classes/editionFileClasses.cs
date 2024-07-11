@@ -14,7 +14,7 @@
             children = new List<clsEditionFile>();
         }
         //public List<string> stories { get; set; }
-        public List<clsEditionFile> children { get; set; }
+        public List<clsEditionFile> children { get; set; }//just so can be used in treeview
 
         public bool Equals(clsEditionFile? other)
         {

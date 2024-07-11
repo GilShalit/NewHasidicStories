@@ -6,21 +6,22 @@
         <Accordion>
             @foreach (clsEditionStories edition in globalService.DisplayStoryTexts.editions)
             {
-                if (edition.display) { }
-                <AccordionItem>
-                    <AccordionHeader>
-                        <Heading Size="HeadingSize.Is6">@edition.name</Heading>
-                    </AccordionHeader>
-                    <AccordionBody></AccordionBody>
-                    @foreach (clsStoryText story in edition.stories)
-                    {
-                        if (story.display)
+                if (edition.display)
+                {
+                    <AccordionItem>
+                        <AccordionHeader>
+                            <Heading Size="HeadingSize.Is6">@edition.name</Heading>
+                        </AccordionHeader>
+                        <AccordionBody></AccordionBody>
+                        @foreach (clsStoryText story in edition.stories)
                         {
-                            <p class="pStory" id=@($"{story.id}") @onclick="(() => HandleStoryClick(edition.name, story.id))">@story.text ...</p>
+                            if (story.display)
+                            {
+                                <p class="pStory" id=@($"{story.id}") @onclick="(() => HandleStoryClick(edition.name, story.id))">@story.text ...</p>
+                            }
                         }
-                    }
-                </AccordionItem>
-            }
+                    </AccordionItem>
+                }
             }
         </Accordion>
     }
@@ -34,11 +35,11 @@
     [Parameter] public string caption { get; set; }
     protected override async Task OnInitializedAsync()
     {
-        globalService.OnDisplayStoriesChanged += HandleDisplayStoriesChanged;
+        globalService.OnStoriesToDisplayChanged += HandleDisplayStoriesChanged;
     }
     public void Dispose()
     {
-        globalService.OnDisplayStoriesChanged -= HandleDisplayStoriesChanged;
+        globalService.OnStoriesToDisplayChanged -= HandleDisplayStoriesChanged;
     }
 
     private void HandleDisplayStoriesChanged()

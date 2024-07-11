@@ -109,10 +109,10 @@ namespace clientHasidicStories.Pages
                 clsDisplayStoryTexts dst = new clsDisplayStoryTexts();
                 foreach (editionStoryTexts e in StoryTexts.editions)
                 {
-                    dst.editions.Add(new clsEditionStories() { name = e.name ,display=true});
+                    dst.editions.Add(new clsEditionStories() { name = e.name });
                     foreach (story s in e.stories)
                     {
-                        dst.editions[dst.editions.Count - 1].stories.Add(new clsStoryText() { id = s.id, text = s.text ,display=true});
+                        dst.editions[dst.editions.Count - 1].stories.Add(new clsStoryText() { id = s.id, text = s.text });
                     }
                 }
                 globalService.DisplayStoryTexts = dst;
