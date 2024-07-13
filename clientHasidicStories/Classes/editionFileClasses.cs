@@ -12,6 +12,7 @@
             _file = file;
             _title = title;
             children = new List<clsEditionFile>();
+            selected = true;
         }
         //public List<string> stories { get; set; }
         public List<clsEditionFile> children { get; set; }//just so can be used in treeview

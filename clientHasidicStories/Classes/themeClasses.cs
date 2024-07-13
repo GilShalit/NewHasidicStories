@@ -24,6 +24,7 @@
         {
             children = new List<clsTheme>();
             stories = new List<string>();
+            selected=true;
         }
         public bool Equals(clsTheme? other)
         {

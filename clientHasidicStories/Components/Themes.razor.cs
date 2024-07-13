@@ -28,6 +28,14 @@ namespace clientHasidicStories.Components
         }
         private void HandleGlobalThemesChange()
         {
+            foreach (clsTheme node in globalService.Themes)
+            {
+                if (node.selected) selectedNodes.Add(node);
+                foreach (clsTheme child in node.children)
+                {
+                    if (child.selected) selectedNodes.Add(child);
+                }
+            }
             StateHasChanged();
             FixAlignment();
         }
@@ -39,24 +47,12 @@ namespace clientHasidicStories.Components
         }
         async Task OnExpandedNodeChanged(IList<clsTheme> nodes)
         {
-            // foreach (clsTheme node in globalService.Themes)
-            // {
-            //     if (nodes.Contains(node)) expandedNodes.Add(node);
-            //     else if (expandedNodes.Contains(node)) expandedNodes.Remove(node);
-            // }
-            // foreach (clsTheme node in nodes)
-            //     foreach (clsTheme child in node.children)
-            //     {
-            //         child.selected = true;
-            //         selectedNodes.Add(child);
-            //     }
-            // globalService.diplayStories = Utils.displayStories(globalService);
             await FixAlignment();
         }
 
         async Task FixAlignment()
         {
-            if(CultureInfo.CurrentCulture.Name == "he-IL")
+            if (CultureInfo.CurrentCulture.Name == "he-IL")
             {
                 await JS.InvokeVoidAsync("changeClassStyle", "b-tree-view-node", "margin-left", "0");
                 await JS.InvokeVoidAsync("changeClassStyle", "b-tree-view-node", "margin-right", "1.25rem");
