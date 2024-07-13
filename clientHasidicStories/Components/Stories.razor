@@ -1,38 +1,51 @@
 ﻿@inject NavigationManager navigationManager
 <Div Class="listControl">
-    <h3>@caption</h3>
-    @if (globalService.DisplayStoryTexts != null)
-    {
-        <Accordion>
-            @foreach (clsEditionStories edition in globalService.DisplayStoryTexts.editions)
+    <Row Margin="Margin.Is1.FromTop">
+        <Column>
+            <h3>@caption</h3>
+        </Column>
+        <Column>
+            @counts
+        </Column>
+    </Row>
+    <Row>
+        <Column>
+            @if (globalService.DisplayStoryTexts != null)
             {
-                if (edition.display)
-                {
-                    <AccordionItem>
-                        <AccordionHeader>
-                            <Heading Size="HeadingSize.Is6">@edition.name</Heading>
-                        </AccordionHeader>
-                        <AccordionBody></AccordionBody>
-                        @foreach (clsStoryText story in edition.stories)
+                <Accordion>
+                    @foreach (clsEditionStories edition in globalService.DisplayStoryTexts.editions)
+                    {
+                        if (edition.display)
                         {
-                            if (story.display)
-                            {
-                                <p class="pStory" id=@($"{story.id}") @onclick="(() => HandleStoryClick(edition.name, story.id))">@story.text ...</p>
-                            }
+                            <AccordionItem>
+                                <AccordionHeader>
+                                    <Heading Size="HeadingSize.Is6">@edition.name</Heading>
+                                </AccordionHeader>
+                                <AccordionBody></AccordionBody>
+                                @foreach (clsStoryText story in edition.stories)
+                                {
+                                    if (story.display)
+                                    {
+                                        <p class="pStory" id=@($"{story.id}") @onclick="(() => HandleStoryClick(edition.name, story.id))">@story.text ...</p>
+                                    }
+                                }
+                            </AccordionItem>
                         }
-                    </AccordionItem>
-                }
+                    }
+                </Accordion>
             }
-        </Accordion>
-    }
-    else
-    {
-        <p>Loading...</p>
-    }
+            else
+            {
+                <p>Loading...</p>
+            }
+        </Column>
+    </Row>
 </Div>
 @code {
     [Inject] GlobalService globalService { get; set; }
     [Parameter] public string caption { get; set; }
+    string counts;
+    
     protected override async Task OnInitializedAsync()
     {
         globalService.OnStoriesToDisplayChanged += HandleDisplayStoriesChanged;
@@ -44,6 +57,7 @@
 
     private void HandleDisplayStoriesChanged()
     {
+        counts= globalService.DisplayStoryTexts.counts;
         if (globalService.diplayStories) StateHasChanged();
     }
 
