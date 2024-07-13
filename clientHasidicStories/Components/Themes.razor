@@ -6,34 +6,35 @@
         </Column>
         <Column>
             <Buttons>
-                <Button Style="background:#DCE7ED" Clicked="@OnClearAll">Clear</Button>
-                <Button Style="background:#FBECD8" Clicked="@OnSelectAll">Select</Button>
+                <Button Style="background:#DCE7ED" Clicked="@OnClearAll">@clear</Button>
+                <Button Style="background:#FBECD8" Clicked="@OnSelectAll">@all</Button>
             </Buttons>
         </Column>
     </Row>
     <Row>
         <Column>
-    @if (globalService.Themes != null && globalService.Themes.Count > 0)
-    {
-        <TreeView Nodes="globalService.Themes"
-                  id="themesTree"
-                  TNode="clsTheme"
-                  GetChildNodes="@(item => item.children)"
-                  HasChildNodes="@(item => item.children?.Any() == true)"
-                  ExpandedNodesChanged="OnExpandedNodeChanged"
-                  SelectionMode="TreeViewSelectionMode.Multiple"
-                  SelectedNodesChanged="OnSelectedNodesChanged"
-                  SelectedNodes="selectedNodes">
-            <NodeContent>
-                <Icon Name="IconName.Lightbulb" />
-                @(fixName(context.name))
-            </NodeContent>
-        </TreeView>
-    }
-    else
-    {
-        <p>Loading...</p>
-    }
+            @if (globalService.Themes != null && globalService.Themes.Count > 0)
+            {
+                <TreeView Nodes="globalService.Themes"
+                          id="themesTree"
+                          TNode="clsTheme"
+                          GetChildNodes="@(item => item.children)"
+                          HasChildNodes="@(item => item.children?.Any() == true)"
+                          ExpandedNodes="@expandedNodes"
+                          SelectedNodes="selectedNodes"
+                          SelectionMode="TreeViewSelectionMode.Multiple"
+                          SelectedNodesChanged="OnSelectedNodesChanged"
+                          @ref=_treeView>
+                    <NodeContent>
+                        <Icon Name="IconName.Lightbulb" />
+                        @(fixName(context.name))
+                    </NodeContent>
+                </TreeView>
+            }
+            else
+            {
+                <p>Loading...</p>
+            }
         </Column>
     </Row>
 </Div>
@@ -42,9 +43,13 @@
     [Inject] GlobalService globalService { get; set; }
     [Inject] IJSRuntime JS { get; set; }
     [Parameter] public string caption { get; set; }
+    [Parameter] public string clear { get; set; }
+    [Parameter] public string all { get; set; }
 
     IList<clsTheme> selectedNodes = new List<clsTheme>();
     IList<clsTheme> expandedNodes = new List<clsTheme>();
+    private TreeView<clsTheme> _treeView;
+
     protected override void OnInitialized()
     {
         globalService.OnGlobalThemesChanged += HandleGlobalThemesChange;
@@ -66,6 +71,11 @@
     }
     async Task OnExpandedNodeChanged(IList<clsTheme> nodes)
     {
+        // foreach (clsTheme node in globalService.Themes)
+        // {
+        //     if (nodes.Contains(node)) expandedNodes.Add(node);
+        //     else if (expandedNodes.Contains(node)) expandedNodes.Remove(node);
+        // }
         // foreach (clsTheme node in nodes)
         //     foreach (clsTheme child in node.children)
         //     {
@@ -78,7 +88,6 @@
 
     async Task FixAlignment()
     {
-
         @if (CultureInfo.CurrentCulture.Name == "he-IL")
         {
             await JS.InvokeVoidAsync("changeClassStyle", "b-tree-view-node", "margin-left", "0");
@@ -91,13 +100,42 @@
     }
     private void OnSelectedNodesChanged(IList<clsTheme> nodes)
     {
+        bool topNodeSelectedBefore;
+        bool topNodeSelectedNow;
         foreach (clsTheme node in globalService.Themes)
         {
-            //node.selected = nodes.Contains(node); as there are no top level themes in stories (need to check)
+            topNodeSelectedBefore=selectedNodes.Contains(node);
+            node.selected = nodes.Contains(node);
+            topNodeSelectedNow=node.selected && !topNodeSelectedBefore;
+
             foreach (clsTheme child in node.children)
             {
                 child.selected = nodes.Contains(child);
             }
+            if (topNodeSelectedNow)
+            {
+                expandedNodes.Add(node);
+                selectedNodes.Add(node);
+                foreach (clsTheme child in node.children)
+                {
+                    if (!selectedNodes.Contains(child))
+                    {
+                        selectedNodes.Add(child);
+                        child.selected = true;
+
+                    }
+                }
+            }
+            else
+                foreach (clsTheme child in node.children)
+                {
+                    if (selectedNodes.Contains(child))
+                    {
+                        selectedNodes.Remove(child);
+                        child.selected = false;
+                    }
+                }
+            _treeView.Reload();
         }
 
         // foreach (clsTheme node in globalService.Themes)
@@ -111,7 +149,6 @@
     }
     Task OnClearAll()
     {
-        selectedNodes.Clear();
         foreach (clsTheme node in globalService.Themes)
         {
             node.selected = false;
@@ -120,6 +157,7 @@
                 child.selected = false;
             }
         }
+        selectedNodes.Clear();
         globalService.diplayStories = Utils.displayStories(globalService);
         return Task.CompletedTask;
     }
