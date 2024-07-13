@@ -1,7 +1,19 @@
 ﻿@using System.IO;
 @inject NavigationManager navigationManager
 <Div Class="listControl">
-    <h3>@caption</h3>
+    <Row Margin="Margin.Is1.FromTop">
+        <Column>
+            <h3>@caption</h3>
+        </Column>
+        <Column>
+            <Buttons>
+                <Button Style="background:#DCE7ED" Clicked="@OnClearAll">@clear</Button>
+                <Button Style="background:#FBECD8" Clicked="@OnSelectAll">@all</Button>
+            </Buttons>
+        </Column>
+    </Row>
+    <Row>
+        <Column>
     @if (globalService.EditionFiles != null && globalService.EditionFiles.Count > 0)
     {
         <TreeView Nodes="globalService.EditionFiles"
@@ -9,6 +21,7 @@
                   GetChildNodes="@(item => item.children)"
                   HasChildNodes="@(item => item.children?.Any() == true)"
                   SelectionMode="TreeViewSelectionMode.Multiple"
+                  SelectedNodes="selectedNodes"
                   SelectedNodesChanged="selectedNodesChanged">
             <NodeContent>
                 <Icon Name="IconName.Book" />
@@ -20,11 +33,16 @@
     {
         <p>Loading...</p>
     }
+        </Column>
+    </Row>
 </Div>
 
 @code {
     [Inject] GlobalService globalService { get; set; }
     [Parameter] public string caption { get; set; }
+    [Parameter] public string clear { get; set; }
+    [Parameter] public string all { get; set; }
+    List<clsEditionFile> selectedNodes = new List<clsEditionFile>();
 
     protected override void OnInitialized()
     {
@@ -36,6 +54,10 @@
     }
     private void HandleGlobalEditionsChange()
     {
+        foreach (clsEditionFile edition in globalService.EditionFiles)
+        {
+            if (edition.selected) selectedNodes.Add(edition);
+        }
         StateHasChanged();
     }
     private void NavigateToFile(string fileName)
@@ -50,6 +72,25 @@
             node.selected = nodes.Contains(node);
         }
         globalService.diplayStories = Utils.displayStories(globalService);
+    }
+    Task OnClearAll()
+    {
+        foreach (clsEditionFile node in globalService.EditionFiles)
+            node.selected = false;
+        selectedNodes.Clear();
+        globalService.diplayStories = Utils.displayStories(globalService);
+        return Task.CompletedTask;
+    }
+    Task OnSelectAll()
+    {
+        selectedNodes.Clear();
+        foreach (clsEditionFile node in globalService.EditionFiles)
+        {
+            node.selected = true;
+            selectedNodes.Add(node);
+        }
+        globalService.diplayStories = Utils.displayStories(globalService);
+        return Task.CompletedTask;
     }
 
 }

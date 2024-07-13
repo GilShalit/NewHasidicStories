@@ -12,6 +12,7 @@
             this.xmlref = xmlref;
             children = new List<clsPerson>();
             stories = new List<string>();
+            selected = true;
         }
         public bool Equals(clsPerson? other)
         {
