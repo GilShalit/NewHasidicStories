@@ -5,7 +5,7 @@
         public string name { get; set; }
         public bool selected { get; set; }
         public string xmlref { get; set; }
-        public List<clsPerson> children { get; set; }
+        public List<clsPerson> children { get; set; } // only for display in tree
         public List<string> stories { get; set; }
         public clsPerson(string xmlref)
         {
@@ -30,6 +30,17 @@
             throw new Exception("Add method not supported");
         }
 
+        public List<string> selectedStoryIds
+        {
+            get
+            {
+                List<string> selectedStoryIds = new List<string>();
+                foreach (clsPerson person in this)
+                        if (person.selected)
+                            selectedStoryIds.AddRange(person.stories);
+                return selectedStoryIds.Distinct().ToList();
+            }
+        }
         // Expose all elements as a read-only list
         public IReadOnlyList<clsPerson> Elements => this;
         public void newPerson(string xmlref, string story)

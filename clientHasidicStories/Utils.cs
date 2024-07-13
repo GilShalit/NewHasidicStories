@@ -8,17 +8,23 @@ namespace clientHasidicStories
             return globalService.EditionFiles.hasSelected || globalService.Persons.hasSelected || globalService.Themes.hasSelected;
         }
 
-        internal static void changeDisplayStories(bool value, GlobalService gs)
+        internal static void changeDisplayStories( GlobalService gs)
         {
             //turn on selected editions
+            gs.DisplayStoryTexts.reset();
             foreach (clsEditionFile edition in gs.EditionFiles.Where(e => e.selected))
             {
                 clsEditionStories editionStories = gs.DisplayStoryTexts.editions.Where(e => e.name == edition.title).First();
-                editionStories.display = value;
-                //find if stories include selected themes 
+                editionStories.display = true;
+
                 foreach (clsStoryText storyText in editionStories.stories)
+                {
+                    //find if stories include selected themes 
                     if (gs.Themes.selectedStoryIds.Contains(storyText.id)) storyText.display = true;
-                //find if stories include selected persons
+
+                    //find if stories include selected persons
+                    if (gs.Persons.selectedStoryIds.Contains(storyText.id)) storyText.display = true;
+                }
                 //find if stories include selected places
                 //if selected edition has no selected stories, turn it off
             }

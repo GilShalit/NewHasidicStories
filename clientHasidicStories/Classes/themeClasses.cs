@@ -47,7 +47,7 @@
             {
                 List<string> selectedStoryIds = new List<string>();
                 foreach (clsTheme theme in this)
-                    foreach (clsTheme child in theme.children)
+                    foreach (clsTheme child in theme.children)//only look at second level
                         if (child.selected)
                             selectedStoryIds.AddRange(child.stories);
                 return selectedStoryIds.Distinct().ToList();

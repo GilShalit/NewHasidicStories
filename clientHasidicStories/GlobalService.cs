@@ -18,7 +18,7 @@ namespace clientHasidicStories
             get => _displayStories;
             set
             {
-                Utils.changeDisplayStories(value, this);
+                Utils.changeDisplayStories( this);
                 OnStoriesToDisplayChanged!.Invoke();
                 if (_displayStories != value)
                 {

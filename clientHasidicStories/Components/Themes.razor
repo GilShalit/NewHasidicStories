@@ -1,6 +1,18 @@
 ﻿@using System.Globalization
 <Div Class="listControl">
-    <h3>@caption</h3>
+    <Row Margin="Margin.Is1.FromTop">
+        <Column>
+            <h3>@caption</h3>
+        </Column>
+        <Column>
+            <Buttons>
+                <Button Style="background:#DCE7ED" Clicked="@OnClearAll">Clear</Button>
+                <Button Style="background:#FBECD8" Clicked="@OnSelectAll">Select</Button>
+            </Buttons>
+        </Column>
+    </Row>
+    <Row>
+        <Column>
     @if (globalService.Themes != null && globalService.Themes.Count > 0)
     {
         <TreeView Nodes="globalService.Themes"
@@ -8,9 +20,10 @@
                   TNode="clsTheme"
                   GetChildNodes="@(item => item.children)"
                   HasChildNodes="@(item => item.children?.Any() == true)"
-                  ExpandedNodesChanged="@OnExpandedNodeChanged"
+                  ExpandedNodesChanged="OnExpandedNodeChanged"
                   SelectionMode="TreeViewSelectionMode.Multiple"
-                  SelectedNodesChanged="selectedNodesChanged">
+                  SelectedNodesChanged="OnSelectedNodesChanged"
+                  SelectedNodes="selectedNodes">
             <NodeContent>
                 <Icon Name="IconName.Lightbulb" />
                 @(fixName(context.name))
@@ -21,7 +34,8 @@
     {
         <p>Loading...</p>
     }
-
+        </Column>
+    </Row>
 </Div>
 
 @code {
@@ -50,8 +64,15 @@
         n = char.ToUpper(n[0]) + n.Substring(1);
         return n;
     }
-    async Task OnExpandedNodeChanged()
+    async Task OnExpandedNodeChanged(IList<clsTheme> nodes)
     {
+        // foreach (clsTheme node in nodes)
+        //     foreach (clsTheme child in node.children)
+        //     {
+        //         child.selected = true;
+        //         selectedNodes.Add(child);
+        //     }
+        // globalService.diplayStories = Utils.displayStories(globalService);
         await FixAlignment();
     }
 
@@ -60,19 +81,19 @@
 
         @if (CultureInfo.CurrentCulture.Name == "he-IL")
         {
-            // await JS.InvokeVoidAsync("changeClassStyle", "b-tree-view-node", "margin-left", "0");
-            // await JS.InvokeVoidAsync("changeClassStyle", "b-tree-view-node", "margin-right", "1.25rem");
-            // await JS.InvokeVoidAsync("changeClassStyle", "b-tree-view-node-title", "margin-left", "0");
-            // await JS.InvokeVoidAsync("changeClassStyle", "b-tree-view-node-title", "margin-right", "1.25rem");
+            await JS.InvokeVoidAsync("changeClassStyle", "b-tree-view-node", "margin-left", "0");
+            await JS.InvokeVoidAsync("changeClassStyle", "b-tree-view-node", "margin-right", "1.25rem");
+            await JS.InvokeVoidAsync("changeClassStyle", "b-tree-view-node-title", "margin-left", "0");
+            await JS.InvokeVoidAsync("changeClassStyle", "b-tree-view-node-title", "margin-right", "1.25rem");
             await JS.InvokeVoidAsync("changeClassStyle", "b-tree-view-node-icon", "float", "right");
             await JS.InvokeVoidAsync("changeClass", "fa-chevron-right", "fa-chevron-left");
         }
     }
-    private void selectedNodesChanged(IList<clsTheme> nodes)
+    private void OnSelectedNodesChanged(IList<clsTheme> nodes)
     {
         foreach (clsTheme node in globalService.Themes)
         {
-            //node.selected = nodes.Contains(node); as there are no top level themes in stories (need to chaeck)
+            //node.selected = nodes.Contains(node); as there are no top level themes in stories (need to check)
             foreach (clsTheme child in node.children)
             {
                 child.selected = nodes.Contains(child);
@@ -87,6 +108,36 @@
         //     }
         // }
         globalService.diplayStories = Utils.displayStories(globalService);
+    }
+    Task OnClearAll()
+    {
+        selectedNodes.Clear();
+        foreach (clsTheme node in globalService.Themes)
+        {
+            node.selected = false;
+            foreach (clsTheme child in node.children)
+            {
+                child.selected = false;
+            }
+        }
+        globalService.diplayStories = Utils.displayStories(globalService);
+        return Task.CompletedTask;
+    }
+    Task OnSelectAll()
+    {
+        selectedNodes.Clear();
+        foreach (clsTheme node in globalService.Themes)
+        {
+            node.selected = true;
+            selectedNodes.Add(node);
+            foreach (clsTheme child in node.children)
+            {
+                child.selected = true;
+                selectedNodes.Add(node);
+            }
+        }
+        globalService.diplayStories = Utils.displayStories(globalService);
+        return Task.CompletedTask;
     }
 
 }
