@@ -14,16 +14,29 @@
     margin-right:0!important;
 }
 */
-.body {
+body {
     font-size: 0.75rem;
 }
-
+.btn, linkStyle {
+    font-size: 0.75rem !important;
+}
+.h6{
+    text-align: center;
+}
 .listControl {
     /*background-color: beige !important;*/
     border-radius: 5px;
     border-top: 1px solid #e0e0e0;
     box-shadow: 0 .25rem .25rem rgba(0,0,0,0.8) !important;
-    font-size: 0.75rem;
+    font-size: 0.75rem!important;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.smallControl {
+    height: calc((100vh - 87px)/2);
+}
+.bigControl {
+    height: calc((100vh - 80px));
 }
 
 #mapCol {
@@ -32,13 +45,16 @@
 }
 
 #mapDiv {
-    max-height: 600px;
+    max-height: calc(100vh - 80px);
     position: absolute;
     top: 0;
     right: 0;
     z-index: 1000;
+    overflow-y: hidden; /* for a smaller screen */
 }
-
+.accordion-button{
+    padding: 0.4rem 1rem;
+}
 .controlsContainer {
     margin-top: 10px;
     padding-left: 20px;
@@ -48,11 +64,15 @@
 .secondRow {
 }
 
-
+.accordion-body {
+    padding: 0.2rem 0.4rem;
+}
 .pStory {
     direction: rtl;
     font-size: 0.75rem;
     cursor: pointer;
+    padding:0 ;
+    margin-bottom:3px;
 }
 
 .navbar{

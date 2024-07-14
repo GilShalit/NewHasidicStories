@@ -1,5 +1,5 @@
 ﻿@inject NavigationManager navigationManager
-<Div Class="listControl">
+<Div Class="listControl bigControl">
     <Row Margin="Margin.Is1.FromTop">
         <Column>
             <h3>@caption</h3>
@@ -17,18 +17,19 @@
                     {
                         if (edition.display)
                         {
-                            <AccordionItem>
-                                <AccordionHeader>
-                                    <Heading Size="HeadingSize.Is6">@edition.name</Heading>
+                            <AccordionItem Visible="true">
+                                <AccordionHeader >
+                                    <Heading Size="HeadingSize.Is6"><AccordionToggle>@edition.name</AccordionToggle></Heading>
                                 </AccordionHeader>
-                                <AccordionBody></AccordionBody>
-                                @foreach (clsStoryText story in edition.stories)
-                                {
-                                    if (story.display)
+                                <AccordionBody>
+                                    @foreach (clsStoryText story in edition.stories)
                                     {
-                                        <p class="pStory" id=@($"{story.id}") @onclick="(() => HandleStoryClick(edition.name, story.id))">@story.text ...</p>
+                                        if (story.display)
+                                        {
+                                            <p class="pStory" id=@($"{story.id}") @onclick="(() => HandleStoryClick(edition.name, story.id))">@story.text [...]</p>
+                                        }
                                     }
-                                }
+                                </AccordionBody>
                             </AccordionItem>
                         }
                     }
@@ -45,7 +46,7 @@
     [Inject] GlobalService globalService { get; set; }
     [Parameter] public string caption { get; set; }
     string counts;
-    
+
     protected override async Task OnInitializedAsync()
     {
         globalService.OnStoriesToDisplayChanged += HandleDisplayStoriesChanged;
@@ -57,7 +58,7 @@
 
     private void HandleDisplayStoriesChanged()
     {
-        counts= globalService.DisplayStoryTexts.counts;
+        counts = globalService.DisplayStoryTexts.counts;
         StateHasChanged();
     }
 
