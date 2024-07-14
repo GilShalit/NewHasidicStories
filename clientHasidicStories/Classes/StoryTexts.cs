@@ -11,6 +11,7 @@
     {
         public string name { get; set; } = "";
         public bool display { get; set; } = false;
+        public int iEdition { get; set; }
         public List<clsStoryText> stories { get; set; } = new List<clsStoryText>();
     }
     public class clsDisplayStoryTexts

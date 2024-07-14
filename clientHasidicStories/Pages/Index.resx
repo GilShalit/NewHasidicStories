@@ -123,6 +123,9 @@
   <data name="clear" xml:space="preserve">
     <value>Clear</value>
   </data>
+  <data name="close" xml:space="preserve">
+    <value>Collapse</value>
+  </data>
   <data name="editions" xml:space="preserve">
     <value>Editions</value>
   </data>

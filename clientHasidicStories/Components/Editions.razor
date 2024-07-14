@@ -6,33 +6,31 @@
             <h3>@caption</h3>
         </Column>
         <Column>
-            <Buttons>
-                <Button Style="background:#DCE7ED" Clicked="@OnClearAll">@clear</Button>
-                <Button Style="background:#FBECD8" Clicked="@OnSelectAll">@all</Button>
-            </Buttons>
+            <Button Class="controlButton" Clicked="@OnClearAll">@clear</Button>
+            <Button Class="controlButton" Clicked="@OnSelectAll">@all</Button>
         </Column>
     </Row>
     <Row>
         <Column>
-    @if (globalService.EditionFiles != null && globalService.EditionFiles.Count > 0)
-    {
-        <TreeView Nodes="globalService.EditionFiles"
-                  TNode="clsEditionFile"
-                  GetChildNodes="@(item => item.children)"
-                  HasChildNodes="@(item => item.children?.Any() == true)"
-                  SelectionMode="TreeViewSelectionMode.Multiple"
-                  SelectedNodes="selectedNodes"
-                  SelectedNodesChanged="selectedNodesChanged">
-            <NodeContent>
-                <Icon Name="IconName.Book" />
-                <Button Class="linkStyle" @onclick="() => NavigateToFile(context.name)">@context.title</Button>
-            </NodeContent>
-        </TreeView>
-    }
-    else
-    {
-        <p>Loading...</p>
-    }
+            @if (globalService.EditionFiles != null && globalService.EditionFiles.Count > 0)
+            {
+                <TreeView Nodes="globalService.EditionFiles"
+                          TNode="clsEditionFile"
+                          GetChildNodes="@(item => item.children)"
+                          HasChildNodes="@(item => item.children?.Any() == true)"
+                          SelectionMode="TreeViewSelectionMode.Multiple"
+                          SelectedNodes="selectedNodes"
+                          SelectedNodesChanged="selectedNodesChanged">
+                    <NodeContent>
+                        <Icon Name="IconName.Book" />
+                        <Button Class="linkStyle" @onclick="() => NavigateToFile(context.name)">@context.title</Button>
+                    </NodeContent>
+                </TreeView>
+            }
+            else
+            {
+                <p>Loading...</p>
+            }
         </Column>
     </Row>
 </Div>

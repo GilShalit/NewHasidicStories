@@ -1,11 +1,14 @@
 ﻿@inject NavigationManager navigationManager
 <Div Class="listControl bigControl">
     <Row Margin="Margin.Is1.FromTop">
-        <Column>
+        <Column ColumnSize="ColumnSize.Is4">
             <h3>@caption</h3>
         </Column>
-        <Column>
-            @counts
+        <Column ColumnSize="ColumnSize.Is4">
+            <Div Class="counts">@counts</Div>
+        </Column>
+        <Column ColumnSize="ColumnSize.Is4">
+            <Button Class="controlButton" Clicked="@OnCollapse">@close</Button>
         </Column>
     </Row>
     <Row>
@@ -13,13 +16,14 @@
             @if (globalService.DisplayStoryTexts != null)
             {
                 <Accordion>
-                    @foreach (clsEditionStories edition in globalService.DisplayStoryTexts.editions)
+                    @for (int i = 0; i < globalService.DisplayStoryTexts.editions.Count; i++)
                     {
+                        clsEditionStories edition = globalService.DisplayStoryTexts.editions[i];
                         if (edition.display)
                         {
-                            <AccordionItem Visible="true">
+                            <AccordionItem @bind-Visible="expandedItems[i]">
                                 <AccordionHeader>
-                                    <Heading Size="HeadingSize.Is6"><AccordionToggle>@edition.name</AccordionToggle></Heading>
+                                    <Heading Size="HeadingSize.Is6"><AccordionToggle Clicked="(args)=>OnItemClicked(args,edition.iEdition)">@edition.name</AccordionToggle></Heading>
                                 </AccordionHeader>
                                 <AccordionBody>
                                     @foreach (clsStoryText story in edition.stories)
@@ -47,7 +51,9 @@
 @code {
     [Inject] GlobalService globalService { get; set; }
     [Parameter] public string caption { get; set; }
+    [Parameter] public string close { get; set; }
     string counts;
+    List<bool> expandedItems = new List<bool>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -60,6 +66,11 @@
 
     private void HandleDisplayStoriesChanged()
     {
+        expandedItems = new List<bool>();
+        for (int i = 0; i < globalService.DisplayStoryTexts.editions.Count; i++)
+        {
+            expandedItems.Add(true);
+        }
         counts = globalService.DisplayStoryTexts.counts;
         StateHasChanged();
     }
@@ -79,5 +90,17 @@
     private string theRest(string text)
     {
         return string.Join(' ', text.Trim().Split(' ').Skip(1));
+    }
+    Task OnCollapse()
+    {
+        for (int i = 0; i < expandedItems.Count; i++)
+            expandedItems[i] = false;
+        return Task.CompletedTask;
+    }
+
+    private void OnItemClicked(MouseEventArgs e, int id)
+    {
+        expandedItems[id] = !expandedItems.ElementAt(id);
+        StateHasChanged();
     }
 }

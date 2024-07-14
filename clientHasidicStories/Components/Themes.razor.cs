@@ -13,6 +13,7 @@ namespace clientHasidicStories.Components
         [Parameter] public string caption { get; set; }
         [Parameter] public string clear { get; set; }
         [Parameter] public string all { get; set; }
+        [Parameter] public string close { get; set; }
 
         IList<clsTheme> selectedNodes = new List<clsTheme>();
         IList<clsTheme> expandedNodes = new List<clsTheme>();
@@ -141,6 +142,13 @@ namespace clientHasidicStories.Components
             globalService.updateStories();
             return Task.CompletedTask;
         }
+        Task OnClose()
+        {
+            expandedNodes.Clear();
+            _treeView.Reload();
+            return Task.CompletedTask;
+        }
+
 
     }
 }

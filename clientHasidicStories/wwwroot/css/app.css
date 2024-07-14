@@ -39,6 +39,14 @@ body {
     height: calc((100vh - 80px));
 }
 
+.counts{
+        font-size: 1rem;
+    text-align: center;
+    padding: 0.2rem;
+    margin-top: 0.2rem;
+
+}
+
 #mapCol {
     position: relative;
     z-index: 1000;
@@ -54,6 +62,10 @@ body {
 }
 .accordion-button{
     padding: 0.4rem 1rem;
+}
+.controlButton {
+    box-shadow: 0 .1rem .1rem rgba(0,0,0,0.8) !important;
+    background: #FBECD8
 }
 .controlsContainer {
     margin-top: 10px;

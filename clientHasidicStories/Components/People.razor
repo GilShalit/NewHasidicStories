@@ -4,34 +4,32 @@
             <h3>@caption</h3>
         </Column>
         <Column>
-            <Buttons>
-                <Button Style="background:#DCE7ED" Clicked="@OnClearAll">@clear</Button>
-                <Button Style="background:#FBECD8" Clicked="@OnSelectAll">@all</Button>
-            </Buttons>
+            <Button Class="controlButton" Clicked="@OnClearAll">@clear</Button>
+            <Button Class="controlButton" Clicked="@OnSelectAll">@all</Button>
         </Column>
     </Row>
     <Row>
         <Column>
-    @if (globalService.Persons != null && globalService.Persons.Count > 0 && globalService.Persons.hasNames)
-    {
-        <TreeView Nodes="globalService.Persons"
-                  TNode="clsPerson"
-                  GetChildNodes="@(item => item.children)"
-                  HasChildNodes="@(item => item.children?.Any() == true)"
-                  SelectionMode="TreeViewSelectionMode.Multiple"
-                  SelectedNodes="selectedNodes"
-                  SelectedNodesChanged="selectedNodesChanged">
+            @if (globalService.Persons != null && globalService.Persons.Count > 0 && globalService.Persons.hasNames)
+            {
+                <TreeView Nodes="globalService.Persons"
+                          TNode="clsPerson"
+                          GetChildNodes="@(item => item.children)"
+                          HasChildNodes="@(item => item.children?.Any() == true)"
+                          SelectionMode="TreeViewSelectionMode.Multiple"
+                          SelectedNodes="selectedNodes"
+                          SelectedNodesChanged="selectedNodesChanged">
 
-            <NodeContent>
-                <Icon Name="IconName.IdCard" />
-                @context.name
-            </NodeContent>
-        </TreeView>
-    }
-    else
-    {
-        <p>Loading...</p>
-    }
+                    <NodeContent>
+                        <Icon Name="IconName.IdCard" />
+                        @context.name
+                    </NodeContent>
+                </TreeView>
+            }
+            else
+            {
+                <p>Loading...</p>
+            }
         </Column>
     </Row>
 </Div>
@@ -54,7 +52,7 @@
     }
     private void HandleGlobalPersonsChange()
     {
-        foreach(clsPerson person in globalService.Persons)
+        foreach (clsPerson person in globalService.Persons)
         {
             if (person.selected) selectedNodes.Add(person);
         }

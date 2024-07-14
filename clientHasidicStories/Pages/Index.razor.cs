@@ -108,9 +108,10 @@ namespace clientHasidicStories.Pages
             {
                 Console.WriteLine("Start ProcessStories");
                 clsDisplayStoryTexts dst = new clsDisplayStoryTexts();
-                foreach (editionStoryTexts e in StoryTexts.editions)
+                for (int i = 0; i < StoryTexts.editions.Count(); i++)
                 {
-                    dst.editions.Add(new clsEditionStories() { name = e.name });
+                    editionStoryTexts e = StoryTexts.editions[i];
+                    dst.editions.Add(new clsEditionStories() { name = e.name, iEdition = i });
                     foreach (story s in e.stories)
                     {
                         dst.editions[dst.editions.Count - 1].stories.Add(new clsStoryText() { id = s.id, text = s.text.Replace("\n", "") });

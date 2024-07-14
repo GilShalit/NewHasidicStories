@@ -1,14 +1,13 @@
 ﻿@using System.Globalization
 <Div Class="listControl bigControl">
     <Row Margin="Margin.Is1.FromTop">
-        <Column>
+        <Column ColumnSize="ColumnSize.Is4">
             <h3>@caption</h3>
         </Column>
-        <Column>
-            <Buttons>
-                <Button Style="background:#DCE7ED" Clicked="@OnClearAll">@clear</Button>
-                <Button Style="background:#FBECD8" Clicked="@OnSelectAll">@all</Button>
-            </Buttons>
+        <Column ColumnSize="ColumnSize.Is8">
+            <Button Class="controlButton" Clicked="@OnClearAll">@clear</Button>
+            <Button Class="controlButton" Clicked="@OnSelectAll">@all</Button>
+            <Button Class="controlButton" Clicked="@OnClose">@close</Button>
         </Column>
     </Row>
     <Row>
