@@ -9,23 +9,14 @@ namespace clientHasidicStories
         private clsEditionFiles _editionfiles;
         private clsPersons _persons;
         private bool _TEILoadedOnce;
-        private bool _displayStories;
         public clsStoryInfoData StoryInfoData { get; set; }
         public clsDisplayStoryTexts DisplayStoryTexts { get; set; }
         public TEI AuthoritiesData { get; set; }
-        public bool diplayStories
+
+        public void updateStories()
         {
-            get => _displayStories;
-            set
-            {
-                Utils.changeDisplayStories( this);
-                OnStoriesToDisplayChanged!.Invoke();
-                if (_displayStories != value)
-                {
-                    _displayStories = value;
-                    OnDisplayStoriesChanged?.Invoke();
-                }
-            }
+            Utils.changeDisplayStories(this);
+            OnStoriesToDisplayChanged!.Invoke();
         }
         public clsGeoJson Points
         {

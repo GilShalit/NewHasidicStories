@@ -23,12 +23,11 @@ namespace clientHasidicStories.Pages
         [Inject] GlobalService globalService { get; set; }
         [Inject] NavigationManager Navigation { get; set; }
         bool isLoading = true;
-        private Blazorise.IFluentColumn myColumnSize = ColumnSize.Is4;
-        private Blazorise.IFluentDisplay showStories = Blazorise.Display.None;
+        private Blazorise.IFluentColumn myColumnSize = ColumnSize.Is3;
 
         protected override async Task OnInitializedAsync()
         {
-            globalService.OnDisplayStoriesChanged += HandleDisplayStoriesChanged;
+            //globalService.OnDisplayStoriesChanged += HandleDisplayStoriesChanged;
             if (!globalService.DataLoaded)
             {
                 isLoading = true;
@@ -85,21 +84,23 @@ namespace clientHasidicStories.Pages
                 await task4;
 
                 globalService.DataLoaded = true;
+                Console.WriteLine("===Data loaded===");
+                globalService.updateStories();
 
                 isLoading = false;
             }
         }
         public void Dispose()
         {
-            globalService.OnDisplayStoriesChanged -= HandleDisplayStoriesChanged;
+            //globalService.OnDisplayStoriesChanged -= HandleDisplayStoriesChanged;
         }
 
-        private void HandleDisplayStoriesChanged()
-        {
-            if (globalService.diplayStories) { showStories = Blazorise.Display.Block; myColumnSize = ColumnSize.Is3; }
-            else { showStories = Blazorise.Display.None; myColumnSize = ColumnSize.Is4; }
-            StateHasChanged();
-        }
+        //private void HandleDisplayStoriesChanged()
+        //{
+        //    if (globalService.diplayStories) { showStories = Blazorise.Display.Block; myColumnSize = ColumnSize.Is3; }
+        //    else { showStories = Blazorise.Display.None; myColumnSize = ColumnSize.Is4; }
+        //    StateHasChanged();
+        //}
 
         private async Task ProcessStoryTexts(clsEditionsStoryTexts StoryTexts)
         {
@@ -116,7 +117,7 @@ namespace clientHasidicStories.Pages
                     }
                 }
                 globalService.DisplayStoryTexts = dst;
-                Console.WriteLine("End ProcessData");
+                Console.WriteLine("End ProcessStories");
             }
             catch (Exception ex)
             {

@@ -99,7 +99,7 @@ namespace clientHasidicStories.Components
                 _treeView.Reload();
             }
 
-            globalService.diplayStories = Utils.displayStories(globalService);
+            globalService.updateStories();
         }
 
         void selectNode(clsTheme node)
@@ -124,7 +124,7 @@ namespace clientHasidicStories.Components
                 }
             }
             selectedNodes.Clear();
-            globalService.diplayStories = Utils.displayStories(globalService);
+            globalService.updateStories();
             return Task.CompletedTask;
         }
         Task OnSelectAll()
@@ -132,15 +132,13 @@ namespace clientHasidicStories.Components
             selectedNodes.Clear();
             foreach (clsTheme node in globalService.Themes)
             {
-                node.selected = true;
-                selectedNodes.Add(node);
+                selectNode(node);
                 foreach (clsTheme child in node.children)
                 {
-                    child.selected = true;
-                    selectedNodes.Add(node);
+                    selectNode(child);
                 }
             }
-            globalService.diplayStories = Utils.displayStories(globalService);
+            globalService.updateStories();
             return Task.CompletedTask;
         }
 

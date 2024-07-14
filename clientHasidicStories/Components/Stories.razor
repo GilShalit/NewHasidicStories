@@ -58,7 +58,7 @@
     private void HandleDisplayStoriesChanged()
     {
         counts= globalService.DisplayStoryTexts.counts;
-        if (globalService.diplayStories) StateHasChanged();
+        StateHasChanged();
     }
 
     private void HandleStoryClick(string editionName, string storyId)
