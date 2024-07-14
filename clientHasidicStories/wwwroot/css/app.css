@@ -74,6 +74,9 @@ body {
     padding:0 ;
     margin-bottom:3px;
 }
+.pStory:hover {
+    background-color: #f0f0f0;
+}
 
 .firstWord{
     font-weight: bold;
