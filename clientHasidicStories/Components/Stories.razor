@@ -18,7 +18,7 @@
                         if (edition.display)
                         {
                             <AccordionItem Visible="true">
-                                <AccordionHeader >
+                                <AccordionHeader>
                                     <Heading Size="HeadingSize.Is6"><AccordionToggle>@edition.name</AccordionToggle></Heading>
                                 </AccordionHeader>
                                 <AccordionBody>
@@ -26,7 +26,9 @@
                                     {
                                         if (story.display)
                                         {
-                                            <p class="pStory" id=@($"{story.id}") @onclick="(() => HandleStoryClick(edition.name, story.id))">@story.text [...]</p>
+                                            <p class="pStory" id=@($"{story.id}") @onclick="(() => HandleStoryClick(edition.name, story.id))">
+                                                <Span Class="firstWord">@firstWord(story.text) </Span>@theRest(story.text) [...]
+                                            </p>
                                         }
                                     }
                                 </AccordionBody>
@@ -70,5 +72,12 @@
         navigationManager.NavigateTo($"/Story/{fileName}/{storyId}", false);
     }
 
-
+    private string firstWord(string text)
+    {
+        return text.Trim().Split(' ')[0] + " ";
+    }
+    private string theRest(string text)
+    {
+        return string.Join(' ', text.Trim().Split(' ').Skip(1));
+    }
 }

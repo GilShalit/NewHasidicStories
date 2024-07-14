@@ -75,6 +75,11 @@ body {
     margin-bottom:3px;
 }
 
+.firstWord{
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
 .navbar{
     padding-top:.2rem!important;
 }

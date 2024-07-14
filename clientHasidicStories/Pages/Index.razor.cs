@@ -113,7 +113,7 @@ namespace clientHasidicStories.Pages
                     dst.editions.Add(new clsEditionStories() { name = e.name });
                     foreach (story s in e.stories)
                     {
-                        dst.editions[dst.editions.Count - 1].stories.Add(new clsStoryText() { id = s.id, text = s.text });
+                        dst.editions[dst.editions.Count - 1].stories.Add(new clsStoryText() { id = s.id, text = s.text.Replace("\n", "") });
                     }
                 }
                 globalService.DisplayStoryTexts = dst;
