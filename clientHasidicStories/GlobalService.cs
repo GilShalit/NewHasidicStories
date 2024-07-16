@@ -8,6 +8,7 @@ namespace clientHasidicStories
         private clsThemes _themes;
         private clsEditionFiles _editionfiles;
         private clsPersons _persons;
+        private clsPlaces _places;
         private bool _TEILoadedOnce;
         public clsStoryInfoData StoryInfoData { get; set; }
         public clsDisplayStoryTexts DisplayStoryTexts { get; set; }
@@ -60,6 +61,15 @@ namespace clientHasidicStories
             set
             {
                 _persons = value;
+                //OnGlobalPersonsChanged?.Invoke();
+            }
+        }
+        public clsPlaces Places
+        {
+            get => _places;
+            set
+            {
+                _places = value;
                 OnGlobalPersonsChanged?.Invoke();
             }
         }

@@ -95,13 +95,6 @@ namespace clientHasidicStories.Pages
             //globalService.OnDisplayStoriesChanged -= HandleDisplayStoriesChanged;
         }
 
-        //private void HandleDisplayStoriesChanged()
-        //{
-        //    if (globalService.diplayStories) { showStories = Blazorise.Display.Block; myColumnSize = ColumnSize.Is3; }
-        //    else { showStories = Blazorise.Display.None; myColumnSize = ColumnSize.Is4; }
-        //    StateHasChanged();
-        //}
-
         private async Task ProcessStoryTexts(clsEditionsStoryTexts StoryTexts)
         {
             try
@@ -297,8 +290,9 @@ namespace clientHasidicStories.Pages
                 string story = "";
                 globalService.StoryInfoData = storyInfo;
 
-                //building persons
+                //building persons and people
                 clsPersons localPersons = new clsPersons();
+                clsPlaces localPlaces = new clsPlaces();
                 for (int e = 0; e < storyInfo.editions.Length; e++)
                 {
                     for (int s = 0; s < storyInfo.editions[e].stories.Length; s++)
@@ -307,6 +301,10 @@ namespace clientHasidicStories.Pages
                         for (int j = 0; j < storyInfo.editions[e].stories[s].persons.Length; j++)
                         {
                             localPersons.newPerson(storyInfo.editions[e].stories[s].persons[j], story);
+                        }
+                        for (int j = 0; j < storyInfo.editions[e].stories[s].places.Length; j++)
+                        {
+                            localPlaces.newPlace(storyInfo.editions[e].stories[s].places[j], story);
                         }
                     }
                 }
