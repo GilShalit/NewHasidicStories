@@ -13,9 +13,12 @@
     private Action ChangeDelegate;//so the Handle method can be unsubscribed
     private DotNetObjectReference<Map> dotNetRef;
     private bool isMapInitialized = false; // Track if the map has been initialized
-    private bool isMapDoneInitializing = false; // Track if the map has finished been initialized
+    private bool isFirstUpdate = true; 
 
     protected override async Task OnInitializedAsync()
+    {
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         dotNetRef = DotNetObjectReference.Create(this);
         ChangeDelegate = async () => await HandleGlobalPointsChange();
@@ -36,13 +39,11 @@
         {
             var center = globalService.Points.data.Center;
             await JS.InvokeVoidAsync("initializeMap", center, "mapDiv", dotNetRef ,globalService.Points);
-            Console.WriteLine("Map initialized");
-            isMapDoneInitializing = true;
             isMapInitialized = true;
         }
         else {
-            Console.WriteLine("Map to be updated");
-            if(isMapDoneInitializing) await JS.InvokeVoidAsync("updatePoints",globalService.Points);
+            if(isFirstUpdate) await Task.Delay(1000);
+            await JS.InvokeVoidAsync("updatePoints",globalService.Points);
         }
         StateHasChanged();
     }

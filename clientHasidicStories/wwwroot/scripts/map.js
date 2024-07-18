@@ -13,19 +13,6 @@ window.initializeMap = (center, divname, dotNetRef, data) => {
     });
 
     map.on('load', function () {
-        map.addSource('points', data);
-
-        map.addLayer({
-            'id': 'points',
-            'type': 'circle',
-            'source': 'points',
-            'paint': {
-                'circle-radius': 8,
-                'circle-color': '#B42222',
-                'circle-opacity': 0.5
-            },
-        });
-
         var popup = new maptilersdk.Popup({
             closeButton: false,
             closeOnClick: false
@@ -46,8 +33,8 @@ window.initializeMap = (center, divname, dotNetRef, data) => {
             }
         });
 
-        // Change it back to the default when it leaves.
         map.on('mouseleave', 'points', function () {
+            // Change it back to the default when it leaves.
             map.getCanvas().style.cursor = '';
             popup.remove();
         });
@@ -73,7 +60,6 @@ window.initializeMap = (center, divname, dotNetRef, data) => {
 }
 // Function to update the points layer with new data
 window.updatePoints = (data) => {
-    return;
     if (map.getSource('points')) {
         map.removeLayer('points');
         map.removeSource('points');
@@ -87,8 +73,24 @@ window.updatePoints = (data) => {
         'source': 'points',
         'paint': {
             'circle-radius': 8,
+            // Start with an opacity of 0
             'circle-color': '#B42222',
-            'circle-opacity': 0.5
+            'circle-opacity': 0
         },
     });
+
+    // Animate the opacity
+    let opacity = 0;
+    const maxOpacity = 0.5; // Target opacity
+    const animationStep = 0.05; // Incremental step
+    const interval = 10; // Time in milliseconds between each step
+
+    const intervalId = setInterval(() => {
+        opacity += animationStep;
+        if (opacity >= maxOpacity) {
+            opacity = maxOpacity;
+            clearInterval(intervalId); // Stop the animation when the target opacity is reached
+        }
+        map.setPaintProperty('points', 'circle-opacity', opacity);
+    }, interval);
 };
