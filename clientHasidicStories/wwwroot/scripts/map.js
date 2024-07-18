@@ -49,7 +49,7 @@
         map.on('mouseleave', 'points', function () {
             map.getCanvas().style.cursor = '';
             popup.remove();
-});
+        });
         map.on('dblclick', 'points', function (evt) {
             if (evt.features.length > 0) {
                 const feature = evt.features[0];
@@ -63,14 +63,9 @@
         }); map.on('click', 'points', function (evt) {
             if (evt.features.length > 0) {
                 const feature = evt.features[0];
-                var coordinates = feature.geometry.coordinates.slice();
-                var name = feature.properties.name;
-                var link = feature.properties.link;
-                // Create a Popup instance and set its options
-                const popup = new maptilersdk.Popup()
-                    .setLngLat(coordinates) // sets the popup's location
-                    .setHTML(`click`) // sets the popup's content
-                    .addTo(map); // adds the popup to the map
+                var id = feature.properties.xmlid;
+                DotNet.invokeMethodAsync("clientHasidicStories", "PointClicked", id)
+                    .then(result => { });
             }
         });
     });
