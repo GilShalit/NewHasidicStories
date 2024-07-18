@@ -64,14 +64,14 @@
         {
             node.selected = nodes.Contains(node);
         }
-        globalService.updateStories();
+        globalService.updateStoriesAndPoints();
     }
     Task OnClearAll()
     {
         foreach (clsPerson node in globalService.Persons)
             node.selected = false;
         selectedNodes.Clear();
-        globalService.updateStories();
+        globalService.updateStoriesAndPoints();
         return Task.CompletedTask;
     }
     Task OnSelectAll()
@@ -82,7 +82,7 @@
             node.selected = true;
             selectedNodes.Add(node);
         }
-        globalService.updateStories();
+        globalService.updateStoriesAndPoints();
         return Task.CompletedTask;
     }
 }

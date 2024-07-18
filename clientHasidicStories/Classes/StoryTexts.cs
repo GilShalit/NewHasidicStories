@@ -17,14 +17,24 @@
     public class clsDisplayStoryTexts
     {
         public List<clsEditionStories> editions { get; set; } = new List<clsEditionStories>();
+        public List<string> selectedStoryIds
+        {
+            get
+            {
+                return editions.Where(e => e.display)
+                    .SelectMany(edition => edition.stories)
+                    .Where(story => story.display)
+                    .Select(story => story.id).ToList();
+            }
+        }
         public string counts
         {
             get
             {
-                // a) Total number of stories in editions
+                // Total number of stories in editions
                 int totalStories = editions.SelectMany(edition => edition.stories).Count();
 
-                // b) Total number of stories where display == true in editions
+                // Total number of stories where display == true in editions
                 int displayedStories = editions.SelectMany(edition => edition.stories)
                                                 .Count(story => story.display);
 

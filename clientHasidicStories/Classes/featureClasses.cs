@@ -13,7 +13,7 @@ namespace clientHasidicStories.Classes
     {
         private List<Feature> lFeatures = new List<Feature>();
         public string type { get; set; } = "FeatureCollection";
-        public Feature[] features { get => lFeatures.ToArray(); }
+        public Feature[] features { get => lFeatures.Where(f => f.selected).ToArray(); }
         public void Add(Feature feature) { lFeatures.Add(feature); }
         public float[] Center
         {
@@ -23,12 +23,23 @@ namespace clientHasidicStories.Classes
                 float lon = 0;
                 foreach (Feature f in lFeatures)
                 {
-                    lat += f.geometry.coordinates[0]; 
+                    lat += f.geometry.coordinates[0];
                     lon += f.geometry.coordinates[1];
                 }
                 lat = lat / lFeatures.Count();
-                lon=lon / lFeatures.Count();
+                lon = lon / lFeatures.Count();
                 return [lat, lon];
+            }
+        }
+        public void changeFeatureSelection(string xmlid, bool selected)
+        {
+            foreach (Feature f in lFeatures)
+            {
+                if (f.properties.xmlid == xmlid)
+                {
+                    f.selected = selected;
+                    break;
+                }
             }
         }
     }
@@ -38,6 +49,7 @@ namespace clientHasidicStories.Classes
         public string type { get; set; } = "Feature";
         public Geometry geometry { get; set; } = new Geometry();
         public Properties properties { get; set; } = new Properties();
+        public bool selected { get; set; } = true;
     }
 
     public class Geometry

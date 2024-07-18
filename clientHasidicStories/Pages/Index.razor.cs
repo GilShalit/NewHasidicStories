@@ -13,6 +13,7 @@ using System.Net.WebSockets;
 using System.Drawing;
 using Blazorise.Modules;
 using Blazorise;
+using System.Globalization;
 
 namespace clientHasidicStories.Pages
 {
@@ -85,7 +86,7 @@ namespace clientHasidicStories.Pages
 
                 globalService.DataLoaded = true;
                 Console.WriteLine("===Data loaded===");
-                globalService.updateStories();
+                globalService.updateStoriesAndPoints();
 
                 isLoading = false;
             }
@@ -169,8 +170,8 @@ namespace clientHasidicStories.Pages
                 //httpLocal.BaseAddress = new Uri("http://localhost:8081/exist/apps/");
 
                 httpLocal.BaseAddress = new Uri(Navigation.BaseUri);
-
-                HttpResponseMessage response = await httpLocal.GetAsync("Authorities.xml");
+                string url = $"Authorities.xml?nocache={DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()}";
+                HttpResponseMessage response = await httpLocal.GetAsync(url);
                 if (response.IsSuccessStatusCode)
                 {
                     XmlSerializer serializer = new XmlSerializer(typeof(TEI));
@@ -217,22 +218,21 @@ namespace clientHasidicStories.Pages
 
                 //find Ids of places included in the stories
                 List<string> includedPlacesIds = new List<string>();
-                if (globalService.StoryInfoData != null)
+                if (globalService.Places != null)
                 {
-                    foreach (clsEditionData editedData in globalService.StoryInfoData.editions)
-                        foreach (clsStoryInfo story in editedData.stories)
-                            foreach (string placeId in story.places)
-                                if (!includedPlacesIds.Contains(placeId)) includedPlacesIds.Add(placeId);
+                    foreach (clsPlace place in globalService.Places)
+                                if (!includedPlacesIds.Contains(place.xmlref)) includedPlacesIds.Add(place.xmlref);
                 }
 
                 foreach (TEITeiHeaderFileDescSourceDescPlace place in authorities.teiHeader.fileDesc.sourceDesc.listPlace
-                    .Where(p => includedPlacesIds.Contains(p.xmlid)))
+                    .Where(p => includedPlacesIds.Contains(p.xmlid))
+                    )
                 {
                     Feature newPoint = new Feature();
                     string[] aGeo = place.location.geo.Trim().Split(",");
                     float[] geo = new float[aGeo.Length];
-                    geo[0] = float.Parse(aGeo[1]);
-                    geo[1] = float.Parse(aGeo[0]);
+                    geo[0] = float.Parse(aGeo[1], CultureInfo.InvariantCulture);
+                    geo[1] = float.Parse(aGeo[0], CultureInfo.InvariantCulture);
                     newPoint.geometry.coordinates = geo;
                     newPoint.properties.name = place.placeName.Value;
                     newPoint.properties.link = place.idno.Value;
@@ -286,9 +286,9 @@ namespace clientHasidicStories.Pages
         {
             try
             {
-                Console.WriteLine("Start ProcessData");
+                Console.WriteLine("Start ProcessStoryInfo");
                 string story = "";
-                globalService.StoryInfoData = storyInfo;
+                //globalService.StoryInfoData = storyInfo;
 
                 //building persons and people
                 clsPersons localPersons = new clsPersons();
@@ -309,6 +309,7 @@ namespace clientHasidicStories.Pages
                     }
                 }
                 globalService.Persons = localPersons;
+                globalService.Places = localPlaces;
 
                 //building themes in separate loops so UI updates as we go
                 string[] themeNames = [];
@@ -326,7 +327,7 @@ namespace clientHasidicStories.Pages
                     }
                 }
                 globalService.Themes = localThemes;
-                Console.WriteLine("End ProcessData");
+                Console.WriteLine("End ProcessStoryInfo");
             }
             catch (Exception ex)
             {

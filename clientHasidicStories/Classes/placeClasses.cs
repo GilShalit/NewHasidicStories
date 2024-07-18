@@ -25,7 +25,7 @@
     }
     public class clsPlaces : List<clsPlace>
     {
-        public bool hasNames { get; set; }
+        //public bool hasNames { get; set; }
         public new void Add(clsPlace place)
         {
             throw new Exception("Add method not supported");

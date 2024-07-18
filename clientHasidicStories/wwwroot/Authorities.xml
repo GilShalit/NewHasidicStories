@@ -1463,7 +1463,7 @@
 						<placeName type="primary-roman">Spain</placeName>
 						<location>
 							<geo>
-								40,-3
+								40.0,-3.0
 							</geo>
 						</location>
 						<idno type="Kima">https://data.geo-kima.org/Place/6471</idno>

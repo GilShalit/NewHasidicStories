@@ -10,14 +10,16 @@ namespace clientHasidicStories
         private clsPersons _persons;
         private clsPlaces _places;
         private bool _TEILoadedOnce;
-        public clsStoryInfoData StoryInfoData { get; set; }
+        //public clsStoryInfoData StoryInfoData { get; set; }
         public clsDisplayStoryTexts DisplayStoryTexts { get; set; }
         public TEI AuthoritiesData { get; set; }
 
-        public void updateStories()
+        public void updateStoriesAndPoints()
         {
             Utils.changeDisplayStories(this);
             OnStoriesToDisplayChanged!.Invoke();
+            Utils.changeDisplayPlaces(this);
+            OnGlobalPointsChanged!.Invoke();
         }
         public clsGeoJson Points
         {
@@ -61,7 +63,7 @@ namespace clientHasidicStories
             set
             {
                 _persons = value;
-                //OnGlobalPersonsChanged?.Invoke();
+                OnGlobalPersonsChanged?.Invoke();
             }
         }
         public clsPlaces Places
@@ -70,7 +72,7 @@ namespace clientHasidicStories
             set
             {
                 _places = value;
-                OnGlobalPersonsChanged?.Invoke();
+                //OnGlobalPersonsChanged?.Invoke();
             }
         }
         public bool TEILoadedOnce { get { bool loaded = _TEILoadedOnce; _TEILoadedOnce = true; return loaded; } init { _TEILoadedOnce = false; } }

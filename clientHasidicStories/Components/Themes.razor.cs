@@ -100,7 +100,7 @@ namespace clientHasidicStories.Components
                 _treeView.Reload();
             }
 
-            globalService.updateStories();
+            globalService.updateStoriesAndPoints();
         }
 
         void selectNode(clsTheme node)
@@ -125,7 +125,7 @@ namespace clientHasidicStories.Components
                 }
             }
             selectedNodes.Clear();
-            globalService.updateStories();
+            globalService.updateStoriesAndPoints();
             return Task.CompletedTask;
         }
         Task OnSelectAll()
@@ -139,7 +139,7 @@ namespace clientHasidicStories.Components
                     selectNode(child);
                 }
             }
-            globalService.updateStories();
+            globalService.updateStoriesAndPoints();
             return Task.CompletedTask;
         }
         Task OnClose()
