@@ -25,7 +25,56 @@
                 'circle-opacity': 0.5
             },
         });
+        var popup = new maptilersdk.Popup({
+            closeButton: false,
+            closeOnClick: false
+        });
+        map.on('mouseenter', 'points', function (evt) {
+            // Change the cursor to a pointer when it enters a feature in the 'points' layer.
+            map.getCanvas().style.cursor = 'pointer';
+
+            if (evt.features.length > 0) {
+                const feature = evt.features[0];
+                var coordinates = feature.geometry.coordinates.slice();
+                var name = feature.properties.name;
+                var link = feature.properties.link;
+
+                popup.setLngLat(coordinates) // sets the popup's location
+                    .setHTML(`<strong>${name}</strong><p style="padding=0;margin:0">click to filter</p><p style="padding=0;margin:0">double click to go there</p>`) // sets the popup's content
+                    .addTo(map); // adds the popup to the map
+            }
+        });
+
+        // Change it back to the default when it leaves.
+        map.on('mouseleave', 'points', function () {
+            map.getCanvas().style.cursor = '';
+            popup.remove();
+});
+        map.on('dblclick', 'points', function (evt) {
+            if (evt.features.length > 0) {
+                const feature = evt.features[0];
+                var link = feature.properties.link; // Get the link from the feature's properties
+
+                // Open the link in a new tab
+                if (link) { // Check if the link is not undefined or empty
+                    window.open(link, '_blank');
+                }
+            }
+        }); map.on('click', 'points', function (evt) {
+            if (evt.features.length > 0) {
+                const feature = evt.features[0];
+                var coordinates = feature.geometry.coordinates.slice();
+                var name = feature.properties.name;
+                var link = feature.properties.link;
+                // Create a Popup instance and set its options
+                const popup = new maptilersdk.Popup()
+                    .setLngLat(coordinates) // sets the popup's location
+                    .setHTML(`click`) // sets the popup's content
+                    .addTo(map); // adds the popup to the map
+            }
+        });
     });
+
 
 
     //const marker = new maptilersdk.Marker()
