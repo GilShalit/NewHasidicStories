@@ -11,15 +11,20 @@
     [Inject] GlobalService globalService { get; set; }
     [Inject] IJSRuntime JS { get; set; }
     private Action ChangeDelegate;//so the Handle method can be unsubscribed
+    private DotNetObjectReference<Map> dotNetRef;
+    private bool isMapInitialized = false; // Track if the map has been initialized
+    private bool isMapDoneInitializing = false; // Track if the map has finished been initialized
 
     protected override async Task OnInitializedAsync()
     {
+        dotNetRef = DotNetObjectReference.Create(this);
         ChangeDelegate = async () => await HandleGlobalPointsChange();
         globalService.OnGlobalPointsChanged += ChangeDelegate;
     }
     public async Task Dispose()
     {
         globalService.OnGlobalPointsChanged -= ChangeDelegate;
+        dotNetRef?.Dispose();
     }
     private async Task HandleGlobalPointsChange()
     {
@@ -27,10 +32,24 @@
     }
     private async Task DrawMap()
     {
-
-        var center = globalService.Points.data.Center;
-
-        await JS.InvokeVoidAsync("showMap", center, "mapDiv", globalService.Points);
+        if (!isMapInitialized)
+        {
+            var center = globalService.Points.data.Center;
+            await JS.InvokeVoidAsync("initializeMap", center, "mapDiv", dotNetRef ,globalService.Points);
+            Console.WriteLine("Map initialized");
+            isMapDoneInitializing = true;
+            isMapInitialized = true;
+        }
+        else {
+            Console.WriteLine("Map to be updated");
+            if(isMapDoneInitializing) await JS.InvokeVoidAsync("updatePoints",globalService.Points);
+        }
         StateHasChanged();
     }
+        [JSInvokable]
+        public  async Task PointClicked(string placeId)
+        {
+            Console.WriteLine("placeId: " + placeId);
+            //return Task.CompletedTask();
+        }
 }

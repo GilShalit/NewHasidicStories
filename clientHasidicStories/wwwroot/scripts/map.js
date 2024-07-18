@@ -1,6 +1,7 @@
-﻿window.showMap = (center, divname, data) => {
+﻿let map;
+window.initializeMap = (center, divname, dotNetRef, data) => {
     maptilersdk.config.apiKey = 'yHCSCgx2fJ24IoOXLGYO';
-    const map = new maptilersdk.Map({
+    map = new maptilersdk.Map({
         container: divname, // container's id or the HTML element to render the map
         style: maptilersdk.MapStyle.TOPO.TOPOGRAPHIQUE,
         center: center, // starting position [lng, lat]
@@ -11,8 +12,7 @@
         maxZoom: 14
     });
 
-    map.on('load', async function () {
-        // Add an image to use as a custom marker
+    map.on('load', function () {
         map.addSource('points', data);
 
         map.addLayer({
@@ -25,6 +25,7 @@
                 'circle-opacity': 0.5
             },
         });
+
         var popup = new maptilersdk.Popup({
             closeButton: false,
             closeOnClick: false
@@ -64,16 +65,30 @@
             if (evt.features.length > 0) {
                 const feature = evt.features[0];
                 var id = feature.properties.xmlid;
-                DotNet.invokeMethodAsync("clientHasidicStories", "PointClicked", id)
+                dotNetRef.invokeMethodAsync("PointClicked", id)
                     .then(result => { });
             }
         });
     });
-
-
-
-    //const marker = new maptilersdk.Marker()
-    //    .setLngLat(center)
-    //    .addTo(map);
-
 }
+// Function to update the points layer with new data
+window.updatePoints = (data) => {
+    return;
+    if (map.getSource('points')) {
+        map.removeLayer('points');
+        map.removeSource('points');
+    }
+
+    map.addSource('points', data);
+
+    map.addLayer({
+        'id': 'points',
+        'type': 'circle',
+        'source': 'points',
+        'paint': {
+            'circle-radius': 8,
+            'circle-color': '#B42222',
+            'circle-opacity': 0.5
+        },
+    });
+};

@@ -21,6 +21,11 @@ namespace clientHasidicStories
             Utils.changeDisplayPlaces(this);
             OnGlobalPointsChanged!.Invoke();
         }
+        public void updatePoints()
+        {
+            Utils.changeDisplayPlaces(this);
+            OnGlobalPointsChanged!.Invoke();
+        }
         public clsGeoJson Points
         {
             get => _points;

@@ -5,12 +5,6 @@ namespace clientHasidicStories
 {
     public static class Utils
     {
-        [JSInvokable]
-        public static async Task PointClicked(string placeId)
-        {
-            Console.WriteLine("placeId: " + placeId);
-            //return Task.CompletedTask();
-        }
         public static bool displayStories(GlobalService globalService)
         {
             return globalService.EditionFiles.hasSelected || globalService.Persons.hasSelected || globalService.Themes.hasSelected;
