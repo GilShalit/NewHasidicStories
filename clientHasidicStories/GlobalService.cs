@@ -12,17 +12,12 @@ namespace clientHasidicStories
         private bool _TEILoadedOnce;
         //public clsStoryInfoData StoryInfoData { get; set; }
         public clsDisplayStoryTexts DisplayStoryTexts { get; set; }
-        public TEI AuthoritiesData { get; set; }
 
         public void updateStoriesAndPoints()
         {
             Utils.changeDisplayStories(this);
             OnStoriesToDisplayChanged!.Invoke();
-            Utils.changeDisplayPlaces(this);
-            OnGlobalPointsChanged!.Invoke();
-        }
-        public void updatePoints()
-        {
+            
             Utils.changeDisplayPlaces(this);
             OnGlobalPointsChanged!.Invoke();
         }
@@ -34,7 +29,7 @@ namespace clientHasidicStories
                 if (_points != value)
                 {
                     _points = value;
-                    OnGlobalPointsChanged?.Invoke();
+                    //OnGlobalPointsChanged?.Invoke();
                 }
             }
         }

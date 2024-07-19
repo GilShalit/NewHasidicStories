@@ -1,5 +1,5 @@
 ﻿let map;
-window.initializeMap = (center, divname, dotNetRef, data) => {
+window.initializeMap = (center, divname, dotNetRef) => {
     maptilersdk.config.apiKey = 'yHCSCgx2fJ24IoOXLGYO';
     map = new maptilersdk.Map({
         container: divname, // container's id or the HTML element to render the map

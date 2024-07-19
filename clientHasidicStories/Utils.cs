@@ -1,6 +1,7 @@
 ﻿using clientHasidicStories.Classes;
 using clientHasidicStories.Components;
 using Microsoft.JSInterop;
+
 namespace clientHasidicStories
 {
     public static class Utils

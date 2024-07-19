@@ -17,12 +17,12 @@
 
     protected override async Task OnInitializedAsync()
     {
-    }
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
         dotNetRef = DotNetObjectReference.Create(this);
         ChangeDelegate = async () => await HandleGlobalPointsChange();
         globalService.OnGlobalPointsChanged += ChangeDelegate;
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
     }
     public async Task Dispose()
     {
@@ -38,11 +38,12 @@
         if (!isMapInitialized)
         {
             var center = globalService.Points.data.Center;
-            await JS.InvokeVoidAsync("initializeMap", center, "mapDiv", dotNetRef ,globalService.Points);
+            await JS.InvokeVoidAsync("initializeMap", center, "mapDiv", dotNetRef );
             isMapInitialized = true;
+            await Task.Delay(1000);
+            await JS.InvokeVoidAsync("updatePoints",globalService.Points);
         }
         else {
-            if(isFirstUpdate) await Task.Delay(1000);
             await JS.InvokeVoidAsync("updatePoints",globalService.Points);
         }
         StateHasChanged();

@@ -42,13 +42,25 @@
     [Parameter] public string clear { get; set; }
     [Parameter] public string all { get; set; }
     IList<clsPerson> selectedNodes = new List<clsPerson>();
+    bool firstTime = true;
+
     protected override void OnInitialized()
     {
         globalService.OnGlobalPersonsChanged += HandleGlobalPersonsChange;
     }
+    // protected override void OnAfterRender(bool firstRender)
+    // {
+    //     if (firstTime && globalService.Persons != null)
+    //     {
+    //         selectedNodes.Clear();
+    //         foreach (clsPerson node in globalService.Persons)
+    //             selectNode(node);
+    //         firstTime = false;
+    //     }
+    // }
     public void Dispose()
     {
-        globalService.OnGlobalThemesChanged -= HandleGlobalPersonsChange;
+        globalService.OnGlobalPersonsChanged -= HandleGlobalPersonsChange;
     }
     private void HandleGlobalPersonsChange()
     {
@@ -62,7 +74,8 @@
     {
         foreach (clsPerson node in globalService.Persons)
         {
-            node.selected = nodes.Contains(node);
+            if (nodes.Contains(node)) selectNode(node);
+            else unSelectNode(node);
         }
         globalService.updateStoriesAndPoints();
     }
@@ -78,11 +91,18 @@
     {
         selectedNodes.Clear();
         foreach (clsPerson node in globalService.Persons)
-        {
-            node.selected = true;
-            selectedNodes.Add(node);
-        }
+            selectNode(node);
         globalService.updateStoriesAndPoints();
         return Task.CompletedTask;
+    }
+    void selectNode(clsPerson node)
+    {
+        node.selected = true;
+        if (!selectedNodes.Contains(node)) selectedNodes.Add(node);
+    }
+    void unSelectNode(clsPerson node)
+    {
+        node.selected = false;
+        if (selectedNodes.Contains(node)) selectedNodes.Remove(node);
     }
 }

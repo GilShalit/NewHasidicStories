@@ -203,7 +203,6 @@ namespace clientHasidicStories.Pages
                 //Console.WriteLine("End delay in ProcessAuthorities");
 
                 //get Person names
-                globalService.AuthoritiesData = authorities;
                 clsPersons localPersons = globalService.Persons;
                 if (localPersons != null)
                 {
@@ -214,14 +213,14 @@ namespace clientHasidicStories.Pages
                     localPersons.hasNames = true;
                     globalService.Persons = localPersons;
                 }
-                clsGeoJson localPoints = new clsGeoJson();
 
                 //find Ids of places included in the stories
+                clsGeoJson localPoints = new clsGeoJson();
                 List<string> includedPlacesIds = new List<string>();
                 if (globalService.Places != null)
                 {
                     foreach (clsPlace place in globalService.Places)
-                                if (!includedPlacesIds.Contains(place.xmlref)) includedPlacesIds.Add(place.xmlref);
+                        if (!includedPlacesIds.Contains(place.xmlref)) includedPlacesIds.Add(place.xmlref);
                 }
 
                 foreach (TEITeiHeaderFileDescSourceDescPlace place in authorities.teiHeader.fileDesc.sourceDesc.listPlace
