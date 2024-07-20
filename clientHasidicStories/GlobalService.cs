@@ -9,7 +9,6 @@ namespace clientHasidicStories
         private clsEditionFiles _editionfiles;
         private clsPersons _persons;
         private clsPlaces _places;
-        private bool _TEILoadedOnce;
         //public clsStoryInfoData StoryInfoData { get; set; }
         public clsDisplayStoryTexts DisplayStoryTexts { get; set; }
 
@@ -78,7 +77,7 @@ namespace clientHasidicStories
                 //OnGlobalPersonsChanged?.Invoke();
             }
         }
-        public bool TEILoadedOnce { get { bool loaded = _TEILoadedOnce; _TEILoadedOnce = true; return loaded; } init { _TEILoadedOnce = false; } }
+        //public bool TEILoadedOnce { get { bool loaded = _TEILoadedOnce; _TEILoadedOnce = true; return loaded; } init { _TEILoadedOnce = false; } }
         public bool DataLoaded { get; set; }
 
         public event Action OnGlobalEditionsChanged;

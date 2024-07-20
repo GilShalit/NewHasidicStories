@@ -1,4 +1,5 @@
 ﻿@inject NavigationManager navigationManager
+@inject IJSRuntime JSRuntime
 <Div Class="listControl bigControl">
     <Row Margin="Margin.Is1.FromTop">
         <Column ColumnSize="ColumnSize.Is4">
@@ -75,12 +76,12 @@
         StateHasChanged();
     }
 
-    private void HandleStoryClick(string editionName, string storyId)
+    private async void HandleStoryClick(string editionName, string storyId)
     {
         string fileName = globalService.EditionFiles.getFileName(editionName);
-        Console.WriteLine($"Clicked story ID: {storyId} in edition: {editionName} ({fileName})");
 
-        navigationManager.NavigateTo($"/Story/{fileName}/{storyId}", false);
+        var url = $"/Story/{fileName}/{storyId}";
+        await JSRuntime.InvokeVoidAsync("open", navigationManager.ToAbsoluteUri(url), "_blank");
     }
 
     private string firstWord(string text)

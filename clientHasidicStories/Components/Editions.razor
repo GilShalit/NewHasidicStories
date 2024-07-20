@@ -1,5 +1,7 @@
 ﻿@using System.IO;
+@inject IJSRuntime JSRuntime
 @inject NavigationManager navigationManager
+
 <Div Class="listControl smallControl">
     <Row Margin="Margin.Is1.FromTop">
         <Column>
@@ -58,10 +60,12 @@
         }
         StateHasChanged();
     }
-    private void NavigateToFile(string fileName)
+    private async void NavigateToFile(string fileName)
     {
-        if (!globalService.TEILoadedOnce) navigationManager.NavigateTo($"/Edition/{fileName}", false);
-        else navigationManager.NavigateTo($"/Edition/{fileName}", true);
+        var url = $"/Edition/{fileName}";
+        await JSRuntime.InvokeVoidAsync("open", navigationManager.ToAbsoluteUri(url), "_blank");
+        // if (!globalService.TEILoadedOnce) navigationManager.NavigateTo($"/Edition/{fileName}", false);
+        // else navigationManager.NavigateTo($"/Edition/{fileName}", true);
     }
     private void selectedNodesChanged(IList<clsEditionFile> nodes)
     {
