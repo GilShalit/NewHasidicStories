@@ -48,22 +48,23 @@
     {
         globalService.OnGlobalPersonsChanged += HandleGlobalPersonsChange;
     }
-    // protected override void OnAfterRender(bool firstRender)
-    // {
-    //     if (firstTime && globalService.Persons != null)
-    //     {
-    //         selectedNodes.Clear();
-    //         foreach (clsPerson node in globalService.Persons)
-    //             selectNode(node);
-    //         firstTime = false;
-    //     }
-    // }
+    protected override void OnAfterRender(bool firstRender)
+    {
+        // if (firstTime && globalService.Persons != null)
+        // {
+        //     selectedNodes.Clear();
+        //     foreach (clsPerson node in globalService.Persons)
+        //         selectNode(node);
+        //     firstTime = false;
+        // }
+    }
     public void Dispose()
     {
         globalService.OnGlobalPersonsChanged -= HandleGlobalPersonsChange;
     }
     private void HandleGlobalPersonsChange()
     {
+        selectedNodes.Clear(); //because this is called twice, when gs.Persons is set in ProcessStoryInfo and when gs.Persons is updated in ProcessAuthorities
         foreach (clsPerson person in globalService.Persons)
         {
             if (person.selected) selectedNodes.Add(person);
