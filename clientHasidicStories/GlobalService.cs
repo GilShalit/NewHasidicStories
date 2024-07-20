@@ -13,13 +13,16 @@ namespace clientHasidicStories
         //public clsStoryInfoData StoryInfoData { get; set; }
         public clsDisplayStoryTexts DisplayStoryTexts { get; set; }
 
-        public void updateStoriesAndPoints()
+        public void updateStoriesAndPoints(string placeId = "")
         {
-            Utils.changeDisplayStories(this);
+            Utils.changeDisplayStories(this, placeId);
             OnStoriesToDisplayChanged!.Invoke();
-            
-            Utils.changeDisplayPlaces(this);
-            OnGlobalPointsChanged!.Invoke();
+
+            if (placeId == "")
+            {
+                Utils.changeDisplayPlaces(this);
+                OnGlobalPointsChanged!.Invoke();
+            }
         }
         public clsGeoJson Points
         {

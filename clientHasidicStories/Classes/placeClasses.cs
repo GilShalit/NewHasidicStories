@@ -31,17 +31,12 @@
             throw new Exception("Add method not supported");
         }
 
-        public List<string> selectedStoryIds
+        //story ids for selected place
+        public List<string> selectedStoryIds(string placeId)
         {
-            get
-            {
-                List<string> selectedStoryIds = new List<string>();
-                foreach (clsPlace place in this)
-                        if (place.selected)
-                            selectedStoryIds.AddRange(place.stories);
-                return selectedStoryIds.Distinct().ToList();
-            }
+            return this.Where(p => p.xmlref == placeId).First().stories.ToList();
         }
+
         // Expose all elements as a read-only list
         public IReadOnlyList<clsPlace> Elements => this;
         public void newPlace(string xmlref, string story)

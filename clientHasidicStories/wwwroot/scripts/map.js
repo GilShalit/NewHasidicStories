@@ -48,18 +48,67 @@ window.initializeMap = (center, divname, dotNetRef) => {
                     window.open(link, '_blank');
                 }
             }
-        }); map.on('click', 'points', function (evt) {
+        });
+        map.on('click', 'points', function (evt) {
             if (evt.features.length > 0) {
                 const feature = evt.features[0];
                 var id = feature.properties.xmlid;
                 dotNetRef.invokeMethodAsync("PointClicked", id)
                     .then(result => { });
+
+                const clickedPointId = id; // Or any unique property from the feature
+
+                // Remove existing pulsing effect if any
+                if (window.pulseInterval) clearInterval(window.pulseInterval);
+
+                let pulseRadius = 8; // Starting radius
+                let pulseOpacity = 1; // Starting opacity for the clicked point
+                const maxRadius = 20;
+                const minRadius = 4;
+                const minOpacity = 0.1;
+                const originalOpacity = 0.5; // Original opacity for the rest of the points
+                let expanding = true; // Direction of the pulse effect
+
+                window.pulseInterval = setInterval(() => {
+                    if (expanding) {
+                        pulseRadius += 0.4; // Increase radius
+                        pulseOpacity = Math.max(minOpacity, 1 - ((pulseRadius - minRadius) / (maxRadius - minRadius)));
+                        if (pulseRadius >= maxRadius) {
+                            expanding = false; // Reverse direction
+                            // Immediately reset radius and opacity to original values for the clicked point
+                            pulseRadius = minRadius;
+                            pulseOpacity = 1;
+                        }
+                    }
+
+                    // Update the circle-radius for all points, and circle-opacity only for the clicked point
+                    map.setPaintProperty('points', 'circle-radius', [
+                        "case",
+                        ["==", ["get", "xmlid"], clickedPointId], pulseRadius,
+                        8 // Default radius for other points
+                    ]);
+                    map.setPaintProperty('points', 'circle-opacity', [
+                        "case",
+                        ["==", ["get", "xmlid"], clickedPointId], pulseOpacity,
+                        originalOpacity // Original opacity for the rest of the points
+                    ]);
+
+                    // If the circle has contracted, restart the expanding phase
+                    if (!expanding) {
+                        expanding = true;
+                    }
+
+                }, 30); // Adjust the interval as needed for smoother animation
+
             }
         });
     });
 }
 // Function to update the points layer with new data
 window.updatePoints = (data) => {
+    // Remove existing pulsing effect if any
+    if (window.pulseInterval) clearInterval(window.pulseInterval);
+
     if (map.getSource('points')) {
         map.removeLayer('points');
         map.removeSource('points');

@@ -48,10 +48,9 @@
         }
         StateHasChanged();
     }
-        [JSInvokable]
-        public  async Task PointClicked(string placeId)
-        {
-            Console.WriteLine("placeId: " + placeId);
-            //return Task.CompletedTask();
-        }
+    [JSInvokable]
+    public  async Task PointClicked(string placeId)
+    {
+        globalService.updateStoriesAndPoints(placeId);
+    }
 }

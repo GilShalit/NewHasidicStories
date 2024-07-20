@@ -11,7 +11,7 @@ namespace clientHasidicStories
             return globalService.EditionFiles.hasSelected || globalService.Persons.hasSelected || globalService.Themes.hasSelected;
         }
 
-        internal static void changeDisplayStories(GlobalService gs)
+        internal static void changeDisplayStories(GlobalService gs, string placeId = "")
         {
             //turn on selected editions
             gs.DisplayStoryTexts.reset();
@@ -22,10 +22,19 @@ namespace clientHasidicStories
 
                 foreach (clsStoryText storyText in editionStories.stories)
                 {
-                    //find if stories include selected themes and selected persons
-                    if (gs.Themes.selectedStoryIds.Contains(storyText.id) && gs.Persons.selectedStoryIds.Contains(storyText.id))
-                        storyText.display = true;
-
+                    if (placeId == "")
+                    {
+                        //find if stories include selected themes and selected persons
+                        if (gs.Themes.selectedStoryIds.Contains(storyText.id) && gs.Persons.selectedStoryIds.Contains(storyText.id))
+                            storyText.display = true;
+                    }
+                    else
+                    {
+                        //find if stories include selected themes and selected persons AND selected place
+                        if (gs.Themes.selectedStoryIds.Contains(storyText.id) && gs.Persons.selectedStoryIds.Contains(storyText.id) 
+                            && gs.Places.selectedStoryIds(placeId).Contains(storyText.id))
+                            storyText.display = true;
+                    }
                 }
                 //find if stories include selected places
                 //if selected edition has no selected stories, turn it off
@@ -38,10 +47,10 @@ namespace clientHasidicStories
                 foreach (string storyId in place.stories)
                 {
                     //find if place stories are shown with selected themes and selected persons
-                    if (gs.DisplayStoryTexts.selectedStoryIds.Contains(storyId) )
-                        gs.Points.data.changeFeatureSelection(place.xmlref,true);
+                    if (gs.DisplayStoryTexts.selectedStoryIds.Contains(storyId))
+                        gs.Points.data.changeFeatureSelection(place.xmlref, true);
                     else
-                        gs.Points.data.changeFeatureSelection(place.xmlref,false);
+                        gs.Points.data.changeFeatureSelection(place.xmlref, false);
 
                 }
             }
