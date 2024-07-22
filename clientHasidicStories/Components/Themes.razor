@@ -20,6 +20,7 @@
                           GetChildNodes="@(item => item.children)"
                           HasChildNodes="@(item => item.children?.Any() == true)"
                           ExpandedNodes="@expandedNodes"
+                          ExpandedNodesChanged="OnExpandedNodeChanged"
                           SelectedNodes="selectedNodes"
                           SelectionMode="TreeViewSelectionMode.Multiple"
                           SelectedNodesChanged="OnSelectedNodesChanged"

@@ -17,13 +17,13 @@ window.loadCssFile = (href) => {
     }
 }
 window.changeClassStyle = (className, styleName, styleValue) => {
-    var elements = document.getElementsByClassName(className);
+    var elements = document.querySelectorAll('#themesTree .' + className);
     for (var i = 0; i < elements.length; i++) {
         elements[i].style[styleName] = styleValue;
     }
 }
 window.changeClass = (oldClassName, newClassName) => {
-    var elements = document.querySelectorAll('.' + oldClassName);
+    var elements = document.querySelectorAll('#themesTree .' + oldClassName);
     elements.forEach(element => {
         element.classList.remove(oldClassName);
         element.classList.add(newClassName);
