@@ -8,13 +8,19 @@
     <pb-document id="document1" path=@(fileName + ".xml") odd="Stories" view="page"></pb-document>
     <br />
     <div class="content-body">
-        <pb-view id="view1" src="document1" column-separator=".tei-cb" append-footnotes="append-footnotes" subscribe="transcription" emit="transcription" wait-for="#facsimile" animation disable-history />
+        <pb-view id="view1" src="document1" xpath="@xpath" column-separator=".tei-cb" append-footnotes="append-footnotes" subscribe="transcription" emit="transcription" animation disable-history />
     </div>
 </pb-page>
 @code {
     [Parameter] public string fileName { get; set; }
     [Parameter] public string storyId { get; set; }
-    
+    string xpath = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        xpath = $"//tei:div[@type ='story' and @xml:id='{storyId}']";
+    }
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
