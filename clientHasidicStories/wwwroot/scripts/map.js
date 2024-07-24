@@ -51,9 +51,9 @@ window.initializeMap = (center, divname, dotNetRef) => {
                 }
             }
         });
-        map.on('click', function (evt) {
-            resetPulsatingPoint();
-        });
+        //map.on('click', function (evt) {
+        //    resetPulsatingPoint();
+        //});
         map.on('click', 'points', function (evt) {
             if (evt.features.length > 0) {
                 const feature = evt.features[0];

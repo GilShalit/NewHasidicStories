@@ -49,16 +49,23 @@ body {
 
 #mapCol {
     position: relative;
+    padding: 0;
     z-index: 1000;
 }
 
 #mapDiv {
     max-height: calc(100vh - 80px);
+    width: 100% !important;
+    height: 100% !important;
     position: absolute;
     top: 0;
     right: 0;
-    z-index: 1000;
+    z-index: 999;
     overflow-y: hidden; /* for a smaller screen */
+}
+.mapClear {
+    position: absolute; top: 4px; left: 20px; 
+    z-index: 1000;
 }
 .accordion-button{
     padding: 0.4rem 1rem;

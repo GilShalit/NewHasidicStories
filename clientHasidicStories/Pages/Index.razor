@@ -13,10 +13,10 @@
         <Column ColumnSize="@myColumnSize">
             <Themes caption="@Localizer["themes"]" clear="@Localizer["clear"]" all="@Localizer["all"]" close="@Localizer["close"]" />
         </Column>
-        <Column id="mapCol" ColumnSize="@myColumnSize">
-            <Map/>
+        <Column id="mapCol" ColumnSize="@myColumnSize" >
+            <Map clear="@Localizer["clear"]" />
         </Column>
-        <Column ColumnSize="@myColumnSize" >
+        <Column ColumnSize="@myColumnSize" Style="padding-right:0">
             <Stories caption="@Localizer["stories"]" close="@Localizer["close"]" />
         </Column>
     </Row>

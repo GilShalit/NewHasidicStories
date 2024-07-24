@@ -1,15 +1,19 @@
 ﻿@using System.Text.Json
-<Div id="mapDiv" Class="listControl" style="width: 100%!important;height:100%!important;" >
+<Div style="position: relative; width: 100%; height: 100%;">
+    <Div id="mapDiv" Class="listControl" />
+    <Button Class="controlButton mapClear" Clicked="@OnClear">@clear</Button>
 </Div>
 
 @code {
     //https://docs.maptiler.com/sdk-js/examples/geojson-markers/
     [Inject] GlobalService globalService { get; set; }
     [Inject] IJSRuntime JS { get; set; }
+    [Parameter] public string clear { get; set; }
+
     private Action ChangeDelegate;//so the Handle method can be unsubscribed
     private DotNetObjectReference<Map> dotNetRef;
     private bool isMapInitialized = false; // Track if the map has been initialized
-    private bool isFirstUpdate = true; 
+    private bool isFirstUpdate = true;
 
     protected override async Task OnInitializedAsync()
     {
@@ -34,19 +38,25 @@
         if (!isMapInitialized)
         {
             var center = globalService.Points.data.Center;
-            await JS.InvokeVoidAsync("initializeMap", center, "mapDiv", dotNetRef );
+            await JS.InvokeVoidAsync("initializeMap", center, "mapDiv", dotNetRef);
             isMapInitialized = true;
             await Task.Delay(1000);
-            await JS.InvokeVoidAsync("updatePoints",globalService.Points);
+            await JS.InvokeVoidAsync("updatePoints", globalService.Points);
         }
-        else {
-            await JS.InvokeVoidAsync("updatePoints",globalService.Points);
+        else
+        {
+            await JS.InvokeVoidAsync("updatePoints", globalService.Points);
         }
         StateHasChanged();
     }
     [JSInvokable]
-    public  async Task PointClicked(string placeId)
+    public async Task PointClicked(string placeId)
     {
         globalService.updateStoriesAndPoints(placeId);
+    }
+    async Task OnClear()
+    {
+        await JS.InvokeVoidAsync("resetPulsatingPoint");
+        globalService.updateStoriesAndPoints();
     }
 }
