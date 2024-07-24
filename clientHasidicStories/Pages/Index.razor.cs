@@ -206,8 +206,10 @@ namespace clientHasidicStories.Pages
                 clsPersons localPersons = globalService.Persons;
                 if (localPersons != null)
                 {
+                    //clsPerson prs = localPersons.Where(p => p.xmlref == "01.001").FirstOrDefault();
                     foreach (clsPerson person in localPersons)
                     {
+                        Console.WriteLine(person.xmlref);
                         person.name = authorities.teiHeader.fileDesc.sourceDesc.listPerson.Where(p => p.xmlid == person.xmlref).FirstOrDefault().name;
                     }
                     localPersons.hasNames = true;
@@ -299,10 +301,12 @@ namespace clientHasidicStories.Pages
                         story = storyInfo.editions[e].stories[s].Id;
                         for (int j = 0; j < storyInfo.editions[e].stories[s].persons.Length; j++)
                         {
+//                            localPersons.newPerson(storyInfo.editions[e].stories[s].persons[j].Substring(1), story);
                             localPersons.newPerson(storyInfo.editions[e].stories[s].persons[j], story);
                         }
                         for (int j = 0; j < storyInfo.editions[e].stories[s].places.Length; j++)
                         {
+//                            localPlaces.newPlace(storyInfo.editions[e].stories[s].places[j].Substring(1), story);
                             localPlaces.newPlace(storyInfo.editions[e].stories[s].places[j], story);
                         }
                     }
