@@ -57,9 +57,7 @@ namespace clientHasidicStories.Components
             {
                 await Task.Delay(5);
                 await JS.InvokeVoidAsync("changeClassStyle", "b-tree-view-node", "margin", "0 1.25rem 0 0");
-                //await JS.InvokeVoidAsync("changeClassStyle", "b-tree-view-node", "margin-right", "1.25rem");
                 await JS.InvokeVoidAsync("changeClassStyle", "b-tree-view-node-title", "margin", "0 1.25rem 0 0");
-                //await JS.InvokeVoidAsync("changeClassStyle", "b-tree-view-node-title", "margin-right", "1.25rem");
                 await JS.InvokeVoidAsync("changeClassStyle", "b-tree-view-node-icon", "float", "right");
                 await JS.InvokeVoidAsync("changeClass", "fa-chevron-right", "fa-chevron-left");
             }

@@ -14,6 +14,7 @@
             {
                 <TreeView Nodes="globalService.Persons"
                           TNode="clsPerson"
+                          id="peopleTree"
                           GetChildNodes="@(item => item.children)"
                           HasChildNodes="@(item => item.children?.Any() == true)"
                           SelectionMode="TreeViewSelectionMode.Multiple"
@@ -47,16 +48,6 @@
     protected override void OnInitialized()
     {
         globalService.OnGlobalPersonsChanged += HandleGlobalPersonsChange;
-    }
-    protected override void OnAfterRender(bool firstRender)
-    {
-        // if (firstTime && globalService.Persons != null)
-        // {
-        //     selectedNodes.Clear();
-        //     foreach (clsPerson node in globalService.Persons)
-        //         selectNode(node);
-        //     firstTime = false;
-        // }
     }
     public void Dispose()
     {

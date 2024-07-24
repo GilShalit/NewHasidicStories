@@ -8,43 +8,47 @@
      Revert styles for checkboxes that are too deeply nested 
     display: block;
 }
-
-.b-tree-view-node, .b-tree-view-node-title{
-    margin-left:0!important;
-    margin-right:0!important;
-}
 */
+#peopleTree .b-tree-view-node, #peopleTree .b-tree-view-node-title, #editionsTree .b-tree-view-node, #editionsTree .b-tree-view-node-title {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
 body {
     font-size: 0.75rem;
 }
+
 .btn, linkStyle {
     font-size: 0.75rem !important;
 }
-.h6{
+
+.h6 {
     text-align: center;
 }
+
 .listControl {
     /*background-color: beige !important;*/
     border-radius: 5px;
     border-top: 1px solid #e0e0e0;
     box-shadow: 0 .25rem .25rem rgba(0,0,0,0.8) !important;
-    font-size: 0.75rem!important;
+    font-size: 0.75rem !important;
     overflow-y: auto;
     overflow-x: hidden;
 }
+
 .smallControl {
     height: calc((100vh - 87px)/2);
 }
+
 .bigControl {
     height: calc((100vh - 80px));
 }
 
-.counts{
+.counts {
     font-size: 1rem;
     text-align: center;
-    padding: 0.2rem ;
+    padding: 0.2rem;
     margin-top: 0.2rem;
-
 }
 
 #mapCol {
@@ -63,17 +67,23 @@ body {
     z-index: 999;
     overflow-y: hidden; /* for a smaller screen */
 }
+
 .mapClear {
-    position: absolute; top: 4px; left: 20px; 
+    position: absolute;
+    top: 4px;
+    left: 20px;
     z-index: 1000;
 }
-.accordion-button{
+
+.accordion-button {
     padding: 0.4rem 1rem;
 }
+
 .controlButton {
     box-shadow: 0 .1rem .1rem rgba(0,0,0,0.8) !important;
     background: #FBECD8
 }
+
 .controlsContainer {
     margin-top: 10px;
     padding-left: 20px;
@@ -86,29 +96,32 @@ body {
 .accordion-body {
     padding: 0.2rem 0.4rem;
 }
+
 .pStory {
     direction: rtl;
     font-size: 0.75rem;
     cursor: pointer;
-    padding:0 ;
-    margin-bottom:3px;
-    font-family:Georgia, 'Times New Roman', Times, serif;
-}
-.pStory:hover {
-    background-color: #f0f0f0;
+    padding: 0;
+    margin-bottom: 3px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
-.firstWord{
+    .pStory:hover {
+        background-color: #f0f0f0;
+    }
+
+.firstWord {
     font-weight: bold;
     font-size: 0.85rem;
 }
 
-.navbar{
-    padding-top:.2rem!important;
+.navbar {
+    padding-top: .2rem !important;
 }
+
 .navbar-nav {
     padding-top: 12px !important;
-    height:55px;
+    height: 55px;
 }
 
 .languageSelector {

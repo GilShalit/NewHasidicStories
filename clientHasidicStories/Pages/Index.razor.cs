@@ -25,9 +25,13 @@ namespace clientHasidicStories.Pages
         [Inject] NavigationManager Navigation { get; set; }
         bool isLoading = true;
         private Blazorise.IFluentColumn myColumnSize = ColumnSize.Is3;
+        string mapPadding = "";
 
         protected override async Task OnInitializedAsync()
         {
+            if (CultureInfo.CurrentCulture.Name == "he-IL") mapPadding = "padding-left:0";
+            else mapPadding = "padding-right:0";
+
             //globalService.OnDisplayStoriesChanged += HandleDisplayStoriesChanged;
             if (!globalService.DataLoaded)
             {
@@ -301,12 +305,12 @@ namespace clientHasidicStories.Pages
                         story = storyInfo.editions[e].stories[s].Id;
                         for (int j = 0; j < storyInfo.editions[e].stories[s].persons.Length; j++)
                         {
-//                            localPersons.newPerson(storyInfo.editions[e].stories[s].persons[j].Substring(1), story);
+                            //                            localPersons.newPerson(storyInfo.editions[e].stories[s].persons[j].Substring(1), story);
                             localPersons.newPerson(storyInfo.editions[e].stories[s].persons[j], story);
                         }
                         for (int j = 0; j < storyInfo.editions[e].stories[s].places.Length; j++)
                         {
-//                            localPlaces.newPlace(storyInfo.editions[e].stories[s].places[j].Substring(1), story);
+                            //                            localPlaces.newPlace(storyInfo.editions[e].stories[s].places[j].Substring(1), story);
                             localPlaces.newPlace(storyInfo.editions[e].stories[s].places[j], story);
                         }
                     }

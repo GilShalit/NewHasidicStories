@@ -18,6 +18,7 @@
             {
                 <TreeView Nodes="globalService.EditionFiles"
                           TNode="clsEditionFile"
+                          id="editionsTree"
                           GetChildNodes="@(item => item.children)"
                           HasChildNodes="@(item => item.children?.Any() == true)"
                           SelectionMode="TreeViewSelectionMode.Multiple"
