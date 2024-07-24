@@ -1,4 +1,6 @@
 ﻿let map;
+let circleRadius = 6;
+let originalOpacity = 0.5;
 window.initializeMap = (center, divname, dotNetRef) => {
     maptilersdk.config.apiKey = 'yHCSCgx2fJ24IoOXLGYO';
     map = new maptilersdk.Map({
@@ -49,6 +51,9 @@ window.initializeMap = (center, divname, dotNetRef) => {
                 }
             }
         });
+        map.on('click', function (evt) {
+            resetPulsatingPoint();
+        });
         map.on('click', 'points', function (evt) {
             if (evt.features.length > 0) {
                 const feature = evt.features[0];
@@ -56,17 +61,15 @@ window.initializeMap = (center, divname, dotNetRef) => {
                 dotNetRef.invokeMethodAsync("PointClicked", id)
                     .then(result => { });
 
-                const clickedPointId = id; // Or any unique property from the feature
-
+                window.lastClickedPointId = id;
                 // Remove existing pulsing effect if any
                 if (window.pulseInterval) clearInterval(window.pulseInterval);
 
-                let pulseRadius = 8; // Starting radius
+                let pulseRadius = circleRadius; // Starting radius
                 let pulseOpacity = 1; // Starting opacity for the clicked point
-                const maxRadius = 20;
-                const minRadius = 4;
+                const maxRadius = 15;
+                const minRadius = 3;
                 const minOpacity = 0.1;
-                const originalOpacity = 0.5; // Original opacity for the rest of the points
                 let expanding = true; // Direction of the pulse effect
 
                 window.pulseInterval = setInterval(() => {
@@ -84,12 +87,12 @@ window.initializeMap = (center, divname, dotNetRef) => {
                     // Update the circle-radius for all points, and circle-opacity only for the clicked point
                     map.setPaintProperty('points', 'circle-radius', [
                         "case",
-                        ["==", ["get", "xmlid"], clickedPointId], pulseRadius,
-                        8 // Default radius for other points
+                        ["==", ["get", "xmlid"], window.lastClickedPointId], pulseRadius,
+                        circleRadius // Default radius for other points
                     ]);
                     map.setPaintProperty('points', 'circle-opacity', [
                         "case",
-                        ["==", ["get", "xmlid"], clickedPointId], pulseOpacity,
+                        ["==", ["get", "xmlid"], window.lastClickedPointId], pulseOpacity,
                         originalOpacity // Original opacity for the rest of the points
                     ]);
 
@@ -121,7 +124,7 @@ window.updatePoints = (data) => {
         'type': 'circle',
         'source': 'points',
         'paint': {
-            'circle-radius': 8,
+            'circle-radius': circleRadius,
             // Start with an opacity of 0
             'circle-color': '#B42222',
             'circle-opacity': 0
@@ -130,7 +133,7 @@ window.updatePoints = (data) => {
 
     // Animate the opacity
     let opacity = 0;
-    const maxOpacity = 0.5; // Target opacity
+    const maxOpacity = originalOpacity; // Target opacity
     const animationStep = 0.05; // Incremental step
     const interval = 10; // Time in milliseconds between each step
 
@@ -143,3 +146,33 @@ window.updatePoints = (data) => {
         map.setPaintProperty('points', 'circle-opacity', opacity);
     }, interval);
 };
+
+window.resetPulsatingPoint = () => {
+    // Remove existing pulsing effect if any
+    if (window.pulseInterval) {
+        clearInterval(window.pulseInterval);
+        window.pulseInterval = null; // Clear the interval ID to prevent interference
+
+        // Reset the size and opacity of the pulsating point to original values
+        // Assuming the original size is circleRadius and the original opacity is OriginalOpacity
+        // You might need to adjust these values based on your initial settings
+
+        // Check if there was a previously clicked point to avoid unnecessary updates
+        if (window.lastClickedPointId) {
+            map.setPaintProperty('points', 'circle-radius', [
+                "case",
+                ["==", ["get", "xmlid"], window.lastClickedPointId], circleRadius,
+                circleRadius // Default size for other points
+            ]);
+            map.setPaintProperty('points', 'circle-opacity', [
+                "case",
+                ["==", ["get", "xmlid"], window.lastClickedPointId], originalOpacity,
+                originalOpacity // Original opacity for the rest of the points
+            ]);
+
+            // Clear the last clicked point ID
+            window.lastClickedPointId = null;
+        }
+    }
+};
+
