@@ -233,14 +233,18 @@ namespace clientHasidicStories.Pages
                     .Where(p => includedPlacesIds.Contains(p.xmlid))
                     )
                 {
+                    Console.WriteLine(place.placeName.Value);
                     Feature newPoint = new Feature();
-                    string[] aGeo = place.location.geo.Trim().Split(",");
-                    float[] geo = new float[aGeo.Length];
-                    geo[0] = float.Parse(aGeo[1], CultureInfo.InvariantCulture);
-                    geo[1] = float.Parse(aGeo[0], CultureInfo.InvariantCulture);
-                    newPoint.geometry.coordinates = geo;
+                    if (place.location != null)
+                    {
+                        string[] aGeo = place.location.geo.Trim().Split(",");
+                        float[] geo = new float[aGeo.Length];
+                        geo[0] = float.Parse(aGeo[1], CultureInfo.InvariantCulture);
+                        geo[1] = float.Parse(aGeo[0], CultureInfo.InvariantCulture);
+                        newPoint.geometry.coordinates = geo;
+                    }
                     newPoint.properties.name = place.placeName.Value;
-                    newPoint.properties.link = place.idno.Value;
+                    if (place.idno != null) newPoint.properties.link = place.idno.Value;
                     newPoint.properties.xmlid = place.xmlid;
                     localPoints.data.Add(newPoint);
                 }
@@ -305,12 +309,12 @@ namespace clientHasidicStories.Pages
                         story = storyInfo.editions[e].stories[s].Id;
                         for (int j = 0; j < storyInfo.editions[e].stories[s].persons.Length; j++)
                         {
-                            //                            localPersons.newPerson(storyInfo.editions[e].stories[s].persons[j].Substring(1), story);
-                            localPersons.newPerson(storyInfo.editions[e].stories[s].persons[j], story);
+                            localPersons.newPerson(storyInfo.editions[e].stories[s].persons[j].Substring(1), story);
+                            //localPersons.newPerson(storyInfo.editions[e].stories[s].persons[j], story);
                         }
                         for (int j = 0; j < storyInfo.editions[e].stories[s].places.Length; j++)
                         {
-                            //                            localPlaces.newPlace(storyInfo.editions[e].stories[s].places[j].Substring(1), story);
+                            localPlaces.newPlace(storyInfo.editions[e].stories[s].places[j].Substring(1), story);
                             localPlaces.newPlace(storyInfo.editions[e].stories[s].places[j], story);
                         }
                     }
@@ -326,6 +330,7 @@ namespace clientHasidicStories.Pages
                     for (int s = 0; s < storyInfo.editions[e].stories.Length; s++)
                     {
                         story = storyInfo.editions[e].stories[s].Id;
+                        Console.WriteLine(story);
                         themeNames = storyInfo.editions[e].stories[s].ana.Split(";");
                         for (int j = 0; j < themeNames.Length; j++)
                         {

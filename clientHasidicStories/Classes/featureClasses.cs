@@ -21,7 +21,7 @@ namespace clientHasidicStories.Classes
             {
                 float lat = 0;
                 float lon = 0;
-                foreach (Feature f in lFeatures)
+                foreach (Feature f in lFeatures.Where(f => f.geometry != null))
                 {
                     lat += f.geometry.coordinates[0];
                     lon += f.geometry.coordinates[1];
