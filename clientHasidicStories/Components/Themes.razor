@@ -14,22 +14,24 @@
         <Column>
             @if (globalService.Themes != null && globalService.Themes.Count > 0)
             {
-                <TreeView Nodes="globalService.Themes"
-                          id="themesTree"
-                          TNode="clsTheme"
-                          GetChildNodes="@(item => item.children)"
-                          HasChildNodes="@(item => item.children?.Any() == true)"
-                          ExpandedNodes="@expandedNodes"
-                          ExpandedNodesChanged="OnExpandedNodeChanged"
-                          SelectedNodes="selectedNodes"
-                          SelectionMode="TreeViewSelectionMode.Multiple"
-                          SelectedNodesChanged="OnSelectedNodesChanged"
-                          @ref=_treeView>
-                    <NodeContent>
-                        <Icon Name="IconName.Lightbulb" />
-                        @(fixName(context.name))
-                    </NodeContent>
-                </TreeView>
+                <Div Class="internalControl">
+                    <TreeView Nodes="globalService.Themes"
+                              id="themesTree"
+                              TNode="clsTheme"
+                              GetChildNodes="@(item => item.children)"
+                              HasChildNodes="@(item => item.children?.Any() == true)"
+                              ExpandedNodes="@expandedNodes"
+                              ExpandedNodesChanged="OnExpandedNodeChanged"
+                              SelectedNodes="selectedNodes"
+                              SelectionMode="TreeViewSelectionMode.Multiple"
+                              SelectedNodesChanged="OnSelectedNodesChanged"
+                              @ref=_treeView>
+                        <NodeContent>
+                            <Icon Name="IconName.Lightbulb" />
+                            @(fixName(context.name))
+                        </NodeContent>
+                    </TreeView>
+                </Div>
             }
             else
             {

@@ -16,35 +16,37 @@
         <Column>
             @if (globalService.DisplayStoryTexts != null)
             {
-                <Accordion>
-                    @for (int i = 0; i < globalService.DisplayStoryTexts.editions.Count; i++)
-                    {
-                        clsEditionStories edition = globalService.DisplayStoryTexts.editions[i];
-                        if (edition.display)
+                <Div Class="internalControl">
+                    <Accordion>
+                        @for (int i = 0; i < globalService.DisplayStoryTexts.editions.Count; i++)
                         {
-                            <AccordionItem @bind-Visible="expandedItems[i]">
-                                <AccordionHeader>
-                                    <Heading Size="HeadingSize.Is6"><AccordionToggle Clicked="(args)=>OnItemClicked(args,edition.iEdition)">@edition.name</AccordionToggle></Heading>
-                                </AccordionHeader>
-                                <AccordionBody>
-                                    @foreach (clsStoryText story in edition.stories)
-                                    {
-                                        if (story.display)
+                            clsEditionStories edition = globalService.DisplayStoryTexts.editions[i];
+                            if (edition.display)
+                            {
+                                <AccordionItem @bind-Visible="expandedItems[i]">
+                                    <AccordionHeader>
+                                        <Heading Size="HeadingSize.Is6"><AccordionToggle Clicked="(args)=>OnItemClicked(args,edition.iEdition)">@edition.name</AccordionToggle></Heading>
+                                    </AccordionHeader>
+                                    <AccordionBody>
+                                        @foreach (clsStoryText story in edition.stories)
                                         {
-                                            <p class="pStory" id=@($"{story.id}") @onclick="(() => HandleStoryClick(edition.name, story.id))">
-                                                <Span Class="firstWord">@firstWord(story.text) </Span>@theRest(story.text) [...]
-                                            </p>
+                                            if (story.display)
+                                            {
+                                                <p class="pStory" id=@($"{story.id}") @onclick="(() => HandleStoryClick(edition.name, story.id))">
+                                                    <Span Class="firstWord">@firstWord(story.text) </Span>@theRest(story.text) [...]
+                                                </p>
+                                            }
                                         }
-                                    }
-                                </AccordionBody>
-                            </AccordionItem>
+                                    </AccordionBody>
+                                </AccordionItem>
+                            }
                         }
-                    }
-                </Accordion>
+                    </Accordion>
+                </Div>
             }
             else
             {
-                <p>Loading...</p>
+                <h6>Loading...</h6>
             }
         </Column>
     </Row>

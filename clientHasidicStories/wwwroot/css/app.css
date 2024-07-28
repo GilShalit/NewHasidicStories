@@ -32,8 +32,20 @@ body {
     border-top: 1px solid #e0e0e0;
     box-shadow: 0 .25rem .25rem rgba(0,0,0,0.8) !important;
     font-size: 0.75rem !important;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.internalControl {
     overflow-y: auto;
     overflow-x: hidden;
+    height: calc((100vh - 130px));
+}
+
+.internalControlSmall {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: calc((100vh - 175px)/2);
 }
 
 .smallControl {

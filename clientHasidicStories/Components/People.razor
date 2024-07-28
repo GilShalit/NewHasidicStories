@@ -14,20 +14,22 @@
         <Column>
             @if (globalService.Persons != null && globalService.Persons.Count > 0 && globalService.Persons.hasNames)
             {
-                <TreeView Nodes="globalService.Persons"
-                          TNode="clsPerson"
-                          id="peopleTree"
-                          GetChildNodes="@(item => item.children)"
-                          HasChildNodes="@(item => item.children?.Any() == true)"
-                          SelectionMode="TreeViewSelectionMode.Multiple"
-                          SelectedNodes="selectedNodes"
-                          SelectedNodesChanged="selectedNodesChanged">
+                <Div Class="internalControlSmall">
+                    <TreeView Nodes="globalService.Persons"
+                              TNode="clsPerson"
+                              id="peopleTree"
+                              GetChildNodes="@(item => item.children)"
+                              HasChildNodes="@(item => item.children?.Any() == true)"
+                              SelectionMode="TreeViewSelectionMode.Multiple"
+                              SelectedNodes="selectedNodes"
+                              SelectedNodesChanged="selectedNodesChanged">
 
-                    <NodeContent>
-                        <Icon Name="IconName.IdCard" />
-                        <Button Class="linkStyle" @onclick="() => NavigateToPerson(context.link)">@context.name</Button>
-                    </NodeContent>
-                </TreeView>
+                        <NodeContent>
+                            <Icon Name="IconName.IdCard" />
+                            <Button Class="linkStyle" @onclick="() => NavigateToPerson(context.link)">@context.name</Button>
+                        </NodeContent>
+                    </TreeView>
+                </Div>
             }
             else
             {
