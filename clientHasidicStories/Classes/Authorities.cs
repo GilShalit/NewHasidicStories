@@ -63,6 +63,8 @@
         public string name { get; set; }
         [System.Xml.Serialization.XmlAttributeAttribute("xml:id")]
         public string xmlid { get; set; }
+        public TEITeiHeaderFileDescSourceDescPlaceIdno idno { get; set; }
+
     }
 
     [System.SerializableAttribute()]

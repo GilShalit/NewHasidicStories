@@ -1,4 +1,6 @@
-﻿<Div Class="listControl smallControl">
+﻿@inject IJSRuntime JSRuntime
+@inject NavigationManager navigationManager
+<Div Class="listControl smallControl">
     <Row Margin="Margin.Is1.FromTop">
         <Column>
             <h3>@caption</h3>
@@ -23,7 +25,7 @@
 
                     <NodeContent>
                         <Icon Name="IconName.IdCard" />
-                        @context.name
+                        <Button Class="linkStyle" @onclick="() => NavigateToPerson(context.link)">@context.name</Button>
                     </NodeContent>
                 </TreeView>
             }
@@ -96,5 +98,9 @@
     {
         node.selected = false;
         if (selectedNodes.Contains(node)) selectedNodes.Remove(node);
+    }
+    private async void NavigateToPerson(string url)
+    {
+        await JSRuntime.InvokeVoidAsync("open", navigationManager.ToAbsoluteUri(url), "_blank");
     }
 }

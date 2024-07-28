@@ -5,6 +5,7 @@
         public string name { get; set; }
         public bool selected { get; set; }
         public string xmlref { get; set; }
+        public string link { get; set; }
         public List<clsPerson> children { get; set; } // only for display in tree
         public List<string> stories { get; set; }
         public clsPerson(string xmlref)
