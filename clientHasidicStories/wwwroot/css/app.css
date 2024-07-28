@@ -9,6 +9,18 @@
     display: block;
 }
 */
+.spinContainer {
+    display: grid;
+    place-items: center; /* Centers both vertically and horizontally */
+    height: 80vh; /* Example height */
+}
+
+.spinContainerSmall {
+    display: grid;
+    place-items: center; /* Centers both vertically and horizontally */
+    height: 40vh; /* Example height */
+}
+
 #peopleTree .b-tree-view-node, #peopleTree .b-tree-view-node-title, #editionsTree .b-tree-view-node, #editionsTree .b-tree-view-node-title {
     margin-left: 0 !important;
     margin-right: 0 !important;
