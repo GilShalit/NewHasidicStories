@@ -3,7 +3,7 @@
 @inject IJSRuntime JSRuntime
 @inject IConfiguration Configuration
 
-<Div Class="listControl bigControl">
+<Div Class="basicControl bigControl">
     <pb-page endpoint=@(Configuration["endpointURL"] + "/HasidicStoriesServer")
              data-template="pages:pb-page" unresolved="unresolved">
         <pb-document id="document1" path=@(fileName + ".xml") odd="Story" view="div"></pb-document>

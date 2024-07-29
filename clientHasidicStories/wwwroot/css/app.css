@@ -21,6 +21,7 @@
     height: 40vh; /* Example height */
 }
 
+/*the single level treeViews*/
 #peopleTree .b-tree-view-node, #peopleTree .b-tree-view-node-title, #editionsTree .b-tree-view-node, #editionsTree .b-tree-view-node-title {
     margin-left: 0 !important;
     margin-right: 0 !important;
@@ -38,8 +39,7 @@ body {
     text-align: center;
 }
 
-.listControl {
-    /*background-color: beige !important;*/
+.basicControl {
     border-radius: 5px;
     border-top: 1px solid #e0e0e0;
     box-shadow: 0 .25rem .25rem rgba(0,0,0,0.8) !important;
