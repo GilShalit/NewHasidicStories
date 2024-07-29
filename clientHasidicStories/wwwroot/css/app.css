@@ -48,6 +48,18 @@ body {
     overflow-x: hidden;
 }
 
+.smallControl {
+    height: calc((100vh - 87px)/2);
+}
+
+.bigControl {
+    height: calc((100vh - 80px));
+}
+
+.smallControlCol{
+    padding: 0;
+}
+
 .internalControl {
     overflow-y: auto;
     overflow-x: hidden;
@@ -58,14 +70,6 @@ body {
     overflow-y: auto;
     overflow-x: hidden;
     height: calc((100vh - 175px)/2);
-}
-
-.smallControl {
-    height: calc((100vh - 87px)/2);
-}
-
-.bigControl {
-    height: calc((100vh - 80px));
 }
 
 .counts {

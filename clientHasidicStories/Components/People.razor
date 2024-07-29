@@ -2,16 +2,16 @@
 @inject NavigationManager navigationManager
 <Div Class="basicControl smallControl">
     <Row Margin="Margin.Is1.FromTop">
-        <Column>
+        <Column Class="smallControlCol">
             <h3>@caption</h3>
         </Column>
-        <Column>
+        <Column Class="smallControlCol">
             <Button Class="controlButton" Clicked="@OnClearAll">@clear</Button>
             <Button Class="controlButton" Clicked="@OnSelectAll">@all</Button>
         </Column>
     </Row>
     <Row>
-        <Column>
+        <Column Class="smallControlCol">
             @if (globalService.Persons != null && globalService.Persons.Count > 0 && globalService.Persons.hasNames)
             {
                 <Div Class="internalControlSmall">
