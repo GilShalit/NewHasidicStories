@@ -15,6 +15,7 @@ namespace clientHasidicStories
         {
             //turn on selected editions
             gs.DisplayStoryTexts.reset();
+            List<string> selectedStoryIds = gs.Themes.selectedStoryIds;
             foreach (clsEditionFile edition in gs.EditionFiles.Where(e => e.selected))
             {
                 clsEditionStories editionStories = gs.DisplayStoryTexts.editions.Where(e => e.name == edition.title).First();
@@ -25,13 +26,13 @@ namespace clientHasidicStories
                     if (placeId == "")
                     {
                         //find if stories include selected themes and selected persons
-                        if (gs.Themes.selectedStoryIds.Contains(storyText.id) && gs.Persons.selectedStoryIds.Contains(storyText.id))
+                        if (selectedStoryIds.Contains(storyText.id) && gs.Persons.selectedStoryIds.Contains(storyText.id))
                             storyText.display = true;
                     }
                     else
                     {
                         //find if stories include selected themes and selected persons AND selected place
-                        if (gs.Themes.selectedStoryIds.Contains(storyText.id) && gs.Persons.selectedStoryIds.Contains(storyText.id) 
+                        if (selectedStoryIds.Contains(storyText.id) && gs.Persons.selectedStoryIds.Contains(storyText.id) 
                             && gs.Places.selectedStoryIds(placeId).Contains(storyText.id))
                             storyText.display = true;
                     }
@@ -42,12 +43,13 @@ namespace clientHasidicStories
         }
         internal static void changeDisplayPlaces(GlobalService gs)
         {
+            List<string> selectedStoryIds = gs.DisplayStoryTexts.selectedStoryIds;
             foreach (clsPlace place in gs.Places)
             {
                 foreach (string storyId in place.stories)
                 {
                     //find if place stories are shown with selected themes and selected persons
-                    if (gs.DisplayStoryTexts.selectedStoryIds.Contains(storyId))
+                    if (selectedStoryIds.Contains(storyId))
                         gs.Points.data.changeFeatureSelection(place.xmlref, true);
                     else
                         gs.Points.data.changeFeatureSelection(place.xmlref, false);
