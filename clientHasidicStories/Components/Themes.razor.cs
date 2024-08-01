@@ -21,8 +21,7 @@ namespace clientHasidicStories.Components
 
         private void OnSelectedValueChanged(LogicalOperator newValue)
         {
-            LogicalOperator selectedValue = newValue;
-            // Handle the new value as needed
+            globalService.logicalOperatorThemes = newValue;
         }
 
         protected override void OnInitialized()

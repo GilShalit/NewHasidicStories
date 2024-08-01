@@ -3,17 +3,15 @@
     <Row Margin="Margin.Is1.FromTop">
         <Column ColumnSize="ColumnSize.Is4">
             <h3>@caption</h3>
-            <AndOrRadio SelectedValueChanged="OnSelectedValueChanged" />
+            @if (globalService.Themes != null && globalService.Themes.Count > 0)
+            {
+                <AndOrRadio SelectedValueChanged="OnSelectedValueChanged" SelectedValue="globalService.logicalOperatorThemes"/>
+            }
         </Column>
         <Column ColumnSize="ColumnSize.Is8">
             <Button Class="controlButton" Clicked="@OnClearAll">@clear</Button>
             <Button Class="controlButton" Clicked="@OnSelectAll">@all</Button>
             <Button Class="controlButton" Clicked="@OnClose">@close</Button>
-
-            @*             <RadioGroup TValue="string" Name="selectioMode" Buttons>
-            <Radio Value="@("red")">And</Radio>
-            <Radio Value="@("green")">Or</Radio>
-            </RadioGroup> *@
         </Column>
     </Row>
     <Row>

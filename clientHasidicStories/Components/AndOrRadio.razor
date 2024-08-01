@@ -1,28 +1,21 @@
 ﻿@using Microsoft.AspNetCore.Components
 @using Microsoft.AspNetCore.Components.Forms
 
-<div class="radio-group">
-    <InputRadioGroup @bind-Value="SelectedValue">
-        <InputRadio Value="LogicalOperator.And" /> And
-        <InputRadio Value="LogicalOperator.Or" /> Or
-    </InputRadioGroup>
-</div>
+<RadioGroup TValue="LogicalOperator" CheckedValue="@SelectedValue" CheckedValueChanged="@OnSelectedValueChanged" class="radio-group">
+    <Radio Value="LogicalOperator.Or">Or</Radio>
+    <Radio Value="LogicalOperator.And">And</Radio>
+</RadioGroup>
 
 @code {
-    private LogicalOperator _selectedValue = LogicalOperator.Or; // Default value
+    [Inject] GlobalService globalService { get; set; }
 
-    [Parameter]
-    public LogicalOperator SelectedValue
-    {
-        get => _selectedValue;
-        set => OnSelectedValueChanged(value);
-    }
+    [Parameter] public EventCallback<LogicalOperator> SelectedValueChanged { get; set; }
 
-    [Parameter]
-    public EventCallback<LogicalOperator> SelectedValueChanged { get; set; }
+    [Parameter] public LogicalOperator SelectedValue { get; set; }
 
     private async Task OnSelectedValueChanged(LogicalOperator newValue)
     {
+        SelectedValue = newValue;
         await SelectedValueChanged.InvokeAsync(newValue);
     }
 }

@@ -9,8 +9,35 @@ namespace clientHasidicStories
         private clsEditionFiles _editionfiles;
         private clsPersons _persons;
         private clsPlaces _places;
+        private LogicalOperator _logicalOperatorThemes=LogicalOperator.Or;
+        private LogicalOperator _logicalOperatorPeople= LogicalOperator.Or;
         //public clsStoryInfoData StoryInfoData { get; set; }
         public clsDisplayStoryTexts DisplayStoryTexts { get; set; }
+
+        public LogicalOperator logicalOperatorThemes
+        {
+            get => _logicalOperatorThemes;
+            set
+            {
+                if (_logicalOperatorThemes != value)
+                {
+                    _logicalOperatorThemes = value;
+                    updateStoriesAndPoints();
+                }
+            }
+        }
+        public LogicalOperator logicalOperatorPeople
+        {
+            get => _logicalOperatorPeople;
+            set
+            {
+                if (_logicalOperatorPeople != value)
+                {
+                    _logicalOperatorPeople = value;
+                    updateStoriesAndPoints();
+                }
+            }
+        }
 
         public void updateStoriesAndPoints(string placeId = "")
         {

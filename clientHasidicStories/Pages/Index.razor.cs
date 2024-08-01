@@ -213,7 +213,7 @@ namespace clientHasidicStories.Pages
                     //clsPerson prs = localPersons.Where(p => p.xmlref == "01.001").FirstOrDefault();
                     foreach (clsPerson person in localPersons)
                     {
-                        Console.WriteLine(person.xmlref);
+                        //Console.WriteLine(person.xmlref);
                         TEITeiHeaderFileDescSourceDescPerson teiPerso = authorities.teiHeader.fileDesc.sourceDesc.listPerson.Where(p => p.xmlid == person.xmlref).FirstOrDefault();
                         person.name = teiPerso.name;
                         person.link = teiPerso.idno.Value;
@@ -235,7 +235,7 @@ namespace clientHasidicStories.Pages
                     .Where(p => includedPlacesIds.Contains(p.xmlid))
                     )
                 {
-                    Console.WriteLine(place.placeName.Value);
+                    //Console.WriteLine(place.placeName.Value);
                     Feature newPoint = new Feature();
                     if (place.location != null)
                     {
@@ -332,7 +332,7 @@ namespace clientHasidicStories.Pages
                     for (int s = 0; s < storyInfo.editions[e].stories.Length; s++)
                     {
                         story = storyInfo.editions[e].stories[s].Id;
-                        Console.WriteLine(story);
+                        //Console.WriteLine(story);
                         themeNames = storyInfo.editions[e].stories[s].ana.Split(";");
                         for (int j = 0; j < themeNames.Length; j++)
                         {
