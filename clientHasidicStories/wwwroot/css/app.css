@@ -9,6 +9,11 @@
     display: block;
 }
 */
+.radio-group {
+    display: flex;
+    gap: 10px;
+}
+
 .spinContainer {
     display: grid;
     place-items: center; /* Centers both vertically and horizontally */

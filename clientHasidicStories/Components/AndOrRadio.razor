@@ -1,0 +1,28 @@
+﻿@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Components.Forms
+
+<div class="radio-group">
+    <InputRadioGroup @bind-Value="SelectedValue">
+        <InputRadio Value="LogicalOperator.And" /> And
+        <InputRadio Value="LogicalOperator.Or" /> Or
+    </InputRadioGroup>
+</div>
+
+@code {
+    private LogicalOperator _selectedValue = LogicalOperator.Or; // Default value
+
+    [Parameter]
+    public LogicalOperator SelectedValue
+    {
+        get => _selectedValue;
+        set => OnSelectedValueChanged(value);
+    }
+
+    [Parameter]
+    public EventCallback<LogicalOperator> SelectedValueChanged { get; set; }
+
+    private async Task OnSelectedValueChanged(LogicalOperator newValue)
+    {
+        await SelectedValueChanged.InvokeAsync(newValue);
+    }
+}

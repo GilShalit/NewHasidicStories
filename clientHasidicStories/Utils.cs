@@ -56,4 +56,9 @@ namespace clientHasidicStories
             }
         }
     }
+    public enum LogicalOperator
+    {
+        And,
+        Or
+    }
 }

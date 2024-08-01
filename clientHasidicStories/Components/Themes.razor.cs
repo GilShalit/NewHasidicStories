@@ -19,6 +19,12 @@ namespace clientHasidicStories.Components
         IList<clsTheme> expandedNodes = new List<clsTheme>();
         private TreeView<clsTheme> _treeView;
 
+        private void OnSelectedValueChanged(LogicalOperator newValue)
+        {
+            LogicalOperator selectedValue = newValue;
+            // Handle the new value as needed
+        }
+
         protected override void OnInitialized()
         {
             globalService.OnGlobalThemesChanged += HandleGlobalThemesChange;
