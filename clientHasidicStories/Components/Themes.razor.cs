@@ -62,7 +62,7 @@ namespace clientHasidicStories.Components
                 await JS.InvokeVoidAsync("changeClass", "fa-chevron-right", "fa-chevron-left");
             }
         }
-        private void OnSelectedNodesChanged(IList<clsTheme> nodes)
+        private async void OnSelectedNodesChanged(IList<clsTheme> nodes)
         {
             bool topNodeSelectedBefore;
             bool topNodeSelectedNow;
@@ -98,7 +98,7 @@ namespace clientHasidicStories.Components
 
                 _treeView.Reload();
             }
-
+            await FixAlignment();
             globalService.updateStoriesAndPoints();
         }
 

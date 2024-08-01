@@ -16,7 +16,6 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 var configuration = builder.Configuration;
 
 string baseAddress = builder.Configuration.GetValue<string>("endpointURL") + "/HasidicStoriesServer/";
-//baseAddress = "http://localhost:8081/exist/apps/HasidicStoriesServer/";
 // Add services to the service collection
 builder.Services
     .AddScoped(sp =>
