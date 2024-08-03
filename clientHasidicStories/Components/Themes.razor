@@ -3,10 +3,7 @@
     <Row Margin="Margin.Is1.FromTop">
         <Column ColumnSize="ColumnSize.Is4">
             <h3>@caption</h3>
-            @if (globalService.Themes != null && globalService.Themes.Count > 0)
-            {
-                <AndOrRadio SelectedValueChanged="OnSelectedValueChanged" SelectedValue="globalService.logicalOperatorThemes"/>
-            }
+            <AndOrRadio SelectedValueChanged="OnLogicalOperatorChanged" SelectedValue="globalService.logicalOperatorThemes" />
         </Column>
         <Column ColumnSize="ColumnSize.Is8">
             <Button Class="controlButton" Clicked="@OnClearAll">@clear</Button>

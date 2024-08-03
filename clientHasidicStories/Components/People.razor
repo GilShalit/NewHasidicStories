@@ -4,6 +4,7 @@
     <Row Margin="Margin.Is1.FromTop">
         <Column Class="smallControlCol">
             <h3>@caption</h3>
+            <AndOrRadio SelectedValueChanged="OnLogicalOperatorChanged" SelectedValue="globalService.logicalOperatorPeople" />
         </Column>
         <Column Class="smallControlCol">
             <Button Class="controlButton" Clicked="@OnClearAll">@clear</Button>
@@ -104,5 +105,11 @@
     private async void NavigateToPerson(string url)
     {
         await JSRuntime.InvokeVoidAsync("open", navigationManager.ToAbsoluteUri(url), "_blank");
+    }
+    private void OnLogicalOperatorChanged(LogicalOperator newValue)
+    {
+        globalService.logicalOperatorPeople = newValue;
+        if (newValue == LogicalOperator.And) OnClearAll();
+        else OnSelectAll();
     }
 }

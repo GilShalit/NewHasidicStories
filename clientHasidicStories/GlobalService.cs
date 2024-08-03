@@ -22,7 +22,6 @@ namespace clientHasidicStories
                 if (_logicalOperatorThemes != value)
                 {
                     _logicalOperatorThemes = value;
-                    updateStoriesAndPoints();
                 }
             }
         }
@@ -34,7 +33,6 @@ namespace clientHasidicStories
                 if (_logicalOperatorPeople != value)
                 {
                     _logicalOperatorPeople = value;
-                    updateStoriesAndPoints();
                 }
             }
         }

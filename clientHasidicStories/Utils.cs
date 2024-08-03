@@ -15,7 +15,18 @@ namespace clientHasidicStories
         {
             //turn on selected editions
             gs.DisplayStoryTexts.reset();
-            List<string> selectedStoryIds = gs.Themes.selectedStoryIds;
+
+            List<string> selectedThemesStoryIds;//StoryIds of selected themes
+            if (gs.logicalOperatorThemes == LogicalOperator.Or) selectedThemesStoryIds = gs.Themes.StoryIdsInAnySelectedTheme;
+            else selectedThemesStoryIds = gs.Themes.StoryIdsInALLSelectedThemes;
+
+            List<string> selectedPeopleStoryIds;//StoryIds of selected themes
+            if (gs.logicalOperatorPeople == LogicalOperator.Or) selectedPeopleStoryIds = gs.Persons.StoryIdsInAnySelectedPerson;
+            else selectedPeopleStoryIds = gs.Persons.StoryIdsInALLSelectedPeople;
+
+            List<string> selectedPlaceStoryIds = new List<string>();
+            if (placeId != "") selectedPlaceStoryIds = gs.Places.selectedStoryIds(placeId);//StoryIds of selected place, if placeId is not empty
+
             foreach (clsEditionFile edition in gs.EditionFiles.Where(e => e.selected))
             {
                 clsEditionStories editionStories = gs.DisplayStoryTexts.editions.Where(e => e.name == edition.title).First();
@@ -26,19 +37,17 @@ namespace clientHasidicStories
                     if (placeId == "")
                     {
                         //find if stories include selected themes and selected persons
-                        if (selectedStoryIds.Contains(storyText.id) && gs.Persons.selectedStoryIds.Contains(storyText.id))
+                        if (selectedThemesStoryIds.Contains(storyText.id) && selectedPeopleStoryIds.Contains(storyText.id))
                             storyText.display = true;
                     }
                     else
                     {
                         //find if stories include selected themes and selected persons AND selected place
-                        if (selectedStoryIds.Contains(storyText.id) && gs.Persons.selectedStoryIds.Contains(storyText.id) 
-                            && gs.Places.selectedStoryIds(placeId).Contains(storyText.id))
+                        if (selectedThemesStoryIds.Contains(storyText.id) && selectedPeopleStoryIds.Contains(storyText.id)
+                            && selectedPlaceStoryIds.Contains(storyText.id))
                             storyText.display = true;
                     }
                 }
-                //find if stories include selected places
-                //if selected edition has no selected stories, turn it off
             }
         }
         internal static void changeDisplayPlaces(GlobalService gs)

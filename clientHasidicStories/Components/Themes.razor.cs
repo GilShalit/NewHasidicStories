@@ -19,11 +19,6 @@ namespace clientHasidicStories.Components
         IList<clsTheme> expandedNodes = new List<clsTheme>();
         private TreeView<clsTheme> _treeView;
 
-        private void OnSelectedValueChanged(LogicalOperator newValue)
-        {
-            globalService.logicalOperatorThemes = newValue;
-        }
-
         protected override void OnInitialized()
         {
             globalService.OnGlobalThemesChanged += HandleGlobalThemesChange;
@@ -152,7 +147,11 @@ namespace clientHasidicStories.Components
             _treeView.Reload();
             return Task.CompletedTask;
         }
-
-
+        private void OnLogicalOperatorChanged(LogicalOperator newValue)
+        {
+            globalService.logicalOperatorThemes = newValue;
+            if (newValue == LogicalOperator.And) OnClearAll();
+            else OnSelectAll();
+        }
     }
 }

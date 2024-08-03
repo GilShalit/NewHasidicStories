@@ -32,7 +32,8 @@
             throw new Exception("Add method not supported");
         }
 
-        public List<string> selectedStoryIds
+        //All stories in Any selected people
+        public List<string> StoryIdsInAnySelectedPerson
         {
             get
             {
@@ -43,6 +44,24 @@
                 return selectedStoryIds.Distinct().ToList();
             }
         }
+        //All stories in ALL selected people
+        public List<string> StoryIdsInALLSelectedPeople
+        {
+            get
+            {
+                var selectedStoryIds = new List<string>();
+
+                if (this.hasSelected)
+                {
+                    selectedStoryIds = this.Where(person => person.selected)
+                        .Select(person => person.stories)
+                        .Aggregate((previousList, nextList) => previousList.Intersect(nextList).ToList());
+                }
+
+                return selectedStoryIds;
+            }
+        }
+
         // Expose all elements as a read-only list
         public IReadOnlyList<clsPerson> Elements => this;
         public void newPerson(string xmlref, string story)

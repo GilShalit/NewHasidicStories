@@ -42,7 +42,8 @@
             throw new Exception("Add method not supported");
         }
 
-        public List<string> selectedStoryIds
+        //All stories in any selected themes
+        public List<string> StoryIdsInAnySelectedTheme
         {
             get
             {
@@ -52,6 +53,26 @@
                         if (child.selected)
                             selectedStoryIds.AddRange(child.stories);
                 return selectedStoryIds.Distinct().ToList();
+            }
+        }
+        //All stories in ALL selected themes
+        public List<string> StoryIdsInALLSelectedThemes
+        {
+            get
+            {
+                var selectedStoryIds = new List<string>();
+                var selectedThemes = this.SelectMany(theme => theme.children)//Only looking at second level
+                                         .Where(child => child.selected)
+                                         .ToList();
+
+                if (selectedThemes.Any())
+                {
+                    selectedStoryIds = selectedThemes
+                        .Select(child => child.stories)
+                        .Aggregate((previousList, nextList) => previousList.Intersect(nextList).ToList());
+                }
+
+                return selectedStoryIds;
             }
         }
 
