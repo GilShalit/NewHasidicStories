@@ -3,7 +3,7 @@
 @inject NavigationManager navigationManager
 
 <Div Class="basicControl smallControl">
-    <Row Margin="Margin.Is1.FromTop">
+    <Row Margin="Margin.Is1.FromTop" Class="topControlRow">
         <Column Class="smallControlCol">
             <h3>@caption</h3>
         </Column>
@@ -16,7 +16,7 @@
         <Column Class="smallControlCol">
             @if (globalService.EditionFiles != null && globalService.EditionFiles.Count > 0)
             {
-                <Div Class="internalControlSmall">
+                <Div Class="internalControl internalEditionsControl">
                     <TreeView Nodes="globalService.EditionFiles"
                               TNode="clsEditionFile"
                               id="editionsTree"

@@ -1,7 +1,7 @@
 ﻿@inject NavigationManager navigationManager
 @inject IJSRuntime JSRuntime
 <Div Class="basicControl bigControl">
-    <Row Margin="Margin.Is1.FromTop">
+    <Row Margin="Margin.Is1.FromTop" >
         <Column ColumnSize="ColumnSize.Is4">
             <h3>@caption</h3>
         </Column>
@@ -16,7 +16,7 @@
         <Column>
             @if (globalService.DisplayStoryTexts != null)
             {
-                <Div Class="internalControl">
+                <Div Class="internalControl internalStoriesControl">
                     <Accordion>
                         @for (int i = 0; i < globalService.DisplayStoryTexts.editions.Count; i++)
                         {

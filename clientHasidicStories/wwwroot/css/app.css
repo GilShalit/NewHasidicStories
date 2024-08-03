@@ -52,6 +52,11 @@ body {
     overflow-y: hidden;
     overflow-x: hidden;
 }
+.topControlRow {
+    border-bottom: 1px solid #e0e0e0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.8) !important;
+    margin-bottom: 5px;
+}
 
 .smallControl {
     height: calc((100vh - 87px)/2);
@@ -68,13 +73,21 @@ body {
 .internalControl {
     overflow-y: auto;
     overflow-x: hidden;
+}
+
+.internalThemesControl {
+    height: calc((100vh - 160px));
+}
+
+.internalStoriesControl {
     height: calc((100vh - 130px));
 }
 
-.internalControlSmall {
-    overflow-y: auto;
-    overflow-x: hidden;
-    height: calc((100vh - 175px)/2);
+.internalEditionsControl {
+    height: calc((100vh - 185px)/2);
+}
+.internalPeopleControl {
+    height: calc((100vh - 245px)/2);
 }
 
 .counts {

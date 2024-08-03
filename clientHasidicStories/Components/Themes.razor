@@ -1,6 +1,6 @@
 ﻿@using System.Globalization
 <Div Class="basicControl bigControl">
-    <Row Margin="Margin.Is1.FromTop">
+    <Row Margin="Margin.Is1.FromTop" Class="topControlRow">
         <Column ColumnSize="ColumnSize.Is4">
             <h3>@caption</h3>
             <AndOrRadio SelectedValueChanged="OnLogicalOperatorChanged" SelectedValue="globalService.logicalOperatorThemes" />
@@ -15,7 +15,7 @@
         <Column>
             @if (globalService.Themes != null && globalService.Themes.Count > 0)
             {
-                <Div Class="internalControl">
+                <Div Class="internalControl internalThemesControl">
                     <TreeView Nodes="globalService.Themes"
                               id="themesTree"
                               TNode="clsTheme"
