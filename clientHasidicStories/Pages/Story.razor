@@ -1,16 +1,20 @@
 ﻿@page "/Story/{fileName}/{storyId}"
 @using Microsoft.Extensions.Localization
+@using System.Text.Json
 @inject IStringLocalizer<Story> Localizer
-@inject IJSRuntime JSRuntime
+@inject IJSRuntime JS
 @inject IConfiguration Configuration
 
 <div class="controlsContainer">
     <Row>
-        <Column ColumnSize="@myColumnSize" Display="@showMap">
-            <Map />
-        </Column>
+        @if(showMap)
+        {
+            <Column ColumnSize="@myColumnSize" >
+                <Map />
+            </Column>
+        }
         <Column ColumnSize="@myColumnSize" Style="direction:rtl">
-            <StoryTEI fileName="@fileName" storyId="@storyId"/>
+            <StoryTEI fileName="@fileName" storyId="@storyId" />
         </Column>
         <Column ColumnSize="@myColumnSize">
             <Row></Row>
@@ -23,12 +27,20 @@
 @code {
     [Parameter] public string fileName { get; set; }
     [Parameter] public string storyId { get; set; }
-    private Blazorise.IFluentColumn myColumnSize = ColumnSize.Is4;
-    private Blazorise.IFluentDisplay showMap = Blazorise.Display.Block;
+    private Blazorise.IFluentColumn myColumnSize;
+    private bool showMap; 
 
-    // protected override Task OnParametersSetAsync()
-    // {
-    //     return base.OnParametersSetAsync();
-    // }
+    protected override async Task OnInitializedAsync()
+    {
+        var stateJson = await JS.InvokeAsync<string>("localStorage.getItem", "places");
+        if (!string.IsNullOrEmpty(stateJson))
+        {
+            clsPlaces places = JsonSerializer.Deserialize<clsPlaces>(stateJson, new JsonSerializerOptions { IncludeFields = true });
 
+            List<string> storyPlaceIds = places.storyPlaceIds(storyId);
+            showMap = storyPlaceIds.Count > 0;
+            if (showMap) myColumnSize = ColumnSize.Is4;
+            else myColumnSize = ColumnSize.Is6;
+        }
+    }
 }

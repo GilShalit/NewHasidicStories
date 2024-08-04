@@ -32,7 +32,6 @@ namespace clientHasidicStories.Pages
             if (CultureInfo.CurrentCulture.Name == "he-IL") mapPadding = "padding-left:0";
             else mapPadding = "padding-right:0";
 
-            //globalService.OnDisplayStoriesChanged += HandleDisplayStoriesChanged;
             if (!globalService.DataLoaded)
             {
                 isLoading = true;
@@ -89,15 +88,15 @@ namespace clientHasidicStories.Pages
                 await task4;
 
                 globalService.DataLoaded = true;
+                
+                // Save necessary state to localStorage
+                await JS.InvokeVoidAsync("localStorage.setItem", "places", JsonSerializer.Serialize(globalService.Places, new JsonSerializerOptions { IncludeFields = true }));
+
                 Console.WriteLine("===Data loaded===");
                 globalService.updateStoriesAndPoints();
 
                 isLoading = false;
             }
-        }
-        public void Dispose()
-        {
-            //globalService.OnDisplayStoriesChanged -= HandleDisplayStoriesChanged;
         }
 
         private async Task ProcessStoryTexts(clsEditionsStoryTexts StoryTexts)

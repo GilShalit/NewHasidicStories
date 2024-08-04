@@ -1,5 +1,5 @@
 ﻿@using System.Text.Json
-@if (isWaitingToStar)
+@if (isWaitingToStart)
 {
     <Div Style="height:42px"/>
     <Spinner cClass="spinContainer" />
@@ -20,16 +20,13 @@ else
     private Action ChangeDelegate;//so the Handle method can be unsubscribed
     private DotNetObjectReference<Map> dotNetRef;
     private bool isMapInitialized = false; // Track if the map has been initialized
-    private bool isWaitingToStar = true;
+    private bool isWaitingToStart = true;
 
     protected override async Task OnInitializedAsync()
     {
         dotNetRef = DotNetObjectReference.Create(this);
         ChangeDelegate = async () => await HandleGlobalPointsChange();
         globalService.OnGlobalPointsChanged += ChangeDelegate;
-    }
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
     }
     public async Task Dispose()
     {
@@ -38,7 +35,7 @@ else
     }
     private async Task HandleGlobalPointsChange()
     {
-        isWaitingToStar = false;
+        isWaitingToStart = false;
         StateHasChanged();
         await DrawMap();
     }

@@ -25,6 +25,10 @@
     }
     public class clsPlaces : List<clsPlace>
     {
+        public clsPlaces()
+        {
+                
+        }
         //public bool hasNames { get; set; }
         public new void Add(clsPlace place)
         {
@@ -35,6 +39,12 @@
         public List<string> selectedStoryIds(string placeId)
         {
             return this.Where(p => p.xmlref == placeId).First().stories.ToList();
+        }
+
+        //place Ids for selected story
+        public List<string> storyPlaceIds(string storyId)
+        {
+            return this.Where(p => p.stories.Contains(storyId)).Select(p => p.xmlref).ToList();
         }
 
         // Expose all elements as a read-only list
