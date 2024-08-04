@@ -1,0 +1,66 @@
+﻿@using System.Text.Json
+@if (isWaitingToStart)
+{
+    <Div Style="height:42px"/>
+    <Spinner cClass="spinContainer" />
+}
+else
+{
+    <Div style="position: relative; width: 100%; height: 100%;">
+        <Div id="mapDiv" Class="basicControl" />
+        <Button Class="controlButton mapClear" Clicked="@OnClear">@clear</Button>
+    </Div>
+}
+@code {
+    //https://docs.maptiler.com/sdk-js/examples/geojson-markers/
+    [Inject] GlobalService globalService { get; set; }
+    [Inject] IJSRuntime JS { get; set; }
+    [Parameter] public string clear { get; set; }
+
+    private Action ChangeDelegate;//so the Handle method can be unsubscribed
+    private DotNetObjectReference<StoryMap> dotNetRef;
+    private bool isMapInitialized = false; // Track if the map has been initialized
+    private bool isWaitingToStart = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        dotNetRef = DotNetObjectReference.Create(this);
+        //ChangeDelegate = async () => await HandleGlobalPointsChange();
+    }
+    public async Task Dispose()
+    {
+        dotNetRef?.Dispose();
+    }
+    // private async Task HandleGlobalPointsChange()
+    // {
+    //     isWaitingToStart = false;
+    //     StateHasChanged();
+    //     await DrawMap();
+    // }
+    private async Task DrawMap()
+    {
+        if (!isMapInitialized)
+        {
+            var center = globalService.Points.data.Center;
+            await JS.InvokeVoidAsync("initializeMap", center, "mapDiv", dotNetRef);
+            isMapInitialized = true;
+            await Task.Delay(1000);
+            await JS.InvokeVoidAsync("updatePoints", globalService.Points);
+        }
+        else
+        {
+            await JS.InvokeVoidAsync("updatePoints", globalService.Points);
+        }
+        StateHasChanged();
+    }
+    [JSInvokable]
+    public async Task PointClicked(string placeId)
+    {
+        globalService.updateStoriesAndPoints(placeId);
+    }
+    async Task OnClear()
+    {
+        await JS.InvokeVoidAsync("resetPulsatingPoint");
+        globalService.updateStoriesAndPoints();
+    }
+}

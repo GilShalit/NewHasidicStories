@@ -15,7 +15,15 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 // Build the configuration
 var configuration = builder.Configuration;
 
-string baseAddress = builder.Configuration.GetValue<string>("endpointURL") + "/HasidicStoriesServer/";
+string baseAddress;
+if (builder.HostEnvironment.IsDevelopment())
+{
+    baseAddress = configuration.GetValue<string>("endpointURL") + "/HasidicStoriesServer/";
+}
+else
+{
+    baseAddress = Environment.GetEnvironmentVariable("endpointURL") + "/HasidicStoriesServer/";
+}
 // Add services to the service collection
 builder.Services
     .AddScoped(sp =>
