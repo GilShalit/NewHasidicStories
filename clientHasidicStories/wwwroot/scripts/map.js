@@ -1,6 +1,49 @@
 ﻿let map;
 let circleRadius = 6;
 let originalOpacity = 0.5;
+
+window.storyMap = (center, divname, date) => {
+    maptilersdk.config.apiKey = 'yHCSCgx2fJ24IoOXLGYO';
+    map = new maptilersdk.Map({
+        container: divname, // container's id or the HTML element to render the map
+        style: maptilersdk.MapStyle.TOPO.TOPOGRAPHIQUE,
+        center: center, // starting position [lng, lat]
+        zoom: 3, // starting zoom
+        pitch: 90,
+        //bearing: -100.86,
+        //maxPitch: 85,
+        maxZoom: 14
+    });
+
+//    map.addLayer({
+//        'id': 'points',
+//        'type': 'circle',
+//        'source': 'points',
+//        'paint': {
+//            'circle-radius': circleRadius,
+//            // Start with an opacity of 0
+//            'circle-color': '#B42222',
+//            'circle-opacity': 0
+//        },
+//    });
+
+//    // Animate the opacity
+//    let opacity = 0;
+//    const maxOpacity = originalOpacity; // Target opacity
+//    const animationStep = 0.05; // Incremental step
+//    const interval = 10; // Time in milliseconds between each step
+
+//    const intervalId = setInterval(() => {
+//        opacity += animationStep;
+//        if (opacity >= maxOpacity) {
+//            opacity = maxOpacity;
+//            clearInterval(intervalId); // Stop the animation when the target opacity is reached
+//        }
+//        map.setPaintProperty('points', 'circle-opacity', opacity);
+//    }, interval);
+
+}
+
 window.initializeMap = (center, divname, dotNetRef) => {
     maptilersdk.config.apiKey = 'yHCSCgx2fJ24IoOXLGYO';
     map = new maptilersdk.Map({
@@ -34,7 +77,6 @@ window.initializeMap = (center, divname, dotNetRef) => {
                     .addTo(map); // adds the popup to the map
             }
         });
-
         map.on('mouseleave', 'points', function () {
             // Change it back to the default when it leaves.
             map.getCanvas().style.cursor = '';
