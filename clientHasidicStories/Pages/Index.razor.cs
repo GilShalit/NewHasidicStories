@@ -23,7 +23,6 @@ namespace clientHasidicStories.Pages
         [Inject] IJSRuntime JS { get; set; }
         [Inject] GlobalService globalService { get; set; }
         [Inject] NavigationManager Navigation { get; set; }
-        bool isLoading = true;
         private Blazorise.IFluentColumn myColumnSize = ColumnSize.Is3;
         string mapPadding = "";
 
@@ -34,8 +33,6 @@ namespace clientHasidicStories.Pages
 
             if (!globalService.DataLoaded)
             {
-                isLoading = true;
-
                 var task1 = GetStoryInfo().ContinueWith(t =>
                 {
                     if (t.IsCompletedSuccessfully)
@@ -89,13 +86,8 @@ namespace clientHasidicStories.Pages
 
                 globalService.DataLoaded = true;
                 
-                // Save necessary state to localStorage
-                await JS.InvokeVoidAsync("localStorage.setItem", "places", JsonSerializer.Serialize(globalService.Places, new JsonSerializerOptions { IncludeFields = true }));
-
                 Console.WriteLine("===Data loaded===");
                 globalService.updateStoriesAndPoints();
-
-                isLoading = false;
             }
         }
 

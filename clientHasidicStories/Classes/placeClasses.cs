@@ -42,9 +42,9 @@
         }
 
         //place Ids for selected story
-        public List<string> storyPlaceIds(string storyId)
+        public List<clsPlace> storyPlaces(string storyId)
         {
-            return this.Where(p => p.stories.Contains(storyId)).Select(p => p.xmlref).ToList();
+            return this.Where(p => p.stories.Contains(storyId)).ToList();
         }
 
         // Expose all elements as a read-only list
