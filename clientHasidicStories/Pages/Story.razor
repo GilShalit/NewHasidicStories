@@ -10,7 +10,7 @@
         @if (showMap)
         {
             <Column ColumnSize="@myColumnSize">
-                <Map />
+                <StoryMap />
             </Column>
         }
         <Column ColumnSize="@myColumnSize" Style="direction:rtl">
@@ -53,6 +53,15 @@
 
             clsGeoJson points = JsonSerializer.Deserialize<clsGeoJson>(await JS.InvokeAsync<string>("localStorage.getItem", "points"), new JsonSerializerOptions { IncludeFields = true });
             globalService.Points = points;
+
         }
     }
+    // protected override async Task OnAfterRenderAsync(bool firstRender)
+    // {
+    //     if (!firstRender)
+    //     {
+    //         globalService.Persons = new clsPersons();//temporary, just to fire the OnGlobalPersonsChanged event
+    //     }
+    // }
+
 }
