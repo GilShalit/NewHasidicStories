@@ -84,12 +84,15 @@
         // Save necessary state to localStorage
         List<clsPlace> places = globalService.Places.storyPlaces(storyId);
         clsGeoJson points = new clsGeoJson();
-        foreach (clsPlace place in places)
-        {
-            Feature point = globalService.Points.data.featureById(place.xmlref);
-            point.selected = true;
-            points.data.Add(point);
-        }
+        Feature point = new Feature();
+        if (places.Count == 0) points.data.Add(point);
+        else
+            foreach (clsPlace place in places)
+            {
+                point = globalService.Points.data.featureById(place.xmlref);
+                point.selected = true;
+                points.data.Add(point);
+            }
         await JSRuntime.InvokeVoidAsync("localStorage.setItem", "places",
             JsonSerializer.Serialize(places,
             new JsonSerializerOptions { IncludeFields = true }));

@@ -4,14 +4,16 @@
 @inject IConfiguration Configuration
 
 <Div Class="basicControl bigControl">
-    <pb-page endpoint=@(Configuration["endpointURL"] + "/HasidicStoriesServer")
-             data-template="pages:pb-page" unresolved="unresolved">
-        <pb-document id="document1" path=@(fileName + ".xml") odd="Story" view="div"></pb-document>
-        <br />
-        <div class="content-body">
-            <pb-view id="view1" src="document1" xpath="@xpath" column-separator=".tei-cb" append-footnotes="append-footnotes" subscribe="transcription" emit="transcription" animation disable-history />
-        </div>
-    </pb-page>
+    <Div Class="internalControl internalTEIStoryControl">
+        <pb-page endpoint=@(Configuration["endpointURL"] + "/HasidicStoriesServer")
+                 data-template="pages:pb-page" unresolved="unresolved">
+            <pb-document id="document1" path=@(fileName + ".xml") odd="Story" view="div"></pb-document>
+            <br />
+            <div class="content-body">
+                <pb-view id="view1" src="document1" xpath="@xpath" column-separator=".tei-cb" append-footnotes="append-footnotes" subscribe="transcription" emit="transcription" animation disable-history />
+            </div>
+        </pb-page>
+    </Div>
 </Div>
 @code {
     [Parameter] public string fileName { get; set; }
