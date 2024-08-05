@@ -25,6 +25,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         dotNetRef = DotNetObjectReference.Create(this);
+        DrawMap();
         //ChangeDelegate = async () => await HandleGlobalPointsChange();
     }
     public async Task Dispose()

@@ -1,4 +1,5 @@
-﻿@inject NavigationManager navigationManager
+﻿@using System.Text.Json
+@inject NavigationManager navigationManager
 @inject IJSRuntime JSRuntime
 <Div Class="basicControl bigControl">
     <Row Margin="Margin.Is1.FromTop" >
@@ -80,8 +81,11 @@
 
     private async void HandleStoryClick(string editionName, string storyId)
     {
-        string fileName = globalService.EditionFiles.getFileName(editionName);
+        // Save necessary state to localStorage
+        await JSRuntime.InvokeVoidAsync("localStorage.setItem", "places", 
+            JsonSerializer.Serialize(globalService.Places.storyPlaces(storyId), new JsonSerializerOptions { IncludeFields = true }));
 
+        string fileName = globalService.EditionFiles.getFileName(editionName);
         var url = $"/Story/{fileName}/{storyId}";
         await JSRuntime.InvokeVoidAsync("open", navigationManager.ToAbsoluteUri(url), "_blank");
     }

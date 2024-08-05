@@ -7,9 +7,9 @@
 
 <div class="controlsContainer">
     <Row>
-        @if(showMap)
+        @if (showMap)
         {
-            <Column ColumnSize="@myColumnSize" >
+            <Column ColumnSize="@myColumnSize">
                 <Map />
             </Column>
         }
@@ -25,10 +25,11 @@
 </div>
 
 @code {
+    [Inject] GlobalService globalService { get; set; }
     [Parameter] public string fileName { get; set; }
     [Parameter] public string storyId { get; set; }
     private Blazorise.IFluentColumn myColumnSize;
-    private bool showMap; 
+    private bool showMap;
 
     protected override async Task OnInitializedAsync()
     {
@@ -37,10 +38,18 @@
         {
             clsPlaces places = JsonSerializer.Deserialize<clsPlaces>(stateJson, new JsonSerializerOptions { IncludeFields = true });
 
-            List<string> storyPlaceIds = places.storyPlaceIds(storyId);
-            showMap = storyPlaceIds.Count > 0;
-            if (showMap) myColumnSize = ColumnSize.Is4;
+            showMap = places.Count > 0;
+            if (showMap)
+            {
+                myColumnSize = ColumnSize.Is4;
+                foreach(clsPlace place in places)
+                {
+                    place.selected = true;
+                }
+            }
             else myColumnSize = ColumnSize.Is6;
+
+            globalService.Places = places;
         }
     }
 }
