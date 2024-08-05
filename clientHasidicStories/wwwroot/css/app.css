@@ -83,6 +83,10 @@ body {
     height: calc((100vh - 130px));
 }
 
+.internalTEIStoryControl {
+    height: calc((100vh - 81px));
+}
+
 .internalEditionsControl {
     height: calc((100vh - 185px)/2);
 }
