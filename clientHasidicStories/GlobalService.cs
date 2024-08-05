@@ -56,7 +56,6 @@ namespace clientHasidicStories
                 if (_points != value)
                 {
                     _points = value;
-                    //OnGlobalPointsChanged?.Invoke();
                 }
             }
         }
@@ -99,7 +98,6 @@ namespace clientHasidicStories
             set
             {
                 _places = value;
-                //OnGlobalPersonsChanged?.Invoke();
             }
         }
         //public bool TEILoadedOnce { get { bool loaded = _TEILoadedOnce; _TEILoadedOnce = true; return loaded; } init { _TEILoadedOnce = false; } }

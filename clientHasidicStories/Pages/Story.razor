@@ -50,6 +50,9 @@
             else myColumnSize = ColumnSize.Is6;
 
             globalService.Places = places;
+
+            clsGeoJson points = JsonSerializer.Deserialize<clsGeoJson>(await JS.InvokeAsync<string>("localStorage.getItem", "points"), new JsonSerializerOptions { IncludeFields = true });
+            globalService.Points = points;
         }
     }
 }
