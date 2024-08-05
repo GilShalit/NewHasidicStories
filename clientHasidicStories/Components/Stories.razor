@@ -2,7 +2,7 @@
 @inject NavigationManager navigationManager
 @inject IJSRuntime JSRuntime
 <Div Class="basicControl bigControl">
-    <Row Margin="Margin.Is1.FromTop" >
+    <Row Margin="Margin.Is1.FromTop">
         <Column ColumnSize="ColumnSize.Is4">
             <h3>@caption</h3>
         </Column>
@@ -47,7 +47,7 @@
             }
             else
             {
-                <Spinner cClass="spinContainer"/>
+                <Spinner cClass="spinContainer" />
             }
         </Column>
     </Row>
@@ -82,8 +82,20 @@
     private async void HandleStoryClick(string editionName, string storyId)
     {
         // Save necessary state to localStorage
-        await JSRuntime.InvokeVoidAsync("localStorage.setItem", "places", 
-            JsonSerializer.Serialize(globalService.Places.storyPlaces(storyId), new JsonSerializerOptions { IncludeFields = true }));
+        List<clsPlace> places = globalService.Places.storyPlaces(storyId);
+        clsGeoJson points = new clsGeoJson();
+        foreach (clsPlace place in places)
+        {
+            Feature point = globalService.Points.data.featureById(place.xmlref);
+            point.selected = true;
+            points.data.Add(point);
+        }
+        await JSRuntime.InvokeVoidAsync("localStorage.setItem", "places",
+            JsonSerializer.Serialize(places,
+            new JsonSerializerOptions { IncludeFields = true }));
+        await JSRuntime.InvokeVoidAsync("localStorage.setItem", "points",
+            JsonSerializer.Serialize(points,
+            new JsonSerializerOptions { IncludeFields = true }));
 
         string fileName = globalService.EditionFiles.getFileName(editionName);
         var url = $"/Story/{fileName}/{storyId}";

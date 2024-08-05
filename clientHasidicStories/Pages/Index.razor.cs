@@ -308,7 +308,7 @@ namespace clientHasidicStories.Pages
                         for (int j = 0; j < storyInfo.editions[e].stories[s].places.Length; j++)
                         {
                             localPlaces.newPlace(storyInfo.editions[e].stories[s].places[j].Substring(1), story);
-                            localPlaces.newPlace(storyInfo.editions[e].stories[s].places[j], story);
+                            //localPlaces.newPlace(storyInfo.editions[e].stories[s].places[j], story);
                         }
                     }
                 }
