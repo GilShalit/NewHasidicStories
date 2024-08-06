@@ -1,7 +1,7 @@
 ﻿@using System.Text.Json
 @if (isWaitingToStart)
 {
-    <Div Style="height:42px"/>
+    <Div Style="height:42px" />
     <Spinner cClass="spinContainer" />
 }
 else
@@ -25,32 +25,31 @@ else
     protected override async Task OnInitializedAsync()
     {
         dotNetRef = DotNetObjectReference.Create(this);
-        //ChangeDelegate = async () => await HandleGlobalPointsChange();
+        // globalService.OnGlobalPersonsChanged += HandleStatusReady;
     }
     public async Task Dispose()
     {
         dotNetRef?.Dispose();
+        //globalService.OnGlobalPersonsChanged -= HandleStatusReady;
     }
-    // private async Task HandleGlobalPointsChange()
+
+    // private async void HandleStatusReady()
     // {
     //     isWaitingToStart = false;
     //     StateHasChanged();
     //     await DrawMap();
     // }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender) { isWaitingToStart = false; StateHasChanged(); }
+        else if (!isMapInitialized) await DrawMap();
+
+    }
     private async Task DrawMap()
     {
-        if (!isMapInitialized)
-        {
-            var center = globalService.Points.data.Center;
-            await JS.InvokeVoidAsync("initializeMap", center, "mapDiv", dotNetRef);
-            isMapInitialized = true;
-            await Task.Delay(1000);
-            await JS.InvokeVoidAsync("updatePoints", globalService.Points);
-        }
-        else
-        {
-            await JS.InvokeVoidAsync("updatePoints", globalService.Points);
-        }
+        var center = globalService.Points.data.Center;
+        await JS.InvokeVoidAsync("storyMap", center, "mapDiv", globalService.Points);
+        isMapInitialized = true;
         StateHasChanged();
     }
     [JSInvokable]

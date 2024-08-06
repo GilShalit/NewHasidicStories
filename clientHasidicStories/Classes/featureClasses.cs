@@ -11,10 +11,11 @@ namespace clientHasidicStories.Classes
 
     public class Data
     {
-        private List<Feature> lFeatures = new List<Feature>();
+        public List<Feature> lFeatures = new List<Feature>();//turned public so it is serialized between tabs
         public string type { get; set; } = "FeatureCollection";
         public Feature[] features { get => lFeatures.Where(f => f.selected).ToArray(); }
         public void Add(Feature feature) { lFeatures.Add(feature); }
+        public Feature featureById(string id) => lFeatures.Where(f => f.properties.xmlid == id).FirstOrDefault();
         public float[] Center
         {
             get
