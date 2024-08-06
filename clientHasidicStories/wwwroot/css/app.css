@@ -14,6 +14,16 @@
     gap: 10px;
 }
 
+    .radio-group .form-check-input {
+        cursor: pointer!important;
+    }
+
+        .radio-group .form-check-input:checked {
+            background-color: #FBECD8;
+            border-color: #FBECD8;
+            box-shadow: 0 .1rem .1rem rgba(0,0,0,0.8) !important;
+        }
+
 .spinContainer {
     display: grid;
     place-items: center; /* Centers both vertically and horizontally */
@@ -52,6 +62,7 @@ body {
     overflow-y: hidden;
     overflow-x: hidden;
 }
+
 .topControlRow {
     border-bottom: 1px solid #e0e0e0;
     box-shadow: 0 1px 3px rgba(0,0,0,0.8) !important;
@@ -66,7 +77,7 @@ body {
     height: calc((100vh - 80px));
 }
 
-.smallControlCol{
+.smallControlCol {
     padding: 0;
 }
 
@@ -90,6 +101,7 @@ body {
 .internalEditionsControl {
     height: calc((100vh - 185px)/2);
 }
+
 .internalPeopleControl {
     height: calc((100vh - 245px)/2);
 }
