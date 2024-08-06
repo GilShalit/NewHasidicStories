@@ -12,10 +12,11 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-// Build the configuration
-var configuration = builder.Configuration;
+//// Build the configuration
+//var configuration = builder.Configuration.AddJsonFile($"appsettings.{env.EnvironmentName}.json");
 
 string baseAddress = builder.Configuration.GetValue<string>("endpointURL") + "/HasidicStoriesServer/";
+
 // Add services to the service collection
 builder.Services
     .AddScoped(sp =>
