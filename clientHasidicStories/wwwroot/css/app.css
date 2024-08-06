@@ -16,6 +16,7 @@
 
     .radio-group .form-check-input {
         cursor: pointer!important;
+        appearance:inherit!important;
     }
 
         .radio-group .form-check-input:checked {
