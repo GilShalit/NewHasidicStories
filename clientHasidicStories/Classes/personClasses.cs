@@ -61,6 +61,14 @@
                 return selectedStoryIds;
             }
         }
+        public List<clsPerson> storyPeople(string storyId)
+        {
+            List<clsPerson> people = new List<clsPerson>();
+            foreach (clsPerson person in this)
+                if (person.stories.Contains(storyId))
+                    people.Add(person);
+            return people;
+        }
 
         // Expose all elements as a read-only list
         public IReadOnlyList<clsPerson> Elements => this;

@@ -66,7 +66,7 @@ body {
 
 .topControlRow {
     border-bottom: 1px solid #e0e0e0;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.8) !important;
+    box-shadow: 0 3px 3px rgba(0,0,0,0.8) !important;
     margin-bottom: 5px;
 }
 
