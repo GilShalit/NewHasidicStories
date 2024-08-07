@@ -8,7 +8,7 @@ window.storyMap = (center, divname, data) => {
         container: divname, // container's id or the HTML element to render the map
         style: maptilersdk.MapStyle.TOPO.TOPOGRAPHIQUE,
         center: center, // starting position [lng, lat]
-        zoom: 4, // starting zoom
+        zoom: 3, // starting zoom
         pitch: 90,
         //bearing: -100.86,
         //maxPitch: 85,

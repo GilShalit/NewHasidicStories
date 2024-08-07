@@ -42,7 +42,7 @@
             throw new Exception("Add method not supported");
         }
 
-        //All stories in any selected themes
+        //All stories that belong to any selected themes
         public List<string> StoryIdsInAnySelectedTheme
         {
             get
@@ -55,7 +55,7 @@
                 return selectedStoryIds.Distinct().ToList();
             }
         }
-        //All stories in ALL selected themes
+        //All stories that belong to ALL selected themes
         public List<string> StoryIdsInALLSelectedThemes
         {
             get
@@ -74,6 +74,33 @@
 
                 return selectedStoryIds;
             }
+        }
+
+        //themes a story belongs to
+        public List<clsTheme> storyThemes(string storyId)
+        {
+            List<clsTheme> result = new List<clsTheme>();
+
+            foreach (var topTheme in this)
+            {
+                List<clsTheme> matchingChildren = topTheme.children
+                    .Where(child => child.stories.Contains(storyId))
+                    .ToList();
+
+                if (topTheme.stories.Contains(storyId) || matchingChildren.Any())
+                {
+                    clsTheme themeWithMatchingChildren = new clsTheme
+                    {
+                        name = topTheme.name,
+                        selected = true,
+                        stories = topTheme.stories,
+                        children = matchingChildren
+                    };
+                    result.Add(themeWithMatchingChildren);
+                }
+            }
+
+            return result;
         }
 
         // Expose all elements as a read-only list
