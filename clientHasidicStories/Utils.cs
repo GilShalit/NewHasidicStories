@@ -56,15 +56,14 @@ namespace clientHasidicStories
         internal static void changeDisplayPlaces(GlobalService gs)
         {
             List<string> selectedStoryIds = gs.DisplayStoryTexts.selectedStoryIds;
+            gs.Points.data.unselectAllFeatures();
             foreach (clsPlace place in gs.Places)
             {
                 foreach (string storyId in place.stories)
                 {
-                    //find if place stories are shown with selected themes and selected persons
+                    //select place stories are shown with selected themes and selected persons
                     if (selectedStoryIds.Contains(storyId))
-                        gs.Points.data.changeFeatureSelection(place.xmlref, true);
-                    else
-                        gs.Points.data.changeFeatureSelection(place.xmlref, false);
+                        gs.Points.data.selectFeature(place.xmlref);
 
                 }
             }
