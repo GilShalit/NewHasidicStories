@@ -9,11 +9,11 @@
     <Row>
         <Column ColumnSize="@myColumnSize">
             <Row></Row>
-            <Row Margin="Margin.Is2.FromTop">
+            <Row >
                 <StoryThemes caption="@Localizer["themes"]" />
             </Row>
             <Row Margin="Margin.Is2.FromTop">
-                <People caption="@Localizer["people"]" />
+                <StoryPeople caption="@Localizer["people"]" />
             </Row>
         </Column>
         <Column ColumnSize="@myColumnSize" Style="direction:rtl">
@@ -56,8 +56,8 @@
             globalService.Places = places;
 
             globalService.Points = JsonSerializer.Deserialize<clsGeoJson>(await JS.InvokeAsync<string>("localStorage.getItem", "points"), new JsonSerializerOptions { IncludeFields = true });
-
             globalService.Themes = JsonSerializer.Deserialize<clsThemes>(await JS.InvokeAsync<string>("localStorage.getItem", "themes"), new JsonSerializerOptions { IncludeFields = true });
+            globalService.Persons = JsonSerializer.Deserialize<clsPersons>(await JS.InvokeAsync<string>("localStorage.getItem", "people"), new JsonSerializerOptions { IncludeFields = true });
         }
     }
     // protected override async Task OnAfterRenderAsync(bool firstRender)

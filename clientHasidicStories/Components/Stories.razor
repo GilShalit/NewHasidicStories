@@ -103,6 +103,9 @@
         await JSRuntime.InvokeVoidAsync("localStorage.setItem", "themes",
             JsonSerializer.Serialize(globalService.Themes.storyThemes(storyId),
             new JsonSerializerOptions { IncludeFields = true }));
+        await JSRuntime.InvokeVoidAsync("localStorage.setItem", "people",
+            JsonSerializer.Serialize(globalService.Persons.storyPeople(storyId),
+            new JsonSerializerOptions { IncludeFields = true }));
 
         //Open story in new tab
         string fileName = globalService.EditionFiles.getFileName(editionName);
