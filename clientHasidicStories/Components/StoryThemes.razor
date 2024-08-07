@@ -1,15 +1,15 @@
 ﻿@using System.Globalization
-<Div Class="basicControl smallControl">
+<Div Class="basicControl midStoryControl">
     <Row Margin="Margin.Is1.FromTop" Class="topControlRow">
         <Column ColumnSize="ColumnSize.Is4">
             <h3>@caption</h3>
         </Column>
     </Row>
     <Row>
-        <Column>
+        <Column Style="padding:0!important">
             @if (globalService.Themes != null && globalService.Themes.Count > 0)
             {
-                <Div Class="internalControl internalThemesControl">
+                <Div Class="internalControl internalStoryThemesControl">
                     <TreeView Nodes="globalService.Themes"
                               id="themesTree"
                               TNode="clsTheme"

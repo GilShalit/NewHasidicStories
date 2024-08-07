@@ -8,17 +8,17 @@
     </Row>
     <Row>
         <Column Class="smallControlCol">
-            @if (globalService.Persons != null && globalService.Persons.Count > 0 )
+            @if (globalService.Places != null && globalService.Places.Count > 0 )
             {
-                <Div Class="internalControl internalStoryPeopleControl">
-                    <TreeView Nodes="globalService.Persons"
-                              TNode="clsPerson"
-                              id="peopleTree"
+                <Div Class="internalControl internalStoryPlacesControl">
+                    <TreeView Nodes="globalService.Places"
+                              TNode="clsPlace"
+                              id="placesTree"
                               GetChildNodes="@(item => item.children)"
                               HasChildNodes="@(item => item.children?.Any() == true)">
                         <NodeContent>
-                            <Icon Name="IconName.IdCard" />
-                            <Button Class="linkStyle" @onclick="() => NavigateToPerson(context.link)">@context.name</Button>
+                            <Icon Name="IconName.MapMarkerAlt" />
+                            <Button Class="linkStyle" @onclick="() => NavigateToPlace(context.xmlref)">@context.name</Button>
                         </NodeContent>
                     </TreeView>
                 </Div>
@@ -43,8 +43,8 @@
     {
         StateHasChanged();
     }
-    private async void NavigateToPerson(string url)
+    private async void NavigateToPlace(string placeId)
     {
-        await JSRuntime.InvokeVoidAsync("open", navigationManager.ToAbsoluteUri(url), "_blank");
+        await JSRuntime.InvokeVoidAsync("open", navigationManager.ToAbsoluteUri(placeId), "_blank");
     }
 }

@@ -120,6 +120,9 @@
   <data name="people" xml:space="preserve">
     <value>דמויות</value>
   </data>
+  <data name="places" xml:space="preserve">
+    <value>מקומות</value>
+  </data>
   <data name="themes" xml:space="preserve">
     <value>נושאים</value>
   </data>
