@@ -41,7 +41,7 @@
             return this.Where(p => p.xmlref == placeId).First().stories.ToList();
         }
 
-        //place Ids for selected story
+        //places a story belongs to
         public List<clsPlace> storyPlaces(string storyId)
         {
             return this.Where(p => p.stories.Contains(storyId)).ToList();

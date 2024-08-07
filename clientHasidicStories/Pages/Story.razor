@@ -7,20 +7,24 @@
 
 <div class="controlsContainer">
     <Row>
+        <Column ColumnSize="@myColumnSize">
+            <Row></Row>
+            <Row Margin="Margin.Is2.FromTop">
+                <StoryThemes caption="@Localizer["themes"]" />
+            </Row>
+            <Row Margin="Margin.Is2.FromTop">
+                <People caption="@Localizer["people"]" />
+            </Row>
+        </Column>
+        <Column ColumnSize="@myColumnSize" Style="direction:rtl">
+            <StoryTEI fileName="@fileName" storyId="@storyId" />
+        </Column>
         @if (showMap)
         {
             <Column ColumnSize="@myColumnSize">
                 <StoryMap />
             </Column>
         }
-        <Column ColumnSize="@myColumnSize" Style="direction:rtl">
-            <StoryTEI fileName="@fileName" storyId="@storyId" />
-        </Column>
-        <Column ColumnSize="@myColumnSize">
-            <Row></Row>
-            <Row Margin="Margin.Is2.FromTop"></Row>
-            <Row Margin="Margin.Is2.FromTop"></Row>
-        </Column>
     </Row>
 </div>
 
@@ -51,9 +55,9 @@
 
             globalService.Places = places;
 
-            clsGeoJson points = JsonSerializer.Deserialize<clsGeoJson>(await JS.InvokeAsync<string>("localStorage.getItem", "points"), new JsonSerializerOptions { IncludeFields = true });
-            globalService.Points = points;
+            globalService.Points = JsonSerializer.Deserialize<clsGeoJson>(await JS.InvokeAsync<string>("localStorage.getItem", "points"), new JsonSerializerOptions { IncludeFields = true });
 
+            globalService.Themes = JsonSerializer.Deserialize<clsThemes>(await JS.InvokeAsync<string>("localStorage.getItem", "themes"), new JsonSerializerOptions { IncludeFields = true });
         }
     }
     // protected override async Task OnAfterRenderAsync(bool firstRender)

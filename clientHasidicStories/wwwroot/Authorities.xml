@@ -2088,9 +2088,6 @@
 					</place>
 					<place xml:id="H-LOC_202">
 						<placeName>Russia</placeName>
-						<location>
-							<geo>60.0,90.0</geo>
-						</location>
 						<idno type="Wikidata">https://www.wikidata.org/wiki/Q34266</idno>
 					</place>
 					<place xml:id="H-LOC_203">

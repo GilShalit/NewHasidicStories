@@ -1,0 +1,34 @@
+﻿@using System.Globalization
+<Div Class="basicControl bigControl">
+    <Row Margin="Margin.Is1.FromTop" Class="topControlRow">
+        <Column ColumnSize="ColumnSize.Is4">
+            <h3>@caption</h3>
+        </Column>
+    </Row>
+    <Row>
+        <Column>
+            @if (globalService.Themes != null && globalService.Themes.Count > 0)
+            {
+                <Div Class="internalControl internalThemesControl">
+                    <TreeView Nodes="globalService.Themes"
+                              id="themesTree"
+                              TNode="clsTheme"
+                              GetChildNodes="@(item => item.children)"
+                              HasChildNodes="@(item => item.children?.Any() == true)"
+                              ExpandedNodes="@expandedNodes"
+                              @ref=_treeView>
+                        <NodeContent>
+                            <Icon Name="IconName.Lightbulb" />
+                            @(fixName(context.name))
+                        </NodeContent>
+                    </TreeView>
+                </Div>
+            }
+            else
+            {
+                <Spinner cClass="spinContainer" />
+            }
+        </Column>
+    </Row>
+</Div>
+
