@@ -263,6 +263,17 @@ window.updatePoints = (data) => {
     }, interval);
 };
 
+// Function to clear the points layer
+window.clearPoints = () => {
+    // Remove existing pulsing effect if any
+    if (window.pulseInterval) clearInterval(window.pulseInterval);
+
+    if (map.getSource('points')) {
+        map.removeLayer('points');
+        map.removeSource('points');
+    }
+};
+
 window.resetPulsatingPoint = () => {
     // Remove existing pulsing effect if any
     if (window.pulseInterval) {
