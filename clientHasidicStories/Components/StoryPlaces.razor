@@ -1,0 +1,50 @@
+﻿@inject IJSRuntime JSRuntime
+@inject NavigationManager navigationManager
+<Div Class="basicControl smallStoryControl">
+    <Row Margin="Margin.Is1.FromTop" Class="topControlRow">
+        <Column Class="smallControlCol">
+            <h3>@caption</h3>
+        </Column>
+    </Row>
+    <Row>
+        <Column Class="smallControlCol">
+            @if (globalService.Places != null && globalService.Places.Count > 0 )
+            {
+                <Div Class="internalControl internalStoryPlacesControl">
+                    <TreeView Nodes="globalService.Places"
+                              TNode="clsPlace"
+                              id="placesTree"
+                              GetChildNodes="@(item => item.children)"
+                              HasChildNodes="@(item => item.children?.Any() == true)">
+                        <NodeContent>
+                            <Icon Name="IconName.MapMarkerAlt" />
+                            <Button Class="linkStyle" @onclick="() => NavigateToPlace(context.xmlref)">@context.name</Button>
+                        </NodeContent>
+                    </TreeView>
+                </Div>
+            }
+        </Column>
+    </Row>
+</Div>
+
+@code {
+    [Inject] GlobalService globalService { get; set; }
+    [Parameter] public string caption { get; set; }
+
+    protected override void OnInitialized()
+    {
+        globalService.OnGlobalPersonsChanged += HandleGlobalPersonsChange;
+    }
+    public void Dispose()
+    {
+        globalService.OnGlobalPersonsChanged -= HandleGlobalPersonsChange;
+    }
+    private void HandleGlobalPersonsChange()
+    {
+        StateHasChanged();
+    }
+    private async void NavigateToPlace(string placeId)
+    {
+        await JSRuntime.InvokeVoidAsync("open", navigationManager.ToAbsoluteUri(placeId), "_blank");
+    }
+}

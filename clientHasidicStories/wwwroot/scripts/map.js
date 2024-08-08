@@ -8,7 +8,7 @@ window.storyMap = (center, divname, data) => {
         container: divname, // container's id or the HTML element to render the map
         style: maptilersdk.MapStyle.TOPO.TOPOGRAPHIQUE,
         center: center, // starting position [lng, lat]
-        zoom: 4, // starting zoom
+        zoom: 3, // starting zoom
         pitch: 90,
         //bearing: -100.86,
         //maxPitch: 85,
@@ -16,11 +16,6 @@ window.storyMap = (center, divname, data) => {
     });
 
     map.on('load', () => {
-        var popup = new maptilersdk.Popup({
-            closeButton: false,
-            closeOnClick: false
-        });
-
         map.addSource('points', data);
 
         map.addLayer({
@@ -34,6 +29,45 @@ window.storyMap = (center, divname, data) => {
                 'circle-opacity': 0
             },
         });
+
+        // Add a symbol layer for the point names with a border
+        map.addLayer({
+            'id': 'point-names',
+            'type': 'symbol',
+            'source': 'points',
+            'layout': {
+                'text-field': ['get', 'name'],
+                'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
+                'text-size': 12,
+                'text-offset': [0, 1.5], // Adjust the offset to position the text above the point
+                'text-anchor': 'bottom',
+                'text-padding': 5, // Add padding around the text
+                'text-justify': 'center'
+            },
+            'paint': {
+                'text-color': '#000000',
+                'text-halo-color': '#B42222', // Border color
+                'text-halo-width': 0.5, // Width of the border
+                'text-halo-blur': 1 // No blur for the border
+            }
+        });
+
+        // Calculate the bounding box for all points
+        const coordinates = data.data.features.map(feature => feature.geometry.coordinates);
+        const bounds = coordinates.reduce((bounds, coord) => {
+            return bounds.extend(coord);
+        }, new maptilersdk.LngLatBounds(coordinates[0], coordinates[0]));
+
+        // Fit the map to the bounds
+        if (coordinates.length === 1) {
+            // If there is only one point, set a default zoom level
+            map.setCenter(coordinates[0]);
+            map.setZoom(8); // Adjust the zoom level as needed
+        } else {
+            map.fitBounds(bounds, {
+                padding: 40 // Optional padding around the bounds
+            });
+        }
 
         // Animate the opacity
         let opacity = 0;
@@ -53,23 +87,12 @@ window.storyMap = (center, divname, data) => {
         map.on('mouseenter', 'points', function (evt) {
             // Change the cursor to a pointer when it enters a feature in the 'points' layer.
             map.getCanvas().style.cursor = 'pointer';
-
-            if (evt.features.length > 0) {
-                const feature = evt.features[0];
-                var coordinates = feature.geometry.coordinates.slice();
-                var name = feature.properties.name;
-                var link = feature.properties.link;
-
-                popup.setLngLat(coordinates) // sets the popup's location
-                    .setHTML(`<strong>${name}</strong><p style="padding=0;margin:0">double click to go there</p>`) // sets the popup's content
-                    .addTo(map); // adds the popup to the map
-            }
         });
         map.on('mouseleave', 'points', function () {
             // Change it back to the default when it leaves.
             map.getCanvas().style.cursor = '';
-            popup.remove();
         });
+
         map.on('dblclick', 'points', function (evt) {
             if (evt.features.length > 0) {
                 const feature = evt.features[0];
@@ -211,6 +234,17 @@ window.updatePoints = (data) => {
             'circle-color': '#B42222',
             'circle-opacity': 0
         },
+    });
+
+    // Calculate the bounding box for all points
+    const coordinates = data.data.features.map(feature => feature.geometry.coordinates);
+    const bounds = coordinates.reduce((bounds, coord) => {
+        return bounds.extend(coord);
+    }, new maptilersdk.LngLatBounds(coordinates[0], coordinates[0]));
+
+    // Fit the map to the bounds
+    map.fitBounds(bounds, {
+        padding: 20 // Optional padding around the bounds
     });
 
     // Animate the opacity

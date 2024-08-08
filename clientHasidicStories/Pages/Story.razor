@@ -7,20 +7,26 @@
 
 <div class="controlsContainer">
     <Row>
+        <Column ColumnSize="@Column1Size">
+            <Row >
+                <StoryThemes caption="@Localizer["themes"]" />
+            </Row>
+            <Row Margin="Margin.Is2.FromTop">
+                <StoryPeople caption="@Localizer["people"]" />
+            </Row>
+            <Row Margin="Margin.Is2.FromTop">
+                <StoryPlaces caption="@Localizer["places"]" />
+            </Row>
+        </Column>
+        <Column ColumnSize="@Column2Size" Style="direction:rtl">
+            <StoryTEI fileName="@fileName" storyId="@storyId" />
+        </Column>
         @if (showMap)
         {
-            <Column ColumnSize="@myColumnSize">
+            <Column ColumnSize="@Column3Size">
                 <StoryMap />
             </Column>
         }
-        <Column ColumnSize="@myColumnSize" Style="direction:rtl">
-            <StoryTEI fileName="@fileName" storyId="@storyId" />
-        </Column>
-        <Column ColumnSize="@myColumnSize">
-            <Row></Row>
-            <Row Margin="Margin.Is2.FromTop"></Row>
-            <Row Margin="Margin.Is2.FromTop"></Row>
-        </Column>
     </Row>
 </div>
 
@@ -28,7 +34,7 @@
     [Inject] GlobalService globalService { get; set; }
     [Parameter] public string fileName { get; set; }
     [Parameter] public string storyId { get; set; }
-    private Blazorise.IFluentColumn myColumnSize;
+    private Blazorise.IFluentColumn Column1Size, Column2Size, Column3Size;
     private bool showMap;
 
     protected override async Task OnInitializedAsync()
@@ -41,19 +47,24 @@
             showMap = places.Count > 0;
             if (showMap)
             {
-                myColumnSize = ColumnSize.Is4;
-                foreach(clsPlace place in places)
+                Column1Size = ColumnSize.Is2;
+                Column2Size = ColumnSize.Is6;
+                Column3Size = ColumnSize.Is4;
+                foreach (clsPlace place in places)
                 {
                     place.selected = true;
                 }
             }
-            else myColumnSize = ColumnSize.Is6;
+            else {
+                Column1Size = ColumnSize.Is3;
+                Column2Size = ColumnSize.Is9;
+            }
 
             globalService.Places = places;
 
-            clsGeoJson points = JsonSerializer.Deserialize<clsGeoJson>(await JS.InvokeAsync<string>("localStorage.getItem", "points"), new JsonSerializerOptions { IncludeFields = true });
-            globalService.Points = points;
-
+            globalService.Points = JsonSerializer.Deserialize<clsGeoJson>(await JS.InvokeAsync<string>("localStorage.getItem", "points"), new JsonSerializerOptions { IncludeFields = true });
+            globalService.Themes = JsonSerializer.Deserialize<clsThemes>(await JS.InvokeAsync<string>("localStorage.getItem", "themes"), new JsonSerializerOptions { IncludeFields = true });
+            globalService.Persons = JsonSerializer.Deserialize<clsPersons>(await JS.InvokeAsync<string>("localStorage.getItem", "people"), new JsonSerializerOptions { IncludeFields = true });
         }
     }
     // protected override async Task OnAfterRenderAsync(bool firstRender)

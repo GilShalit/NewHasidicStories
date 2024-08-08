@@ -2,7 +2,7 @@
 @inject NavigationManager navigationManager
 @inject IJSRuntime JSRuntime
 <Div Class="basicControl bigControl">
-    <Row Margin="Margin.Is1.FromTop">
+    <Row Margin="Margin.Is1.FromTop" Class="topControlRow">
         <Column ColumnSize="ColumnSize.Is4">
             <h3>@caption</h3>
         </Column>
@@ -92,14 +92,23 @@
                 point = globalService.Points.data.featureById(place.xmlref);
                 point.selected = true;
                 points.data.Add(point);
+                place.name=point.properties.name;
             }
+
         await JSRuntime.InvokeVoidAsync("localStorage.setItem", "places",
             JsonSerializer.Serialize(places,
             new JsonSerializerOptions { IncludeFields = true }));
         await JSRuntime.InvokeVoidAsync("localStorage.setItem", "points",
             JsonSerializer.Serialize(points,
             new JsonSerializerOptions { IncludeFields = true }));
+        await JSRuntime.InvokeVoidAsync("localStorage.setItem", "themes",
+            JsonSerializer.Serialize(globalService.Themes.storyThemes(storyId),
+            new JsonSerializerOptions { IncludeFields = true }));
+        await JSRuntime.InvokeVoidAsync("localStorage.setItem", "people",
+            JsonSerializer.Serialize(globalService.Persons.storyPeople(storyId),
+            new JsonSerializerOptions { IncludeFields = true }));
 
+        //Open story in new tab
         string fileName = globalService.EditionFiles.getFileName(editionName);
         var url = $"/Story/{fileName}/{storyId}";
         await JSRuntime.InvokeVoidAsync("open", navigationManager.ToAbsoluteUri(url), "_blank");

@@ -32,16 +32,15 @@ namespace clientHasidicStories.Classes
                 return [lat, lon];
             }
         }
-        public void changeFeatureSelection(string xmlid, bool selected)
+        public void selectFeature(string xmlid)
         {
-            foreach (Feature f in lFeatures)
-            {
-                if (f.properties.xmlid == xmlid)
-                {
-                    f.selected = selected;
-                    break;
-                }
-            }
+            Feature feature = lFeatures.Where(f => f.properties.xmlid == xmlid).FirstOrDefault();
+            //not selecting features with a 0,0 coordinate
+            if (feature != null && (feature.geometry.coordinates[0] != 0 || feature.geometry.coordinates[1] != 0)) feature.selected = true;
+        }
+        public void unselectAllFeatures()
+        {
+            foreach (Feature feature in lFeatures) feature.selected = false;
         }
     }
 

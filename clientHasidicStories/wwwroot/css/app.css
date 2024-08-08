@@ -9,9 +9,15 @@
     display: block;
 }
 */
+h3 {
+    font-family:'Times New Roman', Times, serif;
+    padding:0 5px
+}
+
 .radio-group {
     display: flex;
     gap: 10px;
+    padding-left:10px;
 }
 
     .radio-group .form-check-input {
@@ -38,9 +44,14 @@
 }
 
 /*the single level treeViews*/
-#peopleTree .b-tree-view-node, #peopleTree .b-tree-view-node-title, #editionsTree .b-tree-view-node, #editionsTree .b-tree-view-node-title {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
+#peopleTree .b-tree-view-node,
+#peopleTree .b-tree-view-node-title,
+#editionsTree .b-tree-view-node,
+#editionsTree .b-tree-view-node-title,
+#placesTree .b-tree-view-node,
+#placesTree .b-tree-view-node-title {
+    margin-left: 0.25rem !important;
+    margin-right: 0.25rem !important;
 }
 
 body {
@@ -65,9 +76,8 @@ body {
 }
 
 .topControlRow {
-    border-bottom: 1px solid #e0e0e0;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.8) !important;
-    margin-bottom: 5px;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3) !important;
+    margin-bottom: 3px;
 }
 
 .smallControl {
@@ -78,8 +88,16 @@ body {
     height: calc((100vh - 80px));
 }
 
+.midStoryControl {
+    height: calc((100vh - 99px)/2);
+}
+
+.smallStoryControl {
+    height: calc((100vh - 94px)/4);
+}
+
 .smallControlCol {
-    padding: 0;
+    padding: 0!important;
 }
 
 .internalControl {
@@ -105,6 +123,18 @@ body {
 
 .internalPeopleControl {
     height: calc((100vh - 245px)/2);
+}
+
+.internalStoryPeopleControl {
+    height: calc((100vh - 245px)/4);
+}
+
+.internalStoryThemesControl {
+    height: calc((100vh - 210px)/2);
+}
+
+.internalStoryPlacesControl {
+    height: calc((100vh - 245px)/4);
 }
 
 .counts {
@@ -140,6 +170,7 @@ body {
 
 .accordion-button {
     padding: 0.4rem 1rem;
+    font-family: 'Times New Roman', Times, serif;
 }
 
 .controlButton {
@@ -166,7 +197,7 @@ body {
     cursor: pointer;
     padding: 0;
     margin-bottom: 3px;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-family:  'Times New Roman', Times, serif;
 }
 
     .pStory:hover {
