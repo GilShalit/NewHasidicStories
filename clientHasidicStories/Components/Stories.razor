@@ -92,7 +92,7 @@
                 point = globalService.Points.data.featureById(place.xmlref);
                 point.selected = true;
                 points.data.Add(point);
-                place.name=point.properties.name;
+                place.name = point.properties.name;
             }
 
         await JSRuntime.InvokeVoidAsync("localStorage.setItem", "places",
