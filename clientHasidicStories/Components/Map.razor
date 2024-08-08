@@ -1,7 +1,7 @@
 ﻿@using System.Text.Json
 @if (isWaitingToStart)
 {
-    <Div Style="height:42px"/>
+    <Div Style="height:42px" />
     <Spinner cClass="spinContainer" />
 }
 else
@@ -51,7 +51,10 @@ else
         }
         else
         {
-            await JS.InvokeVoidAsync("updatePoints", globalService.Points);
+            if (globalService.Points.data.features.Length > 0)
+                await JS.InvokeVoidAsync("updatePoints", globalService.Points);
+            else
+                await JS.InvokeVoidAsync("clearPoints");
         }
         StateHasChanged();
     }
