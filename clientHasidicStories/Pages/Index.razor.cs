@@ -378,7 +378,7 @@ namespace clientHasidicStories.Pages
                 clsEditionFiles editions = new clsEditionFiles();
                 foreach (Li lItem in result.li)
                 {
-                    editions.Add(new clsEditionFile(lItem.pbrestricted.pbajax.url, lItem.header.div.div[0].a.h5.text));
+                    editions.Add(new clsEditionFile(lItem.pbrestricted.pbajax.url, lItem.header.div.div[0].a.span.text));
                 }
                 globalService.EditionFiles = editions;
                 Console.WriteLine("End ProcessEditions");
