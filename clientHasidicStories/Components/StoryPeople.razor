@@ -1,4 +1,4 @@
-﻿@inject IJSRuntime JSRuntime
+﻿@inject IJSRuntime JS
 @inject NavigationManager navigationManager
 <Div Class="basicControl smallStoryControl">
     <Row Margin="Margin.Is1.FromTop" Class="topControlRow">
@@ -8,14 +8,17 @@
     </Row>
     <Row>
         <Column Class="smallControlCol">
-            @if (globalService.Persons != null && globalService.Persons.Count > 0 )
+            @if (globalService.Persons != null && globalService.Persons.Count > 0)
             {
                 <Div Class="internalControl internalStoryPeopleControl">
                     <TreeView Nodes="globalService.Persons"
                               TNode="clsPerson"
                               id="peopleTree"
                               GetChildNodes="@(item => item.children)"
-                              HasChildNodes="@(item => item.children?.Any() == true)">
+                              HasChildNodes="@(item => item.children?.Any() == true)"
+                              SelectionMode="TreeViewSelectionMode.Multiple"
+                              SelectedNodes="selectedNodes"
+                              SelectedNodesChanged="selectedNodesChanged">
                         <NodeContent>
                             <Icon Name="IconName.IdCard" />
                             <Button Class="linkStyle" @onclick="() => NavigateToPerson(context.link)">@context.name</Button>
@@ -30,6 +33,7 @@
 @code {
     [Inject] GlobalService globalService { get; set; }
     [Parameter] public string caption { get; set; }
+    IList<clsPerson> selectedNodes = new List<clsPerson>();
 
     protected override void OnInitialized()
     {
@@ -45,6 +49,27 @@
     }
     private async void NavigateToPerson(string url)
     {
-        await JSRuntime.InvokeVoidAsync("open", navigationManager.ToAbsoluteUri(url), "_blank");
+        await JS.InvokeVoidAsync("open", navigationManager.ToAbsoluteUri(url), "_blank");
+    }
+    private void selectedNodesChanged(IList<clsPerson> nodes)
+    {
+        foreach (clsPerson node in globalService.Persons)
+        {
+            if (nodes.Contains(node)) selectNode(node);
+            else unSelectNode(node);
+        }
+        globalService.updateStoriesAndPoints();
+    }
+    void selectNode(clsPerson node)
+    {
+        node.selected = true;
+        if (!selectedNodes.Contains(node)) selectedNodes.Add(node);
+        JS.InvokeVoidAsync("highlight", "persname", node.xmlref, true);
+    }
+    void unSelectNode(clsPerson node)
+    {
+        node.selected = false;
+        if (selectedNodes.Contains(node)) selectedNodes.Remove(node);
+        JS.InvokeVoidAsync("highlight", "persname", node.xmlref, false);
     }
 }

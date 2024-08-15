@@ -1,5 +1,6 @@
 ﻿@inject IJSRuntime JSRuntime
 @inject NavigationManager navigationManager
+@inject IJSRuntime JS
 <Div Class="basicControl smallStoryControl">
     <Row Margin="Margin.Is1.FromTop" Class="topControlRow">
         <Column Class="smallControlCol">
@@ -15,7 +16,10 @@
                               TNode="clsPlace"
                               id="placesTree"
                               GetChildNodes="@(item => item.children)"
-                              HasChildNodes="@(item => item.children?.Any() == true)">
+                              HasChildNodes="@(item => item.children?.Any() == true)"
+                              SelectionMode="TreeViewSelectionMode.Multiple"
+                              SelectedNodes="selectedNodes"
+                              SelectedNodesChanged="selectedNodesChanged">
                         <NodeContent>
                             <Icon Name="IconName.MapMarkerAlt" />
                             <Button Class="linkStyle" @onclick="() => NavigateToPlace(context.xmlref)">@context.name</Button>
@@ -30,6 +34,7 @@
 @code {
     [Inject] GlobalService globalService { get; set; }
     [Parameter] public string caption { get; set; }
+    IList<clsPlace> selectedNodes = new List<clsPlace>();
 
     protected override void OnInitialized()
     {
@@ -46,5 +51,26 @@
     private async void NavigateToPlace(string placeId)
     {
         await JSRuntime.InvokeVoidAsync("open", navigationManager.ToAbsoluteUri(placeId), "_blank");
+    }
+    private void selectedNodesChanged(IList<clsPlace> nodes)
+    {
+        foreach (clsPlace node in globalService.Places)
+        {
+            if (nodes.Contains(node)) selectNode(node);
+            else unSelectNode(node);
+        }
+        globalService.updateStoriesAndPoints();
+    }
+    void selectNode(clsPlace node)
+    {
+        node.selected = true;
+        if (!selectedNodes.Contains(node)) selectedNodes.Add(node);
+        JS.InvokeVoidAsync("highlight", "placename", node.xmlref, true);
+    }
+    void unSelectNode(clsPlace node)
+    {
+        node.selected = false;
+        if (selectedNodes.Contains(node)) selectedNodes.Remove(node);
+        JS.InvokeVoidAsync("highlight", "placename", node.xmlref, false);
     }
 }
