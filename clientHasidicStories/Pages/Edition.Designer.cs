@@ -70,11 +70,29 @@ namespace clientHasidicStories.Pages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stories.
+        /// </summary>
+        public static string content {
+            get {
+                return ResourceManager.GetString("content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Next Page.
         /// </summary>
         public static string forward {
             get {
                 return ResourceManager.GetString("forward", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stories List.
+        /// </summary>
+        public static string stories {
+            get {
+                return ResourceManager.GetString("stories", resourceCulture);
             }
         }
     }

@@ -2,7 +2,7 @@
     let pbPage = document.querySelector('pb-page');
     let pbView = pbPage.querySelector('pb-view');
     let elements = pbView.shadowRoot.querySelectorAll(type);
-    let color = type == 'persname' ? '#F1E5AC' : '#FDD7E4';
+    let color = type == 'persname' ? '#F1E5AC' : '#BCC6CC';
     elements.forEach(element => {
         if (element.getAttribute('ref') === '#' + id) {
             if (isHighlight) element.style.backgroundColor = color;

@@ -1,5 +1,6 @@
 ﻿@page "/Edition/{fileName}"
 @using Microsoft.Extensions.Localization
+@using System.Globalization
 @inject IStringLocalizer<Edition> Localizer
 @inject IJSRuntime JSRuntime
 @inject IConfiguration Configuration
@@ -9,7 +10,11 @@
 <pb-page endpoint=@(Configuration["endpointURL"] + "/HasidicStoriesServer")
          data-template="pages:pb-page" unresolved="unresolved">
     <pb-document id="document1" path=@(fileName + ".xml") odd="Stories" view="page"></pb-document>
-    <app-toolbar class="toolbar" sticky="sticky" dir="rtl">
+    <app-toolbar class="toolbar" sticky="sticky">
+        <paper-button id="tocToggle" class="toc-toggle">
+            <iron-icon icon="icons:view-list" />
+            <span class="clsToolbar">@Localizer["stories"]</span>
+        </paper-button>
         <pb-navigation emit="transcription" keyboard="left" subscribe="transcription" direction="backward" unit="div">
             <paper-button>
                 <iron-icon icon="icons:file-upload" />
@@ -26,6 +31,14 @@
             </paper-button>
         </pb-navigation>
     </app-toolbar>
+    <pb-drawer toggle="tocToggle" class="toc" emit="toc" subscribe="transcription" position="@tocPosition">
+        <div class="drawer-content">
+            <h3>
+                @Localizer["content"]
+            </h3>
+            <pb-load id="toc" url="api/document/{doc}/edition_contents?target=transcription&amp;icons=true" expand="expand" src="document1" subscribe="toc" load-once="load-once"><pb-i18n key="dialogs.loading">Loading</pb-i18n></pb-load>
+        </div>
+    </pb-drawer>
     <br />
     <div class="content-body">
         <pb-view id="view1" src="document1" column-separator=".tei-cb" append-footnotes="append-footnotes" subscribe="transcription" emit="transcription" wait-for="#facsimile" animation disable-history />
@@ -37,11 +50,23 @@
 
 @code {
     [Parameter] public string fileName { get; set; }
+    string tocPosition = "";
+
+    protected override void OnInitialized()
+    {
+        if (CultureInfo.CurrentCulture.Name == "he-IL") tocPosition = "right";
+        else tocPosition = "left";
+    }
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            var cssUrl = Configuration["endpointURL"] + "/HasidicStoriesServer/resources/css/theme.css";
+            string cssUrl = "";
+            if (CultureInfo.CurrentCulture.Name == "he-IL")
+                cssUrl = Configuration["endpointURL"] + "/HasidicStoriesServer/resources/css/theme_rtl.css";
+            else
+                cssUrl = Configuration["endpointURL"] + "/HasidicStoriesServer/resources/css/theme.css";
+
             await JSRuntime.InvokeVoidAsync("loadCssFile", cssUrl);
         }
     }

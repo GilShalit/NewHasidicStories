@@ -61,7 +61,7 @@ namespace clientHasidicStories.Layout {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Using.
+        ///   Looks up a localized string similar to How To.
         /// </summary>
         public static string _using {
             get {

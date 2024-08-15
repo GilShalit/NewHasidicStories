@@ -120,7 +120,13 @@
   <data name="back" xml:space="preserve">
     <value>Previous Page</value>
   </data>
+  <data name="content" xml:space="preserve">
+    <value>Stories</value>
+  </data>
   <data name="forward" xml:space="preserve">
     <value>Next Page</value>
+  </data>
+  <data name="stories" xml:space="preserve">
+    <value>Stories List</value>
   </data>
 </root>

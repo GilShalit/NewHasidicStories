@@ -120,7 +120,13 @@
   <data name="back" xml:space="preserve">
     <value>העמוד הקודם</value>
   </data>
+  <data name="content" xml:space="preserve">
+    <value>סיפורים</value>
+  </data>
   <data name="forward" xml:space="preserve">
     <value>העמוד הבא</value>
+  </data>
+  <data name="stories" xml:space="preserve">
+    <value>רשימת הסיפורים</value>
   </data>
 </root>
