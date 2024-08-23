@@ -205,9 +205,9 @@ namespace clientHasidicStories.Pages
                     foreach (clsPerson person in localPersons)
                     {
                         //Console.WriteLine(person.xmlref);
-                        TEITeiHeaderFileDescSourceDescPerson teiPerso = authorities.teiHeader.fileDesc.sourceDesc.listPerson.Where(p => p.xmlid == person.xmlref).FirstOrDefault();
-                        person.name = teiPerso.name;
-                        person.link = teiPerso.idno.Value;
+                        TEITeiHeaderFileDescSourceDescListPersonPerson teiPerson = authorities.teiHeader.fileDesc.sourceDesc.listPerson[1].person.Where(p => p.xmlid == person.xmlref).FirstOrDefault();
+                        person.name = teiPerson.name.Where(n=>n.lang=="en").First().Value;
+                        person.link = teiPerson.idno[0].Value;
                     }
                     localPersons.hasNames = true;
                     globalService.Persons = localPersons;
@@ -222,7 +222,7 @@ namespace clientHasidicStories.Pages
                         if (!includedPlacesIds.Contains(place.xmlref)) includedPlacesIds.Add(place.xmlref);
                 }
 
-                foreach (TEITeiHeaderFileDescSourceDescPlace place in authorities.teiHeader.fileDesc.sourceDesc.listPlace
+                foreach (TEITeiHeaderFileDescSourceDescListPlace place in authorities.teiHeader.fileDesc.sourceDesc.listPlace
                     .Where(p => includedPlacesIds.Contains(p.xmlid))
                     )
                 {
@@ -236,8 +236,8 @@ namespace clientHasidicStories.Pages
                         geo[1] = float.Parse(aGeo[0], CultureInfo.InvariantCulture);
                         newPoint.geometry.coordinates = geo;
                     }
-                    newPoint.properties.name = place.placeName.Value;
-                    if (place.idno != null) newPoint.properties.link = place.idno.Value;
+                    newPoint.properties.name = place.placeName;
+                    if (place.idno != null) newPoint.properties.link = place.idno[0].Value;//ToDo: support more then one link
                     newPoint.properties.xmlid = place.xmlid;
                     localPoints.data.Add(newPoint);
                 }
