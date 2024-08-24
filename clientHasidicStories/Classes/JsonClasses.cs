@@ -47,7 +47,7 @@ namespace clientHasidicStories.Classes
         public string href { get; set; }
         public string _class { get; set; }
         public string target { get; set; }
-        public H5 span { get; set; }
+        public H5 div { get; set; }
     }
 
     public class H5
