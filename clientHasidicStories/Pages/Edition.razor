@@ -21,9 +21,11 @@
                 <span class="clsToolbar">@Localizer["back"]</span>
             </paper-button>
         </pb-navigation>
-            <pb-view src="document1" xpath="//teiHeader/fileDesc/titleStmt/title[@@type='main']" view="single" disable-history="">
-                <pb-param name="header" value="short" load-css="/resources/css/editionTitle.css" />
-            </pb-view>
+        <pb-view src="document1" xpath="//teiHeader/fileDesc/titleStmt/title[@@type='main']" view="single" disable-history="" />
+        <Div id="pb-view-container" Style="display: flex; align-items: right;">
+            <pb-view src="document1" xpath="//teiHeader/fileDesc/sourceDesc/bibl/pubPlace" view="single" disable-history="" />,&nbsp;
+            <pb-view src="document1" xpath="//teiHeader/fileDesc//sourceDesc/bibl/date" view="single" disable-history="" />
+        </Div>
         <pb-navigation emit="transcription" keyboard="right" subscribe="transcription" direction="forward" unit="div">
             <paper-button icon="icons:chevron-down">
                 <span class="clsToolbar">@Localizer["forward"]</span>
