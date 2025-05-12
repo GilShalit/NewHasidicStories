@@ -10,19 +10,19 @@
 }
 */
 h3 {
-    font-family:'Times New Roman', Times, serif;
-    padding:0 5px
+    font-family: 'Times New Roman', Times, serif;
+    padding: 0 5px
 }
 
 .radio-group {
     display: flex;
     gap: 10px;
-    padding-left:10px;
+    padding-left: 10px;
 }
 
     .radio-group .form-check-input {
-        cursor: pointer!important;
-        appearance:inherit!important;
+        cursor: pointer !important;
+        appearance: inherit !important;
     }
 
         .radio-group .form-check-input:checked {
@@ -97,7 +97,7 @@ body {
 }
 
 .smallControlCol {
-    padding: 0!important;
+    padding: 0 !important;
 }
 
 .internalControl {
@@ -197,7 +197,7 @@ body {
     cursor: pointer;
     padding: 0;
     margin-bottom: 3px;
-    font-family:  'Times New Roman', Times, serif;
+    font-family: 'Times New Roman', Times, serif;
 }
 
     .pStory:hover {
@@ -250,8 +250,15 @@ body {
     color: red;
 }
 
+.reload {
+    color: white;
+    font-weight: 600;
+}
+
 #blazor-error-ui {
     background: red;
+    color: white;
+    font-weight: 600;
     bottom: 0;
     box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
     display: none;
@@ -327,3 +334,21 @@ code {
     bottom: 0;
     width: 100%;
 }
+
+#info_page {
+    padding-top: 30px;
+}
+
+    #info_page p, #info_page ul {
+        font-size: 1rem;
+        padding-inline: 50px;
+    }
+
+    #info_page ul {
+        font-size: 1rem;
+        padding-inline: 70px;
+    }
+
+    #info_page h3 {
+        padding-inline: 70px;
+    }

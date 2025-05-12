@@ -204,9 +204,10 @@ namespace clientHasidicStories.Pages
                     //clsPerson prs = localPersons.Where(p => p.xmlref == "01.001").FirstOrDefault();
                     foreach (clsPerson person in localPersons)
                     {
-                        //Console.WriteLine(person.xmlref);
+                        Console.WriteLine(person.xmlref);
                         TEITeiHeaderFileDescSourceDescListPersonPerson teiPerson = authorities.teiHeader.fileDesc.sourceDesc.listPerson[1].person.Where(p => p.xmlid == person.xmlref).FirstOrDefault();
                         person.name = teiPerson.name.Where(n=>n.lang=="en").First().Value;
+                        Console.WriteLine(person.name);
                         person.link = teiPerson.idno[0].Value;
                     }
                     localPersons.hasNames = true;

@@ -2,9 +2,8 @@
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<TopMenuStart> Localizer
 
-
 <BarItem>
-    <Button Style="font-size:1rem!important; padding-top:0!important">
+    <Button @onclick="() => NavigateToInfoPage(sAbout)" Style="font-size:1rem!important; padding-top:0!important">
         <BarIcon IconName="IconName.QuestionCircle" IconSize="IconSize.Large" />
         @Localizer["about"]
     </Button>
@@ -52,6 +51,12 @@
     RenderFragment meterIcon =@<img src="/Images/noun_meter system_2596699.png" style="width:44px; height: 32px" />;
     Version version = typeof(Program).Assembly.GetName().Version;
     string mailURI = "";
+    string sAbout = "about";
+
+    private void NavigateToInfoPage(string part)
+    {
+        Navigation.NavigateTo($"/Info_l/{part}");
+    }
 
     async Task OnShare()
     {
