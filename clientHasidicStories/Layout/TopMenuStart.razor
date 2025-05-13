@@ -9,24 +9,24 @@
     </Button>
 </BarItem>
 <BarItem>
-    <Button Style="font-size:1rem!important; padding-top:0!important">
+    <Button @onclick="() => NavigateToInfoPage(sCredit)" Style="font-size:1rem!important; padding-top:0!important">
         <BarIcon IconName="IconName.InfoCircle" IconSize="IconSize.Large" />
         @Localizer["credits"]
     </Button>
 </BarItem>
-<BarItem>
+@* <BarItem>
     <Button Style="font-size:1rem!important; padding-top:0!important">
         <BarIcon IconName="IconName.Desktop" IconSize="IconSize.Large" />
         @Localizer["using"]
     </Button>
-</BarItem>
+</BarItem> *@
 <BarItem>
-    <Button Style="font-size:1rem!important; padding-top:0!important">
+    <Button @onclick="() => NavigateToInfoPage(sTeam)" Style="font-size:1rem!important; padding-top:0!important">
         <BarIcon IconName="IconName.UserFriends" IconSize="IconSize.Large" />
         @Localizer["team"]
     </Button>
 </BarItem>
-<BarItem>
+@* <BarItem>
     <Tooltip Text="Click to copy a link to the current object. Paste in an email or social media message." Multiline=true Fade=true Placement="TooltipPlacement.Bottom">
         <Button Clicked="@OnShare" Style="font-size:1rem!important; padding-top:0!important">
             <BarIcon IconName="IconName.ShareAlt" IconSize="IconSize.Large" />
@@ -41,7 +41,7 @@
             @Localizer["comment"]
         </Link>
     </Tooltip>
-</BarItem>
+</BarItem> *@
 @code {
     [Inject] NavigationManager Navigation { get; set; }
     [Inject] IJSRuntime JS { get; set; }
@@ -51,7 +51,9 @@
     RenderFragment meterIcon =@<img src="/Images/noun_meter system_2596699.png" style="width:44px; height: 32px" />;
     Version version = typeof(Program).Assembly.GetName().Version;
     string mailURI = "";
-    string sAbout = "about";
+    const string sAbout = "AboutRef";
+    const string sCredit = "CreditsRef";
+    const string sTeam = "TeamRef";
 
     private void NavigateToInfoPage(string part)
     {
