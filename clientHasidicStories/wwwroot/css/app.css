@@ -337,18 +337,84 @@ code {
 
 #info_page {
     padding-top: 30px;
+    max-width: 900px;
+    margin: 0 auto;
+    line-height: 1.6;
+    color: #333;
 }
 
-    #info_page p, #info_page ul {
-        font-size: 1rem;
+    #info_page h3 {
         padding-inline: 50px;
+        margin-top: 30px;
+        margin-bottom: 15px;
+        color: #4d4d4d;
+        font-family: Georgia, serif;
+        border-bottom: 1px solid #e0e0e0;
+        padding-bottom: 8px;
+    }
+
+    #info_page p, #info_page ul {
+        font-size: 1.05rem;
+        padding-inline: 50px;
+        margin-bottom: 16px;
+    }
+
+    #info_page p {
+        font-family: 'Times New Roman', Times, serif;
+        text-align: justify;
     }
 
     #info_page ul {
-        font-size: 1rem;
-        padding-inline: 70px;
+        padding-inline-start: 70px;
+        font-family: 'Times New Roman', Times, serif;
+        list-style-type: none; /* Removes the default bullets */
     }
 
-    #info_page h3 {
-        padding-inline: 70px;
+    #info_page li {
+        position: relative;
+        padding-inline-start: 25px;
+        margin-bottom: 12px;
     }
+
+        /* 19th century style list marker */
+        #info_page li:before {
+            content: "§"; /* Section mark/silcrow, common in 19th century scholarly works */
+            position: absolute;
+            inset-inline-start: 0;
+            color: #5a4a42; /* Sepia-like tone for historical feel */
+            font-size: 1rem;
+            top: 0.1rem;
+            font-family: "Times New Roman", Times, serif;
+        }
+
+    /* Alternative option using decorative asterism */
+    /*
+#info_page li:before {
+    content: "❧"; /* Floral leaf/hedera symbol 
+    position: absolute;
+    inset-inline-start: 0;
+    color: #5a4a42;
+    font-size: 0.9rem;
+    top: 0.2rem;
+}
+*/
+
+    #info_page a {
+        color: #3b5998;
+        text-decoration: none;
+        border-bottom: 1px dotted #3b5998;
+        transition: color 0.2s ease, border-bottom 0.2s ease;
+    }
+
+        #info_page a:hover {
+            color: #8b9dc3;
+            border-bottom: 1px solid #8b9dc3;
+        }
+
+/* Add a subtle parchment-like background */
+#info_page {
+    background-color: #fcfaf5; /* Slightly off-white, parchment-like color */
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    padding-bottom: 30px;
+}

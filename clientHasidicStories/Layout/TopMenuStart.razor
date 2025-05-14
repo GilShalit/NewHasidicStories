@@ -51,13 +51,25 @@
     RenderFragment meterIcon =@<img src="/Images/noun_meter system_2596699.png" style="width:44px; height: 32px" />;
     Version version = typeof(Program).Assembly.GetName().Version;
     string mailURI = "";
-    const string sAbout = "AboutRef";
-    const string sCredit = "CreditsRef";
-    const string sTeam = "TeamRef";
+    const string sAbout = "About";
+    const string sCredit = "Credits";
+    const string sTeam = "Team";
+    string infoPage = "Info_e";
+
+    protected override async Task OnInitializedAsync()
+    {
+        string result = await JS.InvokeAsync<string>("blazorCulture.get");
+        infoPage = result switch
+        {
+            "en-US" => "Info_e",
+            "he-IL" => "Info_h",
+            _ => "Info_e"
+        };
+    }
 
     private void NavigateToInfoPage(string part)
     {
-        Navigation.NavigateTo($"/Info_l/{part}");
+        Navigation.NavigateTo($"/{infoPage}/{part}");
     }
 
     async Task OnShare()

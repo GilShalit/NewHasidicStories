@@ -21,32 +21,6 @@
     RenderFragment dhdevIcon =@<img src="/Images/logo_white_background_cut.jpg" style="width:44px; height: 32px" />;
     RenderFragment meterIcon =@<img src="/Images/noun_meter system_2596699.png" style="width:44px; height: 32px" />;
     Version version = typeof(Program).Assembly.GetName().Version;
-    string mailURI = "";
 
-    async Task OnShare()
-    {
-        string link = "Link not yet implemented"; //((string)clientUtils.getfromGlobals("link2Share", globals)) ?? Navigation.BaseUri;
-        await JS.InvokeVoidAsync("navigator.clipboard.writeText", link);
-        await NotificationService.Success("A link has been placed on the Clipbooard. Paste it anywhere to share.", "Sharing");
-    }
-    void buildComment()
-    {
-        //mailURI = clientUtils.getMailURI(globals);
-    }
-    private async Task goToSets()
-    {
-        //await sideMenuState.collapseAndReset();
-        Navigation.NavigateTo($"/sets");
-    }
-    private async Task goToTopics()
-    {
-        //await sideMenuState.collapseAndReset();
-        Navigation.NavigateTo($"/topics");
-    }
-    private async Task goToPubs()
-    {
-        //await sideMenuState.collapseAndReset();
-        Navigation.NavigateTo($"/publications");
-    }
 
 }

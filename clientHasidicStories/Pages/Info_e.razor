@@ -1,4 +1,4 @@
-﻿@page "/Info_l/{part}"
+﻿@page "/Info_e/{part}"
 <Div Id="info_page">
     @if (part == AboutRef)
     {
@@ -44,8 +44,8 @@
 @code
 {
     [Parameter] public string part { get; set; }
-    const string AboutRef= "AboutRef";
-    const string CreditsRef = "CreditsRef";
-    const string TeamRef = "TeamRef";
+    const string AboutRef= "About";
+    const string CreditsRef = "Credits";
+    const string TeamRef = "Team";
 
 }
