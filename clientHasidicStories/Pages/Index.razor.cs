@@ -25,13 +25,18 @@ namespace clientHasidicStories.Pages
         [Inject] NavigationManager Navigation { get; set; }
         private Blazorise.IFluentColumn myColumnSize = ColumnSize.Is3;
         string mapPadding = "";
+        private bool isAboutModalVisible = false;
+        string aboutLanguage = "";
+        string aboutPart = "";
 
         protected override async Task OnInitializedAsync()
         {
+            globalService.OnAboutDisplay += ShowAbout;
             if (CultureInfo.CurrentCulture.Name == "he-IL") mapPadding = "padding-left:0";
             else mapPadding = "padding-right:0";
 
-            if (!globalService.DataLoaded)
+            //            if (!globalService.DataLoaded)
+            if (true)
             {
                 var task1 = GetStoryInfo().ContinueWith(t =>
                 {
@@ -85,10 +90,24 @@ namespace clientHasidicStories.Pages
                 await task4;
 
                 globalService.DataLoaded = true;
-                
+
                 Console.WriteLine("===Data loaded===");
                 globalService.updateStoriesAndPoints();
             }
+        }
+
+        private void ShowAbout(string part, string lang)
+        {
+            aboutLanguage = lang;
+            aboutPart = part;
+            isAboutModalVisible = true;
+            StateHasChanged();
+        }
+
+        private void HandleModalVisibilityChanged(bool visible)
+        {
+            isAboutModalVisible = visible;
+            StateHasChanged();
         }
 
         private async Task ProcessStoryTexts(clsEditionsStoryTexts StoryTexts)
@@ -206,7 +225,7 @@ namespace clientHasidicStories.Pages
                     {
                         Console.WriteLine(person.xmlref);
                         TEITeiHeaderFileDescSourceDescListPersonPerson teiPerson = authorities.teiHeader.fileDesc.sourceDesc.listPerson[1].person.Where(p => p.xmlid == person.xmlref).FirstOrDefault();
-                        person.name = teiPerson.name.Where(n=>n.lang=="en").First().Value;
+                        person.name = teiPerson.name.Where(n => n.lang == "en").First().Value;
                         Console.WriteLine(person.name);
                         person.link = teiPerson.idno[0].Value;
                     }

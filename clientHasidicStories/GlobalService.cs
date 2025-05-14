@@ -109,5 +109,11 @@ namespace clientHasidicStories
         public event Action OnGlobalPointsChanged;
         public event Action OnDisplayStoriesChanged;
         public event Action OnStoriesToDisplayChanged;
+        public event Action<string, string> OnAboutDisplay;
+
+        public void ShowAbout(string part, string language)
+        {
+            OnAboutDisplay?.Invoke(part, language);
+        }
     }
 }

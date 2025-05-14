@@ -3,13 +3,13 @@
 @inject IStringLocalizer<TopMenuStart> Localizer
 
 <BarItem>
-    <Button @onclick="() => NavigateToInfoPage(sAbout)" Style="font-size:1rem!important; padding-top:0!important">
+    <Button @onclick="() => NavigateToPage(sAbout)" Style="font-size:1rem!important; padding-top:0!important">
         <BarIcon IconName="IconName.QuestionCircle" IconSize="IconSize.Large" />
         @Localizer["about"]
     </Button>
 </BarItem>
 <BarItem>
-    <Button @onclick="() => NavigateToInfoPage(sCredit)" Style="font-size:1rem!important; padding-top:0!important">
+    <Button @onclick="() => NavigateToPage(sCredit)" Style="font-size:1rem!important; padding-top:0!important">
         <BarIcon IconName="IconName.InfoCircle" IconSize="IconSize.Large" />
         @Localizer["credits"]
     </Button>
@@ -21,7 +21,7 @@
     </Button>
 </BarItem> *@
 <BarItem>
-    <Button @onclick="() => NavigateToInfoPage(sTeam)" Style="font-size:1rem!important; padding-top:0!important">
+    <Button @onclick="() => NavigateToPage(sTeam)" Style="font-size:1rem!important; padding-top:0!important">
         <BarIcon IconName="IconName.UserFriends" IconSize="IconSize.Large" />
         @Localizer["team"]
     </Button>
@@ -46,30 +46,28 @@
     [Inject] NavigationManager Navigation { get; set; }
     [Inject] IJSRuntime JS { get; set; }
     [Inject] INotificationService NotificationService { get; set; }
+    [Inject] GlobalService globalService { get; set; }
     [CascadingParameter] Dictionary<string, object> globals { get; set; }
     RenderFragment dhdevIcon =@<img src="/Images/logo_white_background_cut.jpg" style="width:44px; height: 32px" />;
     RenderFragment meterIcon =@<img src="/Images/noun_meter system_2596699.png" style="width:44px; height: 32px" />;
     Version version = typeof(Program).Assembly.GetName().Version;
     string mailURI = "";
+    const string sHome = "Home";
     const string sAbout = "About";
     const string sCredit = "Credits";
     const string sTeam = "Team";
-    string infoPage = "Info_e";
+    string language = "en-US";
 
     protected override async Task OnInitializedAsync()
     {
-        string result = await JS.InvokeAsync<string>("blazorCulture.get");
-        infoPage = result switch
-        {
-            "en-US" => "Info_e",
-            "he-IL" => "Info_h",
-            _ => "Info_e"
-        };
+        language = await JS.InvokeAsync<string>("blazorCulture.get");
     }
 
-    private void NavigateToInfoPage(string part)
+    private void NavigateToPage(string part)
     {
-        Navigation.NavigateTo($"/{infoPage}/{part}");
+        if (part == sHome) Navigation.NavigateTo("/");
+        else globalService.ShowAbout(part, language);
+        //else Navigation.NavigateTo($"/{infoPage}/{part}");
     }
 
     async Task OnShare()

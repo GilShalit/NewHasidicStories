@@ -418,3 +418,70 @@ code {
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     padding-bottom: 30px;
 }
+
+/* Base styles for the modal container */
+.modal-outer-container {
+    display: none;
+}
+
+    .modal-outer-container.active {
+        display: block;
+    }
+
+/* Backdrop styles */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    z-index: 1000;
+}
+
+/* Content container - completely separate from backdrop */
+.modal-content-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Higher z-index ensures it's above the backdrop */
+    z-index: 1001;
+    /* Make container itself transparent and unblurred */
+    background-color: transparent;
+    pointer-events: none; /* Allow clicks to pass through to backdrop */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 5vh; /* For vertical positioning */
+}
+
+/* Actual modal content */
+.modal-content {
+    width: 70%;
+    max-height: 90vh;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: auto;
+    pointer-events: auto; /* Add this line */
+    position: relative; /* Add this line */
+}
+
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.modal-body {
+    padding: 20px;
+}
