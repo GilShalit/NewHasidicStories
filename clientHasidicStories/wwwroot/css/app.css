@@ -9,10 +9,6 @@
     display: block;
 }
 */
-h3 {
-    font-family: 'Times New Roman', Times, serif;
-    padding: 0 5px
-}
 
 .radio-group {
     display: flex;
@@ -172,11 +168,37 @@ body {
     padding: 0.4rem 1rem;
     font-family: 'Times New Roman', Times, serif;
 }
+/* Styles for screens below 1110px */
+@media screen and (max-width: 1110px) {
+    .controlButton {
+        box-shadow: 0 .1rem .1rem rgba(0,0,0,0.8) !important;
+        background: #FBECD8;
+        padding: 4px 8px;
+    }
 
-.controlButton {
-    box-shadow: 0 .1rem .1rem rgba(0,0,0,0.8) !important;
-    background: #FBECD8
+    h3 {
+        font-family: 'Times New Roman', Times, serif;
+        padding: 0 5px;
+        font-size:1.25rem;
+    }
 }
+
+/* Styles for screens above 1110px */
+@media screen and (min-width: 1111px) {
+    .controlButton {
+        box-shadow: 0 .1rem .1rem rgba(0,0,0,0.8) !important;
+        background: #FBECD8;
+        padding: 6px 12px;
+    }
+
+    h3 {
+        font-family: 'Times New Roman', Times, serif;
+        padding: 0 5px;
+    }
+}
+
+
+
 
 .controlsContainer {
     margin-top: 10px;

@@ -31,7 +31,7 @@ namespace clientHasidicStories.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            globalService.OnAboutDisplay += ShowAbout;
+            globalService.ShowAboutDisplay += ShowAbout;
             if (CultureInfo.CurrentCulture.Name == "he-IL") mapPadding = "padding-left:0";
             else mapPadding = "padding-right:0";
 
