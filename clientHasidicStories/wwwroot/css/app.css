@@ -507,3 +507,19 @@ code {
 .modal-body {
     padding: 20px;
 }
+
+#LangSelectorIcon {
+    width: 44px;
+    height: 32px
+}
+#DHDevIcon {
+    /*width: 44px;*/
+    height: 48px
+}
+#OpenUIcon {
+    /*width: 44px;*/
+    height: 50px
+}
+#ISFIcon {
+    height: 50px
+}

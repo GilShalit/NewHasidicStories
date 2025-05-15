@@ -1,25 +1,36 @@
 ﻿@using System.Globalization
 <BarItem Style="font-size:14px!important;margin-top:-9px">
-        <CultureSelector />
-    </BarItem>
-    <BarItem Style="font-size:14px!important;margin-top:-10px">
-        <BarIcon IconName="meterIcon" />
-        @version
-    </BarItem>
-    <BarItem>
+    <CultureSelector />
+</BarItem>
+<BarItem Style="font-size:14px!important;margin-top:-10px">
+    <BarIcon IconName="meterIcon" />
+    @version
+</BarItem>
+<BarItem>
     <BarLink To="https://WWW.dh-dev.com" Target="Target.Blank" Style="font-size:14px!important; padding-top:0;margin-top:-10px">
-            <BarIcon IconName="dhdevIcon" />
-            DHDev
-        </BarLink>
-    </BarItem>
+        <BarIcon IconName="dhdevIcon" />
+    </BarLink>
+</BarItem>
+<BarItem>
+    <BarLink To="https://www.isf.org.il/" Target="Target.Blank" Style="font-size:14px!important; padding-top:0;margin-top:-10px">
+        <BarIcon IconName="ISFIcon" />
+    </BarLink>
+</BarItem>
+<BarItem>
+    <BarLink To="https://www.openu.ac.il/" Target="Target.Blank" Style="font-size:14px!important; padding-top:0;margin-top:-10px">
+        <BarIcon IconName="OUIcon" />
+    </BarLink>
+</BarItem>
 
 @code {
     [Inject] NavigationManager Navigation { get; set; }
     [Inject] IJSRuntime JS { get; set; }
     [Inject] INotificationService NotificationService { get; set; }
     [CascadingParameter] Dictionary<string, object> globals { get; set; }
-    RenderFragment dhdevIcon =@<img src="/Images/logo_white_background_cut.jpg" style="width:44px; height: 32px" />;
-    RenderFragment meterIcon =@<img src="/Images/noun_meter system_2596699.png" style="width:44px; height: 32px" />;
+    RenderFragment dhdevIcon =@<img src="/Images/logo_white_background_cut.jpg" id="DHDevIcon" />;
+    RenderFragment meterIcon =@<img src="/Images/noun_meter system_2596699.png" id="LangSelectorIcon" />;
+    RenderFragment OUIcon =@<img src="/Images/logo_op_en.png" id="OpenUIcon" />;
+    RenderFragment ISFIcon =@<img src="/Images/keren_logo_HEB.png" id="ISFIcon" />;
     Version version = typeof(Program).Assembly.GetName().Version;
 
 
