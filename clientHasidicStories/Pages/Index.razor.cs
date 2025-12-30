@@ -14,7 +14,6 @@ using System.Drawing;
 using Blazorise.Modules;
 using Blazorise;
 using System.Globalization;
-using Blazorise.Extensions;
 
 namespace clientHasidicStories.Pages
 {
@@ -345,13 +344,10 @@ namespace clientHasidicStories.Pages
                     {
                         story = storyInfo.editions[e].stories[s].Id;
                         //Console.WriteLine(story);
-                        if (!storyInfo.editions[e].stories[s].ana.IsNullOrEmpty())
+                        themeNames = storyInfo.editions[e].stories[s].ana.Split(";");
+                        for (int j = 0; j < themeNames.Length; j++)
                         {
-                            themeNames = storyInfo.editions[e].stories[s].ana.Split(";");
-                            for (int j = 0; j < themeNames.Length; j++)
-                            {
-                                localThemes.newTheme(themeNames[j], story);
-                            }
+                            localThemes.newTheme(themeNames[j], story);
                         }
                     }
                 }
