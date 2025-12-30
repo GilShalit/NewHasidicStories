@@ -344,10 +344,13 @@ namespace clientHasidicStories.Pages
                     {
                         story = storyInfo.editions[e].stories[s].Id;
                         //Console.WriteLine(story);
-                        themeNames = storyInfo.editions[e].stories[s].ana.Split(";");
-                        for (int j = 0; j < themeNames.Length; j++)
+                        if (!string.IsNullOrEmpty(storyInfo.editions[e].stories[s].ana))
                         {
-                            localThemes.newTheme(themeNames[j], story);
+                            themeNames = storyInfo.editions[e].stories[s].ana.Split(";");
+                            for (int j = 0; j < themeNames.Length; j++)
+                            {
+                                localThemes.newTheme(themeNames[j], story);
+                            }
                         }
                     }
                 }
