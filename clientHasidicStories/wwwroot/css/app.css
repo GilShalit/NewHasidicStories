@@ -523,3 +523,6 @@ code {
 #ISFIcon {
     height: 50px
 }
+div.b-tree-view-node-title:not(:has(.linkStyle)) {
+    display: none;
+}

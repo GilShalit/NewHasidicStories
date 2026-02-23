@@ -19,9 +19,13 @@
                               SelectionMode="TreeViewSelectionMode.Multiple"
                               SelectedNodes="selectedNodes"
                               SelectedNodesChanged="selectedNodesChanged">
+
                         <NodeContent>
-                            <Icon Name="IconName.IdCard" />
-                            <Button Class="linkStyle" @onclick="() => NavigateToPerson(context.link)">@context.name</Button>
+                            @if (Utils.isItemVisible(context))
+                            {
+                                <Icon Name="IconName.IdCard" />
+                                <Button Class="linkStyle" @onclick="() => NavigateToPerson(context.link)">@context.name</Button>
+                            }
                         </NodeContent>
                     </TreeView>
                 </Div>

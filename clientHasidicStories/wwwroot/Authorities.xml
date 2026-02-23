@@ -34,6 +34,10 @@
 					</person>
 				</listPerson>
 				<listPerson type="contents">
+					<person xml:id="TBD_or_None">
+						<name xml:lang="en">Place holder</name>
+						<idno type="Wikidata">https://www.wikidata.org/wiki/XYZ</idno>
+					</person>
 					<person xml:id="H_Abraham">
 						<name xml:lang="en">Abraham (the Patriarch)</name>
 						<idno type="Wikidata">https://www.wikidata.org/wiki/Q9181</idno>

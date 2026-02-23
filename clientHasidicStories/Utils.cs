@@ -7,6 +7,11 @@ namespace clientHasidicStories
 {
     public static class Utils
     {
+        public static bool isItemVisible(clsPerson person)
+        {
+            return person.name != "Place holder";
+        }
+
         public static bool displayStories(GlobalService globalService)
         {
             return globalService.EditionFiles.hasSelected || globalService.Persons.hasSelected || globalService.Themes.hasSelected;
