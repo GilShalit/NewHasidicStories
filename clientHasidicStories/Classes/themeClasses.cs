@@ -5,9 +5,8 @@
         public string all { get; set; }
     }
 
-    public class clsTheme : IEquatable<clsTheme>
+    public class clsTheme //: IEquatable<clsTheme>
     {
-        //There are no single level themes in the data
         public string name { get; set; }
         public bool selected { get; set; }
         public bool hasSelected
@@ -26,14 +25,14 @@
             stories = new List<string>();
             selected=true;
         }
-        public bool Equals(clsTheme? other)
-        {
-            // Check if the other object is null
-            if (other == null) return false;
+        //public bool Equals(clsTheme? other)
+        //{
+        //    // Check if the other object is null
+        //    if (other == null) return false;
 
-            // Check if the Titles are equal
-            return this.name == other.name;
-        }
+        //    // Check if the Titles are equal
+        //    return this.name == other.name;
+        //}
     }
     public class clsThemes : List<clsTheme>
     {
