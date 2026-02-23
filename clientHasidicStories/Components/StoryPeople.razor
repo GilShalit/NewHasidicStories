@@ -13,7 +13,7 @@
                 <Div Class="internalControl internalStoryPeopleControl">
                     <TreeView Nodes="globalService.Persons"
                               TNode="clsPerson"
-                              id="peopleTree"
+                              id="storyPeopleTree"
                               GetChildNodes="@(item => item.children)"
                               HasChildNodes="@(item => item.children?.Any() == true)"
                               SelectionMode="TreeViewSelectionMode.Multiple"

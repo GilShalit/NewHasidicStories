@@ -523,6 +523,12 @@ code {
 #ISFIcon {
     height: 50px
 }
-div.b-tree-view-node-title:not(:has(.linkStyle)) {
+/*div.b-tree-view-node-title:not(:has(.linkStyle)) {
+    display: none;
+}*/
+#storyPeopleTree div.b-tree-view-node-title:not(:has(.linkStyle)) {
+    display: none;
+}
+#peopleTree div.b-tree-view-node-title:not(:has(.linkStyle)) {
     display: none;
 }

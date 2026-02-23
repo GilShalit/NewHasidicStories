@@ -14,7 +14,7 @@
                 <Div Class="internalControl internalStoryPlacesControl">
                     <TreeView Nodes="globalService.Places"
                               TNode="clsPlace"
-                              id="placesTree"
+                              id="storyPlacesTree"
                               GetChildNodes="@(item => item.children)"
                               HasChildNodes="@(item => item.children?.Any() == true)"
                               SelectionMode="TreeViewSelectionMode.Multiple"
