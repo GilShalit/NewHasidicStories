@@ -76,15 +76,8 @@ body {
     margin-bottom: 3px;
 }
 
-.topControlRow .form-check.form-switch {
-    display: flex;
-    align-items: center;
-    margin-bottom: 0;
-}
-
-.topControlRow .form-check.form-switch .form-check-label {
-    margin-left: 4px;
-    font-size: 0.85rem;
+.filterRadios .form-check {
+    margin-bottom: -0.5rem;
 }
 
 .smallControl {
