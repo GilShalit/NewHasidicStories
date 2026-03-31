@@ -37,6 +37,8 @@ namespace clientHasidicStories
             }
         }
 
+        public bool isPeopleFiltered { get; set; } = false;
+
         public void updateStoriesAndPoints(string placeId = "")
         {
             Utils.changeDisplayStories(this, placeId);

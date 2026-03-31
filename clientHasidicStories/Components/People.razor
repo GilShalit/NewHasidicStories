@@ -10,7 +10,7 @@
             <div style="display:flex; align-items:center; gap:0.5rem;">
                 <Button Class="controlButton" Clicked="@OnClearAll">@clear</Button>
                 <Button Class="controlButton" Clicked="@OnSelectAll">@all</Button>
-                <Switch TValue="bool" Checked="@isFiltered" CheckedChanged="@onPeopleFilterChange">@(isFiltered ? "Filtered" : "Unfiltered")</Switch>
+                <Switch TValue="bool" Checked="@globalService.isPeopleFiltered" CheckedChanged="@onPeopleFilterChange">@(globalService.isPeopleFiltered ? "Filtered" : "Unfiltered")</Switch>
             </div>
         </Column>
     </Row>
@@ -55,7 +55,7 @@
     [Parameter] public string all { get; set; }
     IList<clsPerson> selectedNodes = new List<clsPerson>();
     bool firstTime = true;
-    bool isFiltered = false;
+
 
     protected override void OnInitialized()
     {
@@ -115,7 +115,8 @@
     }
     private void onPeopleFilterChange(bool value)
     {
-        isFiltered = value;
+        globalService.isPeopleFiltered = value;
+        globalService.updateStoriesAndPoints();
     }
     private void OnLogicalOperatorChanged(LogicalOperator newValue)
     {

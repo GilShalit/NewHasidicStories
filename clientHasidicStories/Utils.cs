@@ -43,7 +43,7 @@ namespace clientHasidicStories
                     if (placeId == "")
                     {
                         //find if stories include selected themes and selected persons
-                        if (selectedThemesStoryIds.Contains(storyText.id) && selectedPeopleStoryIds.Contains(storyText.id))
+                        if (selectedThemesStoryIds.Contains(storyText.id) && (!gs.isPeopleFiltered || selectedPeopleStoryIds.Contains(storyText.id)))
                             storyText.display = true;
 
                         //if (gs.Places.storyPlaces(storyText.id).Count==0)Console.WriteLine($"No places for story {storyText.text.Substring(0,20)} in {edition.title}");
@@ -51,7 +51,7 @@ namespace clientHasidicStories
                     else
                     {
                         //find if stories include selected themes and selected persons AND selected place
-                        if (selectedThemesStoryIds.Contains(storyText.id) && selectedPeopleStoryIds.Contains(storyText.id)
+                        if (selectedThemesStoryIds.Contains(storyText.id) && (!gs.isPeopleFiltered || selectedPeopleStoryIds.Contains(storyText.id))
                             && selectedPlaceStoryIds.Contains(storyText.id))
                             storyText.display = true;
                     }
