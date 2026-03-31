@@ -4,12 +4,12 @@
     <Row Margin="Margin.Is1.FromTop" Class="topControlRow">
         <Column ColumnSize="ColumnSize.Is4" Class="smallControlCol">
             <h3>@caption</h3>
-            <AndOrRadio SelectedValueChanged="OnLogicalOperatorChanged" SelectedValue="globalService.logicalOperatorPeople" />
+            <AndOrRadio SelectedValueChanged="OnLogicalOperatorChanged" SelectedValue="globalService.logicalOperatorPeople" Disabled="@(!globalService.isPeopleFiltered)" />
         </Column>
         <Column ColumnSize="ColumnSize.Is8" Class="smallControlCol">
             <div style="display:flex; align-items:center; gap:0.5rem;">
-                <Button Class="controlButton" Clicked="@OnClearAll">@clear</Button>
-                <Button Class="controlButton" Clicked="@OnSelectAll">@all</Button>
+                <Button Class="controlButton" Clicked="@OnClearAll" Disabled="@(!globalService.isPeopleFiltered)">@clear</Button>
+                <Button Class="controlButton" Clicked="@OnSelectAll" Disabled="@(!globalService.isPeopleFiltered)">@all</Button>
                 <RadioGroup TValue="bool" Name="peopleFilter" CheckedValue="@globalService.isPeopleFiltered" CheckedValueChanged="@onPeopleFilterChange">
                     <div class="filterRadios" style="display:flex; flex-direction:column; gap:0; line-height:1.2;">
                         <Radio TValue="bool" Value="false">Unfiltered</Radio>
@@ -23,7 +23,7 @@
         <Column Class="smallControlCol">
             @if (globalService.Persons != null && globalService.Persons.Count > 0 && globalService.Persons.hasNames)
             {
-                <Div Class="internalControl internalPeopleControl">
+                <Div Class="internalControl internalPeopleControl" Style="@(!globalService.isPeopleFiltered ? "pointer-events: none; opacity: 0.6" : "")">
                     <TreeView Nodes="globalService.Persons"
                               TNode="clsPerson"
                               id="peopleTree"
