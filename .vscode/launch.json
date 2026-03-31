@@ -1,0 +1,12 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch Blazor WASM",
+      "type": "blazorwasm",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/clientHasidicStories",
+      "browser": "chrome"
+    }
+  ]
+}

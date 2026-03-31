@@ -2,13 +2,16 @@
 @inject NavigationManager navigationManager
 <Div Class="basicControl smallControl">
     <Row Margin="Margin.Is1.FromTop" Class="topControlRow">
-        <Column Class="smallControlCol">
+        <Column ColumnSize="ColumnSize.Is4" Class="smallControlCol">
             <h3>@caption</h3>
             <AndOrRadio SelectedValueChanged="OnLogicalOperatorChanged" SelectedValue="globalService.logicalOperatorPeople" />
         </Column>
-        <Column Class="smallControlCol">
-            <Button Class="controlButton" Clicked="@OnClearAll">@clear</Button>
-            <Button Class="controlButton" Clicked="@OnSelectAll">@all</Button>
+        <Column ColumnSize="ColumnSize.Is8" Class="smallControlCol">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+                <Button Class="controlButton" Clicked="@OnClearAll">@clear</Button>
+                <Button Class="controlButton" Clicked="@OnSelectAll">@all</Button>
+                <Switch TValue="bool" Checked="@isFiltered" CheckedChanged="@onPeopleFilterChange">@(isFiltered ? "Filtered" : "Unfiltered")</Switch>
+            </div>
         </Column>
     </Row>
     <Row>
@@ -52,6 +55,7 @@
     [Parameter] public string all { get; set; }
     IList<clsPerson> selectedNodes = new List<clsPerson>();
     bool firstTime = true;
+    bool isFiltered = false;
 
     protected override void OnInitialized()
     {
@@ -108,6 +112,10 @@
     private async void NavigateToPerson(string url)
     {
         await JSRuntime.InvokeVoidAsync("open", navigationManager.ToAbsoluteUri(url), "_blank");
+    }
+    private void onPeopleFilterChange(bool value)
+    {
+        isFiltered = value;
     }
     private void OnLogicalOperatorChanged(LogicalOperator newValue)
     {
