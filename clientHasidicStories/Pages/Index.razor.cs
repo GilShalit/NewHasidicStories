@@ -242,8 +242,27 @@ namespace clientHasidicStories.Pages
                         if (!includedPlacesIds.Contains(place.xmlref)) includedPlacesIds.Add(place.xmlref);
                 }
 
+                HashSet<string> validPlaceIds = new HashSet<string>(
+                    authorities.teiHeader.fileDesc.sourceDesc.listPlace
+                        .Where(p => includedPlacesIds.Contains(p.xmlid))
+                        .Select(p => p.xmlid)
+                );
+
+                //remove places from stories that do not exist in authorities
+                if (globalService.Places != null)
+                {
+                    clsPlaces filteredPlaces = new clsPlaces();
+                    foreach (clsPlace place in globalService.Places)
+                    {
+                        if (!validPlaceIds.Contains(place.xmlref)) continue;
+                        foreach (string storyId in place.stories)
+                            filteredPlaces.newPlace(place.xmlref, storyId);
+                    }
+                    globalService.Places = filteredPlaces;
+                }
+
                 foreach (TEITeiHeaderFileDescSourceDescListPlace place in authorities.teiHeader.fileDesc.sourceDesc.listPlace
-                    .Where(p => includedPlacesIds.Contains(p.xmlid))
+                    .Where(p => validPlaceIds.Contains(p.xmlid))
                     )
                 {
                     //Console.WriteLine(place.placeName.Value);
@@ -269,7 +288,6 @@ namespace clientHasidicStories.Pages
                 HandleError(ex);
             }
         }
-
         private async Task<clsStoryInfoData> GetStoryInfo()
         {
             try
