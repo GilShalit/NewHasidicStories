@@ -173,19 +173,9 @@ namespace clientHasidicStories.Pages
             try
             {
                 Console.WriteLine("Start GetAuthorities");
-                //await Task.Delay(2000); // Delay for 2 seconds
-                //Console.WriteLine("End delay in GetAuthorities");
                 TEI authorities;
-
-                HttpClient httpLocal = new HttpClient();
-
-                //Both options below do not work so probably need to develop an api call so that authorities can be outside the application
-                //httpLocal.BaseAddress = new Uri("http://localhost:8081/exist/apps/HasidicStoriesServer/data/");
-                //httpLocal.BaseAddress = new Uri("http://localhost:8081/exist/apps/");
-
-                httpLocal.BaseAddress = new Uri(Navigation.BaseUri);
-                string url = $"Authorities.xml?nocache={DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()}";
-                HttpResponseMessage response = await httpLocal.GetAsync(url);
+                HttpResponseMessage response = await http.GetAsync(
+                    $"api/document/registers/Authorities.xml");
                 if (response.IsSuccessStatusCode)
                 {
                     XmlSerializer serializer = new XmlSerializer(typeof(TEI));
