@@ -16,7 +16,7 @@
     }
     public class clsDisplayStoryTexts
     {
-        public List<clsEditionStories> editions { get; set; } = new List<clsEditionStories>();
+        public List<clsEditionStories> editions { get; set; } = new();
         public List<string> selectedStoryIds
         {
             get

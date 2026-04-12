@@ -1,4 +1,6 @@
 ﻿@using System.Text.Json
+@using System.Globalization;
+
 @inject NavigationManager navigationManager
 @inject IJSRuntime JSRuntime
 <Div Class="basicControl bigControl">
@@ -19,28 +21,27 @@
             {
                 <Div Class="internalControl internalStoriesControl">
                     <Accordion>
-                        @for (int i = 0; i < globalService.DisplayStoryTexts.editions.Count; i++)
+                        @{ int index = 0; }
+                        @foreach (clsEditionStories edition in editions)
                         {
-                            clsEditionStories edition = globalService.DisplayStoryTexts.editions[i];
-                            if (edition.display)
-                            {
-                                <AccordionItem @bind-Visible="expandedItems[i]">
-                                    <AccordionHeader>
-                                        <Heading Size="HeadingSize.Is6"><AccordionToggle Clicked="(args)=>OnItemClicked(args,edition.iEdition)">@edition.name</AccordionToggle></Heading>
-                                    </AccordionHeader>
-                                    <AccordionBody>
-                                        @foreach (clsStoryText story in edition.stories)
+                            int currentIndex = index;
+                            <AccordionItem @bind-Visible="expandedItems[currentIndex]">
+                                <AccordionHeader>
+                                    <Heading Size="HeadingSize.Is6"><AccordionToggle>@localEditionName(edition.name)</AccordionToggle></Heading>
+                                </AccordionHeader>
+                                <AccordionBody>
+                                    @foreach (clsStoryText story in edition.stories)
+                                    {
+                                        if (story.display)
                                         {
-                                            if (story.display)
-                                            {
-                                                <p class="pStory" id=@($"{story.id}") @onclick="(() => HandleStoryClick(edition.name, story.id))">
-                                                    <Span Class="firstWord">@firstWord(story.text) </Span>@theRest(story.text) [...]
-                                                </p>
-                                            }
+                                            <p class="pStory" id=@($"{story.id}") @onclick="(() => HandleStoryClick(edition.name, story.id))">
+                                                <Span Class="firstWord">@firstWord(story.text) </Span>@theRest(story.text) [...]
+                                            </p>
                                         }
-                                    </AccordionBody>
-                                </AccordionItem>
-                            }
+                                    }
+                                </AccordionBody>
+                            </AccordionItem>
+                            index++;
                         }
                     </Accordion>
                 </Div>
@@ -56,12 +57,15 @@
     [Inject] GlobalService globalService { get; set; }
     [Parameter] public string caption { get; set; }
     [Parameter] public string close { get; set; }
-    string counts;
+    string counts; string lang = "";
     List<bool> expandedItems = new List<bool>();
+    List<clsEditionStories> editions;
 
     protected override async Task OnInitializedAsync()
     {
         globalService.OnStoriesToDisplayChanged += HandleDisplayStoriesChanged;
+        if (CultureInfo.CurrentCulture.Name == "he-IL") lang = "he";
+        else lang = "en";
     }
     public void Dispose()
     {
@@ -71,14 +75,19 @@
     private void HandleDisplayStoriesChanged()
     {
         expandedItems = new List<bool>();
-        for (int i = 0; i < globalService.DisplayStoryTexts.editions.Count; i++)
+        editions = globalService.DisplayStoryTexts.editions
+            .Where(e => e.display && e.stories.Any(s => s.display))
+            .OrderBy(e => e.name)
+            .ToList();
+
+        for (int i = 0; i < editions.Count; i++)
         {
             expandedItems.Add(true);
         }
+
         counts = globalService.DisplayStoryTexts.counts;
         StateHasChanged();
     }
-
     private async void HandleStoryClick(string editionName, string storyId)
     {
         // Save necessary state to localStorage
@@ -129,9 +138,9 @@
         return Task.CompletedTask;
     }
 
-    private void OnItemClicked(MouseEventArgs e, int id)
+    private string localEditionName(string editionName)
     {
-        expandedItems[id] = !expandedItems.ElementAt(id);
-        StateHasChanged();
+        clsEditionFile? editionFile = globalService.EditionFiles.FirstOrDefault(e => e.title == editionName);
+        return Utils.GetEditionTitle(editionFile, lang);
     }
 }

@@ -7,6 +7,14 @@ namespace clientHasidicStories
 {
     public static class Utils
     {
+        public static string GetEditionTitle(clsEditionFile? edition, string lang)
+            => lang switch
+            {
+                "he" => edition?.titleHebrew ?? "",
+                "en" => edition?.titleEnglish ?? "",
+                _ => edition?.title ?? ""
+            };
+
         public static bool isItemVisible(clsPerson person)
         {
             return person.name != "Place holder";

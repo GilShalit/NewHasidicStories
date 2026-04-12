@@ -29,7 +29,7 @@
                               SelectedNodesChanged="selectedNodesChanged">
                         <NodeContent>
                             <Icon Name="IconName.Book" />
-                            <Button Class="linkStyle" @onclick="() => NavigateToFile(context.name)">@GetEditionTitle(context)</Button>
+                            <Button Class="linkStyle" @onclick="() => NavigateToFile(context.name)">@Utils.GetEditionTitle(context,lang)</Button>
                         </NodeContent>
                     </TreeView>
                 </Div>
@@ -102,11 +102,4 @@
         globalService.updateStoriesAndPoints();
         return Task.CompletedTask;
     }
-    private string GetEditionTitle(clsEditionFile edition)
-    => lang switch
-    {
-        "he" => edition.titleHebrew,
-        "en" => edition.titleEnglish,
-        _ => edition.title
-    };
 }
