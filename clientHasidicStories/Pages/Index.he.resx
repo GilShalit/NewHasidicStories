@@ -129,6 +129,9 @@
   <data name="editions" xml:space="preserve">
     <value>מהדורות</value>
   </data>
+  <data name="filtered" xml:space="preserve">
+    <value>מפולטר</value>
+  </data>
   <data name="people" xml:space="preserve">
     <value>דמויות</value>
   </data>
@@ -137,5 +140,8 @@
   </data>
   <data name="themes" xml:space="preserve">
     <value>נושאים</value>
+  </data>
+  <data name="unfiltered" xml:space="preserve">
+    <value>לא מפולטר</value>
   </data>
 </root>

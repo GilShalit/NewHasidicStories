@@ -19,7 +19,7 @@ namespace clientHasidicStories.Pages {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public partial class Index {
@@ -97,6 +97,15 @@ namespace clientHasidicStories.Pages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Filtered.
+        /// </summary>
+        public static string filtered {
+            get {
+                return ResourceManager.GetString("filtered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to People.
         /// </summary>
         public static string people {
@@ -120,6 +129,15 @@ namespace clientHasidicStories.Pages {
         public static string themes {
             get {
                 return ResourceManager.GetString("themes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unfiltered.
+        /// </summary>
+        public static string unfiltered {
+            get {
+                return ResourceManager.GetString("unfiltered", resourceCulture);
             }
         }
     }

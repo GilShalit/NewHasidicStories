@@ -12,8 +12,8 @@
                 <Button Class="controlButton" Clicked="@OnSelectAll" Disabled="@(!globalService.isPeopleFiltered)">@all</Button>
                 <RadioGroup TValue="bool" Name="peopleFilter" CheckedValue="@globalService.isPeopleFiltered" CheckedValueChanged="@onPeopleFilterChange">
                     <div class="filterRadios" style="display:flex; flex-direction:column; gap:0; line-height:1.2;">
-                        <Radio TValue="bool" Value="false">Unfiltered</Radio>
-                        <Radio TValue="bool" Value="true">Filtered</Radio>
+                        <Radio TValue="bool" Value="false">@Unfiltered</Radio>
+                        <Radio TValue="bool" Value="true">@Filtered</Radio>
                     </div>
                 </RadioGroup>
             </div>
@@ -58,6 +58,8 @@
     [Parameter] public string caption { get; set; }
     [Parameter] public string clear { get; set; }
     [Parameter] public string all { get; set; }
+    [Parameter] public string Unfiltered { get; set; }
+    [Parameter] public string Filtered { get; set; }
     IList<clsPerson> selectedNodes = new List<clsPerson>();
     bool firstTime = true;
 
