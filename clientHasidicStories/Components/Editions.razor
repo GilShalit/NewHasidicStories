@@ -1,4 +1,6 @@
 ﻿@using System.IO;
+@using System.Globalization;
+
 @inject IJSRuntime JSRuntime
 @inject NavigationManager navigationManager
 
@@ -27,7 +29,7 @@
                               SelectedNodesChanged="selectedNodesChanged">
                         <NodeContent>
                             <Icon Name="IconName.Book" />
-                            <Button Class="linkStyle" @onclick="() => NavigateToFile(context.name)">@context.title</Button>
+                            <Button Class="linkStyle" @onclick="() => NavigateToFile(context.name)">@GetEditionTitle(context)</Button>
                         </NodeContent>
                     </TreeView>
                 </Div>
@@ -46,10 +48,13 @@
     [Parameter] public string clear { get; set; }
     [Parameter] public string all { get; set; }
     List<clsEditionFile> selectedNodes = new List<clsEditionFile>();
+    string lang = "";
 
     protected override void OnInitialized()
     {
         globalService.OnGlobalEditionsChanged += HandleGlobalEditionsChange;
+        if (CultureInfo.CurrentCulture.Name == "he-IL") lang="he";
+        else lang = "en";
     }
     public void Dispose()
     {
@@ -97,5 +102,11 @@
         globalService.updateStoriesAndPoints();
         return Task.CompletedTask;
     }
-
+    private string GetEditionTitle(clsEditionFile edition)
+    => lang switch
+    {
+        "he" => edition.titleHebrew,
+        "en" => edition.titleEnglish,
+        _ => edition.title
+    };
 }

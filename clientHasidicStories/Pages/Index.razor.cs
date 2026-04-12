@@ -35,65 +35,61 @@ namespace clientHasidicStories.Pages
             if (CultureInfo.CurrentCulture.Name == "he-IL") mapPadding = "padding-left:0";
             else mapPadding = "padding-right:0";
 
-            //            if (!globalService.DataLoaded)
-            if (true)
+            var task1 = GetStoryInfo().ContinueWith(t =>
             {
-                var task1 = GetStoryInfo().ContinueWith(t =>
+                if (t.IsCompletedSuccessfully)
                 {
-                    if (t.IsCompletedSuccessfully)
-                    {
-                        InvokeAsync(async () => await ProcessStoryInfo(t.Result));
-                    }
-                    else
-                    {
-                        HandleError(t.Exception);
-                    }
-                });
-
-                var task2 = GetEditionFiles().ContinueWith(t =>
+                    InvokeAsync(async () => await ProcessStoryInfo(t.Result));
+                }
+                else
                 {
-                    if (t.IsCompletedSuccessfully)
-                    {
-                        InvokeAsync(async () => await ProcessEditionFiles(t.Result));
-                    }
-                    else
-                    {
-                        HandleError(t.Exception);
-                    }
-                });
-                await Task.WhenAll(task1, task2);
+                    HandleError(t.Exception);
+                }
+            });
 
-                var task3 = GetAuthorities().ContinueWith(t =>
+            var task2 = GetEditionFiles().ContinueWith(t =>
+            {
+                if (t.IsCompletedSuccessfully)
                 {
-                    if (t.IsCompletedSuccessfully)
-                    {
-                        InvokeAsync(async () => await ProcessAuthorities(t.Result));
-                    }
-                    else
-                    {
-                        HandleError(t.Exception);
-                    }
-                });
-                await task3;
-
-                var task4 = GetStoryTexts().ContinueWith(t =>
+                    InvokeAsync(async () => await ProcessEditionFiles(t.Result));
+                }
+                else
                 {
-                    if (t.IsCompletedSuccessfully)
-                    {
-                        InvokeAsync(async () => await ProcessStoryTexts(t.Result));
-                    }
-                    else
-                    {
-                        HandleError(t.Exception);
-                    }
-                });
-                await task4;
+                    HandleError(t.Exception);
+                }
+            });
+            await Task.WhenAll(task1, task2);
 
-                globalService.DataLoaded = true;
+            var task3 = GetAuthorities().ContinueWith(t =>
+            {
+                if (t.IsCompletedSuccessfully)
+                {
+                    InvokeAsync(async () => await ProcessAuthorities(t.Result));
+                }
+                else
+                {
+                    HandleError(t.Exception);
+                }
+            });
+            await task3;
 
-                Console.WriteLine("===Data loaded===");
-                globalService.updateStoriesAndPoints();
-            }
+            var task4 = GetStoryTexts().ContinueWith(t =>
+            {
+                if (t.IsCompletedSuccessfully)
+                {
+                    InvokeAsync(async () => await ProcessStoryTexts(t.Result));
+                }
+                else
+                {
+                    HandleError(t.Exception);
+                }
+            });
+            await task4;
+
+            globalService.DataLoaded = true;
+
+            Console.WriteLine("===Data loaded===");
+            globalService.updateStoriesAndPoints();
         }
 
         private void ShowAbout(string part, string lang)
