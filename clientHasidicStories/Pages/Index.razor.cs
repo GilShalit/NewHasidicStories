@@ -369,7 +369,7 @@ namespace clientHasidicStories.Pages
             {
                 Console.WriteLine("Start GetEditions");
                 clsFileList files;
-                HttpResponseMessage response = await http.GetAsync("api/filelist");
+                HttpResponseMessage response = await http.GetAsync("api/filelist?per-page=9999");
 
                 if (response.IsSuccessStatusCode)
                 {
